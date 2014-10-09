@@ -1,0 +1,17 @@
+[
+{
+    "modid": "bulbs",
+    "name": "Bulbs",
+    "description": "A mod for better lighting options",
+    "version": "1.7.10-0.0.1",
+    "credits": "",
+    "logoFile": "",
+    "mcversion": "1.7.10",
+    "url": "http://schimski.de/bulbs",
+    "updateUrl": "",
+    "authors": ["Schimski"],
+    "parent":"",
+    "screenshots": [],
+    "dependencies": [ "mod_MinecraftForge" ]
+}
+]
