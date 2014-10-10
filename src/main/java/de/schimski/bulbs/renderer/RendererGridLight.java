@@ -1,20 +1,28 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelGridLight;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import de.schimski.bulbs.block.BlockGridLight;
 import de.schimski.bulbs.reference.Reference;
+import de.schimski.bulbs.tileEntity.TileEntityGridLight;
+import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
 public class RendererGridLight extends TileEntitySpecialRenderer{
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/models/gridLight.png");
     private ModelGridLight model;
+    static int myRenderID;
 
     public RendererGridLight() {
         this.model = new ModelGridLight();
-
     }
 
     private void alignTileEntityAccordingMetadata(double x, double y, double z, int metadata)
