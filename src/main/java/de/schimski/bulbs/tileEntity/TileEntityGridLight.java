@@ -4,8 +4,12 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityGridLight extends TileEntity {
 
-    public TileEntityGridLight (int metadata) {
-        this.blockMetadata = metadata;
+    public TileEntityGridLight() {
+        super();
+    }
 
+    public TileEntityGridLight (int metadata) {
+        super();
+        this.blockMetadata = metadata;
     }
 }
