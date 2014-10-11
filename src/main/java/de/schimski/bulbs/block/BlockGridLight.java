@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
+import de.schimski.bulbs.utility.BlockHelper;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -70,6 +71,8 @@ public class BlockGridLight extends BlockBulbs{
 
     public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
     {
+        boolean[] check = BlockHelper.compareBlocks4Sides(p_149660_1_,p_149660_2_,p_149660_3_,p_149660_4_, "tile.bulbs:gridLight", p_149660_5_);
+        LogHelper.info(check[0] + " - " + check[1] + " - " + check[2] + " - " + check[3]);
 
         return p_149660_5_;
     }
