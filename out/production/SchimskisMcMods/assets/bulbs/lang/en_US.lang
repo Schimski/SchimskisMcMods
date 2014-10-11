@@ -1,0 +1,3 @@
+item.bulbs:lightBulb.name=Light Bulb
+tile.bulbs:gridLight.name=Gridlight
+itemGroup.bulbs=Bulbs

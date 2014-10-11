@@ -43,7 +43,6 @@ public class BlockGridLight extends BlockBulbs{
     public void setBlockBoundsBasedOnState(IBlockAccess p_149719_1_, int x, int y, int z)
     {
         // Sets the bounds of the block.  minX, minY, minZ, maxX, maxY, maxZ
-        //LogHelper.info("SetBounds: " + p_149719_1_.getBlockMetadata(x,y,z));
         float p = 1/16f;
         switch (p_149719_1_.getBlockMetadata(x,y,z)) {
             case 0:
