@@ -149,7 +149,7 @@ public class ModelGridLightCon1 extends ModelBase
     bottom.render(f5);
     Shape13.render(f5);
     Shape14.render(f5);
-    Shape1.render(f5);
+    Shape15.render(f5);
   }
 
   public void renderModel(float f5)
@@ -168,7 +168,7 @@ public class ModelGridLightCon1 extends ModelBase
       bottom.render(f5);
       Shape13.render(f5);
       Shape14.render(f5);
-      Shape1.render(f5);
+      Shape15.render(f5);
   }
 
 
