@@ -88,7 +88,6 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
 
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float p_147500_8_)
     {
-        entity.getWorldObj().scheduleBlockUpdate(entity.xCoord, entity.yCoord, entity.zCoord, entity.getWorldObj().getBlock( entity.xCoord ,entity.yCoord,entity.zCoord), 10);
         TileEntityGridLight gridLight = (TileEntityGridLight)(entity);
 
 //      tileGridLight.readFromNBT(tileGridLight.nbtTag);

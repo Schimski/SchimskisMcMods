@@ -13,6 +13,12 @@ public class TileEntityGridLight extends TileEntity {
 
     public NBTTagCompound nbtTag;
 
+    public void updateEntity()
+    {
+        LogHelper.info("update");
+
+    }
+
     public void setNeighbour(int side, boolean connect) {
         boolConnect[side] = connect;
         this.writeToNBT(this.nbtTag);

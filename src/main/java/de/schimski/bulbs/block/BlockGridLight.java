@@ -6,6 +6,7 @@ import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.utility.BlockHelper;
 import de.schimski.bulbs.utility.LogHelper;
+import ibxm.Player;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;

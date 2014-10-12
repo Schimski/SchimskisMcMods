@@ -9,6 +9,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.handler.ConfigurationHandler;
+import de.schimski.bulbs.handler.PacketHandler;
 import de.schimski.bulbs.init.*;
 import de.schimski.bulbs.proxy.CommonProxy;
 import de.schimski.bulbs.proxy.IProxy;
@@ -43,6 +44,7 @@ public class bulbs {
     public void init(FMLInitializationEvent event) {
         proxy.init(event);
         Recipes.init();
+        PacketHandler.initPackets();
     }
 
     @Mod.EventHandler
