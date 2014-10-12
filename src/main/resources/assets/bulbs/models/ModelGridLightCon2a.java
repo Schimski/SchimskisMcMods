@@ -9,27 +9,31 @@ package assets.bulbs.models;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
 
-public class ModelGridLightCon1 extends ModelBase
+public class ModelGridLightCon2a extends ModelBase
 {
-  //fields
+    //fields
     ModelRenderer Shape1;
     ModelRenderer Shape2;
     ModelRenderer Shape4;
-    ModelRenderer Shape5;
     ModelRenderer Shape6;
     ModelRenderer Shape7;
-    ModelRenderer Shape8;
-    ModelRenderer Shape9;
+    ModelRenderer shape8;
+    ModelRenderer lamp1;
     ModelRenderer Shape10;
     ModelRenderer Shape11;
     ModelRenderer Shape12;
     ModelRenderer bottom;
-    ModelRenderer Shape13;
     ModelRenderer Shape14;
     ModelRenderer Shape15;
-
-  public ModelGridLightCon1()
+    ModelRenderer lamp2;
+    ModelRenderer bottom2;
+    ModelRenderer top6;
+    ModelRenderer side7;
+    ModelRenderer side8;
+  
+  public ModelGridLightCon2a()
   {
     textureWidth = 64;
     textureHeight = 64;
@@ -52,12 +56,6 @@ public class ModelGridLightCon1 extends ModelBase
       Shape4.setTextureSize(64, 64);
       Shape4.mirror = true;
       setRotation(Shape4, 0F, 0F, 0F);
-      Shape5 = new ModelRenderer(this, 0, 0);
-      Shape5.addBox(0F, 1F, 0F, 1, 2, 0);
-      Shape5.setRotationPoint(-3F, 20F, -5F);
-      Shape5.setTextureSize(64, 64);
-      Shape5.mirror = true;
-      setRotation(Shape5, 0F, 0F, 0F);
       Shape6 = new ModelRenderer(this, 0, 0);
       Shape6.addBox(0F, 1F, 0F, 0, 2, 1);
       Shape6.setRotationPoint(-5F, 20F, 2F);
@@ -70,18 +68,18 @@ public class ModelGridLightCon1 extends ModelBase
       Shape7.setTextureSize(64, 64);
       Shape7.mirror = true;
       setRotation(Shape7, 0F, 0F, 0F);
-      Shape8 = new ModelRenderer(this, 0, 0);
-      Shape8.addBox(0F, 1F, 0F, 1, 2, 0);
-      Shape8.setRotationPoint(7.466667F, 20F, -5F);
-      Shape8.setTextureSize(64, 64);
-      Shape8.mirror = true;
-      setRotation(Shape8, 0F, 0F, 0F);
-      Shape9 = new ModelRenderer(this, 0, 20);
-      Shape9.addBox(0F, 1F, 0F, 12, 1, 8);
-      Shape9.setRotationPoint(-4F, 21F, -4F);
-      Shape9.setTextureSize(64, 64);
-      Shape9.mirror = true;
-      setRotation(Shape9, 0F, 0F, 0F);
+      shape8 = new ModelRenderer(this, 0, 0);
+      shape8.addBox(0F, 1F, 0F, 1, 2, 0);
+      shape8.setRotationPoint(7.466667F, 20F, -5F);
+      shape8.setTextureSize(64, 64);
+      shape8.mirror = true;
+      setRotation(shape8, 0F, 0F, 0F);
+      lamp1 = new ModelRenderer(this, 0, 20);
+      lamp1.addBox(0F, 1F, 0F, 12, 1, 8);
+      lamp1.setRotationPoint(-4F, 21F, -4F);
+      lamp1.setTextureSize(64, 64);
+      lamp1.mirror = true;
+      setRotation(lamp1, 0F, 0F, 0F);
       Shape10 = new ModelRenderer(this, 0, 0);
       Shape10.addBox(0F, 1F, 0F, 13, 0, 1);
       Shape10.setRotationPoint(-5F, 20F, 2F);
@@ -95,8 +93,8 @@ public class ModelGridLightCon1 extends ModelBase
       Shape11.mirror = true;
       setRotation(Shape11, 0F, 0F, 0F);
       Shape12 = new ModelRenderer(this, 0, 30);
-      Shape12.addBox(0F, 1F, 0F, 1, 0, 10);
-      Shape12.setRotationPoint(-3F, 20F, -5F);
+      Shape12.addBox(0F, 1F, 0F, 1, 0, 13);
+      Shape12.setRotationPoint(-3F, 20F, -8F);
       Shape12.setTextureSize(64, 64);
       Shape12.mirror = true;
       setRotation(Shape12, 0F, 0F, 0F);
@@ -106,12 +104,6 @@ public class ModelGridLightCon1 extends ModelBase
       bottom.setTextureSize(64, 64);
       bottom.mirror = true;
       setRotation(bottom, 0F, 0F, 0F);
-      Shape13 = new ModelRenderer(this, 0, 0);
-      Shape13.addBox(0F, 1F, 0F, 1, 2, 0);
-      Shape13.setRotationPoint(2F, 20F, -5F);
-      Shape13.setTextureSize(64, 64);
-      Shape13.mirror = true;
-      setRotation(Shape13, 0F, 0F, 0F);
       Shape14 = new ModelRenderer(this, 0, 0);
       Shape14.addBox(0F, 1F, 0F, 1, 2, 0);
       Shape14.setRotationPoint(2F, 20F, 5F);
@@ -119,11 +111,41 @@ public class ModelGridLightCon1 extends ModelBase
       Shape14.mirror = true;
       setRotation(Shape14, 0F, 0F, 0F);
       Shape15 = new ModelRenderer(this, 0, 30);
-      Shape15.addBox(0F, 1F, 0F, 1, 0, 10);
-      Shape15.setRotationPoint(2F, 20F, -5F);
+      Shape15.addBox(0F, 1F, 0F, 1, 0, 13);
+      Shape15.setRotationPoint(2F, 20F, -8F);
       Shape15.setTextureSize(64, 64);
       Shape15.mirror = true;
       setRotation(Shape15, 0F, 0F, 0F);
+      lamp2 = new ModelRenderer(this, 8, 24);
+      lamp2.addBox(0F, 1F, 0F, 8, 1, 4);
+      lamp2.setRotationPoint(-4F, 21F, -8F);
+      lamp2.setTextureSize(64, 64);
+      lamp2.mirror = true;
+      setRotation(lamp2, 0F, 0F, 0F);
+      bottom2 = new ModelRenderer(this, 12, 4);
+      bottom2.addBox(0F, 1F, 0F, 12, 1, 2);
+      bottom2.setRotationPoint(-6F, 22F, -8F);
+      bottom2.setTextureSize(64, 64);
+      bottom2.mirror = true;
+      setRotation(bottom2, 0F, 0F, 0F);
+      top6 = new ModelRenderer(this, 0, 0);
+      top6.addBox(0F, 1F, 0F, 10, 0, 1);
+      top6.setRotationPoint(-5F, 20F, -8.466666F);
+      top6.setTextureSize(64, 64);
+      top6.mirror = true;
+      setRotation(top6, 0F, 0F, 0F);
+      side7 = new ModelRenderer(this, 0, 0);
+      side7.addBox(0F, 1F, 0F, 0, 2, 1);
+      side7.setRotationPoint(-5F, 20F, -8.466666F);
+      side7.setTextureSize(64, 64);
+      side7.mirror = true;
+      setRotation(side7, 0F, 0F, 0F);
+      side8 = new ModelRenderer(this, 0, 0);
+      side8.addBox(0F, 1F, 0F, 0, 2, 1);
+      side8.setRotationPoint(5F, 20F, -8.466666F);
+      side8.setTextureSize(64, 64);
+      side8.mirror = true;
+      setRotation(side8, 0F, 0F, 0F);
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
@@ -133,18 +155,21 @@ public class ModelGridLightCon1 extends ModelBase
     Shape1.render(f5);
     Shape2.render(f5);
     Shape4.render(f5);
-    Shape5.render(f5);
     Shape6.render(f5);
     Shape7.render(f5);
-    Shape8.render(f5);
-    Shape9.render(f5);
+    shape8.render(f5);
+    lamp1.render(f5);
     Shape10.render(f5);
     Shape11.render(f5);
     Shape12.render(f5);
     bottom.render(f5);
-    Shape13.render(f5);
     Shape14.render(f5);
     Shape15.render(f5);
+    lamp2.render(f5);
+    bottom2.render(f5);
+    top6.render(f5);
+    side7.render(f5);
+    side8.render(f5);
   }
 
   public void renderModel(float f5)
@@ -152,21 +177,23 @@ public class ModelGridLightCon1 extends ModelBase
       Shape1.render(f5);
       Shape2.render(f5);
       Shape4.render(f5);
-      Shape5.render(f5);
       Shape6.render(f5);
       Shape7.render(f5);
-      Shape8.render(f5);
-      Shape9.render(f5);
+      shape8.render(f5);
+      lamp1.render(f5);
       Shape10.render(f5);
       Shape11.render(f5);
       Shape12.render(f5);
       bottom.render(f5);
-      Shape13.render(f5);
       Shape14.render(f5);
       Shape15.render(f5);
+      lamp2.render(f5);
+      bottom2.render(f5);
+      top6.render(f5);
+      side7.render(f5);
+      side8.render(f5);
   }
-
-
+  
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
     model.rotateAngleX = x;

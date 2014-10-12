@@ -6,12 +6,15 @@ import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.utility.BlockHelper;
 import de.schimski.bulbs.utility.LogHelper;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 
 public class BlockGridLight extends BlockBulbs{
@@ -69,18 +72,34 @@ public class BlockGridLight extends BlockBulbs{
     }
 
 
-    public int onBlockPlaced(World world, int x, int y, int z, int side, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
-    {
-        connectNeighbours = BlockHelper.compareBlocks4Sides(world,x,y,z, "tile.bulbs:gridLight", side);
+    public int onBlockPlaced(World world, int x, int y, int z, int side, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_) {
+        connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:gridLight", side);
         return side;
     }
 
-    public void onPostBlockPlaced(World p_149714_1_, int p_149714_2_, int p_149714_3_, int p_149714_4_, int p_149714_5_)
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbourBlock)
     {
-        connectNeighbours = BlockHelper.compareBlocks4Sides(p_149714_1_,p_149714_2_,p_149714_3_,p_149714_4_, "tile.bulbs:gridLight", p_149714_5_);
-        //LogHelper.info(check[0] + " - " + check[1] + " - " + check[2] + " - " + check[3]);
-        //TileEntityGridLight newLight = (TileEntityGridLight)p_149714_1_.getTileEntity(p_149714_2_,p_149714_3_,p_149714_4_);
-        //newLight.setNeighbour('r', true);
+        //world.scheduleBlockUpdate(this.x,this.y,this.z,this,20);
+        TileEntity entity = world.getTileEntity(x,y,z);
+        if (entity != null)
+        {
+            LogHelper.info(entity.getClass().getName());
+            if (entity.getClass().getName().equals("de.schimski.bulbs.tileEntity.TileEntityGridLight")) {
+                connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:gridLight", entity.getBlockMetadata());
+                passNeighboursToTileEntity((TileEntityGridLight)(entity));
+            }
+        }
+    }
+
+    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_) {
+        LogHelper.info("update");
+        //connectNeighbours = BlockHelper.compareBlocks4Sides(p_149674_1_,this.x,this.y,this.z, "tile.bulbs:gridLight", sidePlaced);
+        //passNeighboursToTileEntity(gridLight);
+    }
+
+    public void onPostBlockPlaced(World world, int x, int y, int z, int side)
+    {
+
     }
 
     public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_)
@@ -121,14 +140,22 @@ public class BlockGridLight extends BlockBulbs{
         return true;
     }
 
+    private void passNeighboursToTileEntity(TileEntityGridLight gridLight)
+    {
+        if (connectNeighbours != null)
+        {
+            for (int i = 0; i<connectNeighbours.length; i++) {
+                LogHelper.info(connectNeighbours[i]);
+                gridLight.setNeighbour(i, connectNeighbours[i]);
+            }
+        }
+    }
+
     public TileEntity createTileEntity(World world, int metadata)
     {
         TileEntityGridLight gridLight= new TileEntityGridLight(metadata);
-        gridLight.initializeNeighbours();
-        if (connectNeighbours != null && connectNeighbours[0] == true) {
-            gridLight.setNeighbour('r', true);
-        }
-        return gridLight;
+        passNeighboursToTileEntity(gridLight);
 
+        return gridLight;
     }
 }

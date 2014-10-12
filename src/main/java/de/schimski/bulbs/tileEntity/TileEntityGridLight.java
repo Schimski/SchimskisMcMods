@@ -1,27 +1,30 @@
 package de.schimski.bulbs.tileEntity;
 
+import de.schimski.bulbs.utility.LogHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityGridLight extends TileEntity {
-    public boolean rightConnect = false;
-    public boolean downConnect = false;
-    public boolean leftConnect = false;
-    public boolean upConnect = false;
+    private boolean[] boolConnect = {false, false, false, false};
 
     public NBTTagCompound nbtTag;
 
-    public void setNeighbour(char side, boolean connect) {
-        switch (side) {
-            case 'r':
-                rightConnect = connect;
-                break;
-            default:
-                rightConnect = false;
-                break;
-        }
-
+    public void setNeighbour(int side, boolean connect) {
+        boolConnect[side] = connect;
         this.writeToNBT(this.nbtTag);
+        this.updateEntity();
+        Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+        LogHelper.info(neighbourCount());
+    }
+
+    @Override
+    public boolean canUpdate()
+    {
+        return true;
     }
 
     public TileEntityGridLight() {
@@ -31,35 +34,66 @@ public class TileEntityGridLight extends TileEntity {
     public TileEntityGridLight (int metadata) {
         super();
         this.blockMetadata = metadata;
+        this.nbtTag = new NBTTagCompound();
+        readFromNBT(nbtTag);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
-        if (nbt!=null){
-            super.readFromNBT(nbt);
-            this.rightConnect = nbt.getBoolean("right");
-        } else {
-            initializeNeighbours();
+        super.readFromNBT(nbt);
+        //LogHelper.info("Reading NBT");
+        for (int i = 0; i < boolConnect.length; i++)
+        {
+            boolConnect[i] = nbt.getBoolean("connect" + String.valueOf(i));
+            //LogHelper.info(boolConnect[i]);
         }
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbt)
     {
-        nbt.setBoolean("right", rightConnect);
-        nbt.setBoolean("down", downConnect);
-        nbt.setBoolean("left", leftConnect);
-        nbt.setBoolean("up", upConnect);
-
-        super.writeToNBT(nbt);
+        if (nbt != null) {
+            LogHelper.info("Writing NBT");
+            for (int i = 0; i <boolConnect.length; i++)
+            {
+                nbt.setBoolean("connect" + String.valueOf(i), boolConnect[i]);
+                LogHelper.info(boolConnect[i]);
+            }
+            super.writeToNBT(nbt);
+        }
     }
 
-    public void initializeNeighbours()
+    public int neighbourCount()
     {
-        this.nbtTag = new NBTTagCompound();
-        this.writeToNBT(nbtTag);
+        int count = 0;
+        for (int i = 0; i<boolConnect.length; i++)
+        {
+            if (boolConnect[i])
+            {
+                count ++;
+            }
+        }
+        return count;
     }
 
+    public boolean hasGridLightNeighbour(int side)
+    {
+        return boolConnect[side];
+    }
 
+    @Override
+    public Packet getDescriptionPacket()
+    {
+        NBTTagCompound nbt = new NBTTagCompound();
+        writeToNBT(nbt);
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 1, nbt);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
+    {
+        readFromNBT(pkt.func_148857_g());
+        Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+    }
 }

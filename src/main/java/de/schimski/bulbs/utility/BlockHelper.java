@@ -1,6 +1,7 @@
 package de.schimski.bulbs.utility;
 
 import net.minecraft.block.Block;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockHelper {
@@ -16,8 +17,8 @@ public class BlockHelper {
 
     public static boolean checkBlockNameAndMetadata(World world, int x, int y, int z, String unlocalizedBlockName, int metadata)
     {
-        LogHelper.info(world.getBlock(x, y, z).getUnlocalizedName());
-        LogHelper.info(world.getBlockMetadata(x,y,z));
+        //LogHelper.info(world.getBlock(x, y, z).getUnlocalizedName());
+        //LogHelper.info(world.getBlockMetadata(x,y,z));
         if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName) && (world.getBlockMetadata(x,y,z) == metadata)) {
             return true;
         } else {

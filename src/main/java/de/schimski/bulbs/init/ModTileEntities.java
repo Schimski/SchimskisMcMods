@@ -7,6 +7,5 @@ public class ModTileEntities {
     public static void init()
     {
         GameRegistry.registerTileEntity(TileEntityGridLight.class, "gridLight");
-
     }
 }
