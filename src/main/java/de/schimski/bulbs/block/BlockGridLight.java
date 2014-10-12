@@ -18,6 +18,7 @@ public class BlockGridLight extends BlockBulbs{
 
     @SideOnly(Side.CLIENT)
     protected IIcon blockIcon;
+    private boolean[] connectNeighbours;
 
     public BlockGridLight()
     {
@@ -68,12 +69,18 @@ public class BlockGridLight extends BlockBulbs{
     }
 
 
-    public int onBlockPlaced(World p_149660_1_, int p_149660_2_, int p_149660_3_, int p_149660_4_, int p_149660_5_, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
+    public int onBlockPlaced(World world, int x, int y, int z, int side, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_)
     {
-        boolean[] check = BlockHelper.compareBlocks4Sides(p_149660_1_,p_149660_2_,p_149660_3_,p_149660_4_, "tile.bulbs:gridLight", p_149660_5_);
-        LogHelper.info(check[0] + " - " + check[1] + " - " + check[2] + " - " + check[3]);
+        connectNeighbours = BlockHelper.compareBlocks4Sides(world,x,y,z, "tile.bulbs:gridLight", side);
+        return side;
+    }
 
-        return p_149660_5_;
+    public void onPostBlockPlaced(World p_149714_1_, int p_149714_2_, int p_149714_3_, int p_149714_4_, int p_149714_5_)
+    {
+        connectNeighbours = BlockHelper.compareBlocks4Sides(p_149714_1_,p_149714_2_,p_149714_3_,p_149714_4_, "tile.bulbs:gridLight", p_149714_5_);
+        //LogHelper.info(check[0] + " - " + check[1] + " - " + check[2] + " - " + check[3]);
+        //TileEntityGridLight newLight = (TileEntityGridLight)p_149714_1_.getTileEntity(p_149714_2_,p_149714_3_,p_149714_4_);
+        //newLight.setNeighbour('r', true);
     }
 
     public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_)
@@ -116,6 +123,12 @@ public class BlockGridLight extends BlockBulbs{
 
     public TileEntity createTileEntity(World world, int metadata)
     {
-        return new TileEntityGridLight(metadata);
+        TileEntityGridLight gridLight= new TileEntityGridLight(metadata);
+        gridLight.initializeNeighbours();
+        if (connectNeighbours != null && connectNeighbours[0] == true) {
+            gridLight.setNeighbour('r', true);
+        }
+        return gridLight;
+
     }
 }

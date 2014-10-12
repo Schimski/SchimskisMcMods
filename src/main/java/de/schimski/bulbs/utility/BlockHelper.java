@@ -52,6 +52,7 @@ public class BlockHelper {
                 result[1] = r6[4];
                 result[2] = r6[1];
                 result[3] = r6[5];
+                break;
             case 2:
                 result[0] = r6[1];
                 result[1] = r6[3];
@@ -69,6 +70,7 @@ public class BlockHelper {
                 result[1] = r6[3];
                 result[2] = r6[5];
                 result[3] = r6[2];
+                break;
             case 5:
                 result[0] = r6[5];
                 result[1] = r6[3];
