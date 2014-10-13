@@ -11,7 +11,6 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityGridLight extends TileEntity {
     private boolean[] boolConnect = {false, false, false, false};
-
     public NBTTagCompound nbtTag;
 
     public void updateEntity()
@@ -20,13 +19,29 @@ public class TileEntityGridLight extends TileEntity {
 
     }
 
+    public boolean neighboursAreClose()
+    {
+        if (this.neighbourCount() != 2) {
+            return false;
+        } else {
+            if ((boolConnect[0] && (boolConnect[3] || boolConnect[1])) || (boolConnect[2] && (boolConnect[3] || boolConnect[1]))){
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     public void setNeighbour(int side, boolean connect) {
         boolConnect[side] = connect;
         this.writeToNBT(this.nbtTag);
 //        this.updateEntity();
-        LogHelper.info("setNeighbor: " + FMLCommonHandler.instance().getEffectiveSide());
+        if (connect) {
+            LogHelper.info("setNeighbor: " + side);
+            LogHelper.info("Neighbours:  " + neighbourCount());
+        }
+
         Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
-        LogHelper.info(neighbourCount());
     }
 
     @Override
