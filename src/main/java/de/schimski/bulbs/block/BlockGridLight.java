@@ -11,7 +11,11 @@ import de.schimski.bulbs.utility.BlockHelper;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -20,7 +24,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 
-public class BlockGridLight extends BlockBulbs{
+public class BlockGridLight extends BlockBulbsContainer{
 
     @SideOnly(Side.CLIENT)
     protected IIcon blockIcon;
@@ -83,13 +87,9 @@ public class BlockGridLight extends BlockBulbs{
 
     public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbourBlock)
     {
-        //world.scheduleBlockUpdate(this.x,this.y,this.z,this,20);
-        //LogHelper.info("RemoteWorld: " + world.isRemote);
-        //LogHelper.info("RemoteWorld: " + world.isRemote);
         TileEntity entity = world.getTileEntity(x,y,z);
         if (entity != null)
         {
-//            LogHelper.info(entity.getClass().getName());
             if (entity.getClass().getName().equals("de.schimski.bulbs.tileEntity.TileEntityGridLight")) {
                 connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:gridLight", entity.getBlockMetadata());
                 passNeighboursToTileEntity((TileEntityGridLight)(entity));
@@ -106,12 +106,6 @@ public class BlockGridLight extends BlockBulbs{
 
     }
 
-    public void updateTick(World p_149674_1_, int p_149674_2_, int p_149674_3_, int p_149674_4_, Random p_149674_5_) {
-        LogHelper.info("update");
-        //connectNeighbours = BlockHelper.compareBlocks4Sides(p_149674_1_,this.x,this.y,this.z, "tile.bulbs:gridLight", sidePlaced);
-        //passNeighboursToTileEntity(gridLight);
-    }
-
     public void onPostBlockPlaced(World world, int x, int y, int z, int side)
     {
 
@@ -124,27 +118,68 @@ public class BlockGridLight extends BlockBulbs{
         }
     }
 
-    public boolean onBlockActivated(World p_149727_1_, int p_149727_2_, int p_149727_3_, int p_149727_4_, EntityPlayer p_149727_5_, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
     {
-        if (p_149727_5_.getHeldItem() != null) {
-            LogHelper.info(p_149727_5_.getHeldItem().getDisplayName());
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (tileEntity == null || player.isSneaking()) {
+            return false;
         }
-        return false;
+        player.openGui(bulbs.instance, 0, world,x,y,z);
+        return true;
     }
 
-    //You don't want the normal render type, or it wont render properly.
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int meta)
+    {
+        dropInventory(world, x, y, z);
+        super.breakBlock(world, x, y, z, block, meta);
+    }
+
+    protected void dropInventory(World world, int x, int y, int z)
+    {
+        TileEntity tileEntity = world.getTileEntity(x, y, z);
+        if (!(tileEntity instanceof IInventory))
+        {
+            return;
+        }
+        IInventory inventory = (IInventory) tileEntity;
+        for (int i = 0; i < inventory.getSizeInventory(); i++)
+        {
+            ItemStack itemStack = inventory.getStackInSlot(i);
+            if (itemStack != null && itemStack.stackSize > 0)
+            {
+                Random rand = new Random();
+                float dX = rand.nextFloat() * 0.8F + 0.1F;
+                float dY = rand.nextFloat() * 0.8F + 0.1F;
+                float dZ = rand.nextFloat() * 0.8F + 0.1F;
+                EntityItem entityItem = new EntityItem(world, x + dX, y + dY, z + dZ, itemStack.copy());
+                if (itemStack.hasTagCompound())
+                {
+                    entityItem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
+                }
+                float factor = 0.05F;
+                entityItem.motionX = rand.nextGaussian() * factor;
+                entityItem.motionY = rand.nextGaussian() * factor + 0.2F;
+                entityItem.motionZ = rand.nextGaussian() * factor;
+                world.spawnEntityInWorld(entityItem);
+                itemStack.stackSize = 0;
+            }
+        }
+    }
+
+
+
+
     @Override
     public int getRenderType() {
         return -1;
     }
 
-    //It's not an opaque cube, so you need this.
     @Override
     public boolean isOpaqueCube() {
         return false;
     }
 
-    //It's not a normal block, so you need this too.
     public boolean renderAsNormalBlock()
     {
         return false;
@@ -160,7 +195,6 @@ public class BlockGridLight extends BlockBulbs{
         if (connectNeighbours != null)
         {
             for (int i = 0; i<connectNeighbours.length; i++) {
-                //LogHelper.info(connectNeighbours[i]);
                 gridLight.setNeighbour(i, connectNeighbours[i]);
             }
         }

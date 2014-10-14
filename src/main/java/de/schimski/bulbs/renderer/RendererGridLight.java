@@ -16,6 +16,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
     private ModelGridLightCon2a modelCon2a;
     private ModelGridLightCon2b modelCon2b;
     private ModelGridLightCon3 modelCon3;
+    private ModelGridLightCon4 modelCon4;
     static int myRenderID;
 
 

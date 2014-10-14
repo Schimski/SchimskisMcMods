@@ -6,16 +6,22 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import de.schimski.bulbs.handler.ConfigurationHandler;
+import de.schimski.bulbs.handler.GuiHandler;
 import de.schimski.bulbs.init.*;
 import de.schimski.bulbs.network.messageBulbs;
 import de.schimski.bulbs.network.messageBulbsHandler;
+import de.schimski.bulbs.proxy.ClientProxy;
+import de.schimski.bulbs.proxy.CommonProxy;
 import de.schimski.bulbs.proxy.IProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.utility.LogHelper;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, guiFactory = Reference.GUI_FACTORY_CLASS)
 public class bulbs {
@@ -51,7 +57,7 @@ public class bulbs {
     {
         proxy.init(event);
         Recipes.init();
-
+        NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         LogHelper.info("Initialization Complete");
     }
 

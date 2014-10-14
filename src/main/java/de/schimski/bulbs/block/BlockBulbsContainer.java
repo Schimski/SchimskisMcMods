@@ -13,12 +13,11 @@ import net.minecraft.world.World;
 
 public class BlockBulbsContainer extends BlockContainer {
 
-
-   public BlockBulbsContainer(Material material)
-   {
-       super(material);
-       this.setCreativeTab(CreativeTabBulbs.BULBS_TAB);
-   }
+    public BlockBulbsContainer(Material material)
+    {
+        super(material);
+        this.setCreativeTab(CreativeTabBulbs.BULBS_TAB);
+    }
 
    public BlockBulbsContainer()
    {
