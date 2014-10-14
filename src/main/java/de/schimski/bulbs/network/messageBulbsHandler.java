@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 public class messageBulbsHandler implements IMessageHandler<messageBulbs, IMessage> {
     @Override
     public IMessage onMessage(messageBulbs message, MessageContext ctx) {
-        LogHelper.info("MessageReceived");
+        //LogHelper.info("MessageReceived");
 
         TileEntityGridLight gridLight = (TileEntityGridLight)Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y,message.z);
 

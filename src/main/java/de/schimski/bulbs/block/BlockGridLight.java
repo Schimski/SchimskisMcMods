@@ -77,6 +77,7 @@ public class BlockGridLight extends BlockBulbs{
 
     public int onBlockPlaced(World world, int x, int y, int z, int side, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_) {
         connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:gridLight", side);
+        LogHelper.info(side);
         return side;
     }
 

@@ -37,8 +37,8 @@ public class TileEntityGridLight extends TileEntity {
         this.writeToNBT(this.nbtTag);
 //        this.updateEntity();
         if (connect) {
-            LogHelper.info("setNeighbor: " + side);
-            LogHelper.info("Neighbours:  " + neighbourCount());
+            //LogHelper.info("setNeighbor: " + side);
+            //LogHelper.info("Neighbours:  " + neighbourCount());
         }
 
         Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
@@ -115,7 +115,7 @@ public class TileEntityGridLight extends TileEntity {
     @Override
     public Packet getDescriptionPacket()
     {
-        LogHelper.info("DescPacket");
+        //LogHelper.info("DescPacket");
         NBTTagCompound nbt = new NBTTagCompound();
         writeToNBT(nbt);
         //logNBT(nbt);
@@ -125,7 +125,7 @@ public class TileEntityGridLight extends TileEntity {
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt)
     {
-        LogHelper.info("DataPacket");
+        //LogHelper.info("DataPacket");
         readFromNBT(pkt.func_148857_g());
         //LogHelper.info(FMLCommonHandler.instance().getEffectiveSide());
         //logNBT(pkt.func_148857_g());

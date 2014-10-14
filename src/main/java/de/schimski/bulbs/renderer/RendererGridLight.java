@@ -3,6 +3,7 @@ package de.schimski.bulbs.renderer;
 import assets.bulbs.models.ModelGridLight;
 import assets.bulbs.models.ModelGridLightCon1;
 import assets.bulbs.models.ModelGridLightCon2a;
+import assets.bulbs.models.ModelGridLightCon2b;
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import de.schimski.bulbs.block.BlockGridLight;
 import de.schimski.bulbs.reference.Reference;
@@ -27,7 +28,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
     private ModelGridLight model;
     private ModelGridLightCon1 modelCon1;
     private ModelGridLightCon2a modelCon2a;
-    private ModelGridLightCon2a modelCon2b;
+    private ModelGridLightCon2b modelCon2b;
     static int myRenderID;
 
 
@@ -121,29 +122,13 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             }
             else if (gridLight.neighbourCount() == 2 && gridLight.neighboursAreClose() == false)
             {
-                if (gridLight.hasGridLightNeighbour(i)&& side == 0)
+                if (gridLight.hasGridLightNeighbour(2) && i == 2 && (side == 4 || side == 5 || side == 2))
                 {
-                    //GL11.glRotatef(-(i+1) * 90, 0 , 1 ,0);
+                    GL11.glRotatef(90, 0, 1, 0);
                 }
-                else if (gridLight.hasGridLightNeighbour(i) && side == 1)
+                else if (gridLight.hasGridLightNeighbour(1) && i == 1 && (side == 3 || side == 0 || side == 1))
                 {
-                    //GL11.glRotatef(i * 90, 0, 1, 0);
-                }
-                else if (gridLight.hasGridLightNeighbour(i) && side == 2)
-                {
-                    //GL11.glRotatef(-90 + (i*90), 0, 1, 0);
-                }
-                else if (gridLight.hasGridLightNeighbour(i) && side == 3)
-                {
-                    //GL11.glRotatef((i*90), 0, 1, 0);
-                }
-                else if (gridLight.hasGridLightNeighbour(i) && side == 4)
-                {
-                    //GL11.glRotatef((i-1) * 90, 0, 1, 0);
-                }
-                else if (gridLight.hasGridLightNeighbour(i) && side == 5)
-                {
-                    //GL11.glRotatef((i+1) * 90, 0, 1, 0);
+                    GL11.glRotatef(90, 0, 1, 0);
                 }
             }
         }
@@ -170,8 +155,10 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             this.bindTexture(textureCon1);
         } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose()){
             this.bindTexture(textureCon2a);
+        } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose() == false){
+            this.bindTexture(textureCon2b);
         } else {
-            this.bindTexture(texture);
+            this.bindTexture(textureCon2b);
         }
     }
 
