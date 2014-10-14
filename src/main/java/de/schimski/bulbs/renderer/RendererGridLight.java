@@ -22,10 +22,12 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/models/gridLight.png");
     private static final ResourceLocation textureCon1 = new ResourceLocation(Reference.MOD_ID, "textures/models/gridLightCon1.png");
-    private static final ResourceLocation textureCon2a = new ResourceLocation(Reference.MOD_ID, "textures/models/gridLightCon1.png");
+    private static final ResourceLocation textureCon2a = new ResourceLocation(Reference.MOD_ID, "textures/models/gridLightCon2a.png");
+    private static final ResourceLocation textureCon2b = new ResourceLocation(Reference.MOD_ID, "textures/models/gridLightCon2b.png");
     private ModelGridLight model;
     private ModelGridLightCon1 modelCon1;
     private ModelGridLightCon2a modelCon2a;
+    private ModelGridLightCon2a modelCon2b;
     static int myRenderID;
 
 
@@ -34,6 +36,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         this.model = new ModelGridLight();
         this.modelCon1 = new ModelGridLightCon1();
         this.modelCon2a = new ModelGridLightCon2a();
+        this.modelCon2b = new ModelGridLightCon2b();
     }
 
     private void alignTileEntityAccordingMetadata(double x, double y, double z, int metadata)
@@ -116,6 +119,33 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
                     GL11.glRotatef((i+1) * 90, 0, 1, 0);
                 }
             }
+            else if (gridLight.neighbourCount() == 2 && gridLight.neighboursAreClose() == false)
+            {
+                if (gridLight.hasGridLightNeighbour(i)&& side == 0)
+                {
+                    //GL11.glRotatef(-(i+1) * 90, 0 , 1 ,0);
+                }
+                else if (gridLight.hasGridLightNeighbour(i) && side == 1)
+                {
+                    //GL11.glRotatef(i * 90, 0, 1, 0);
+                }
+                else if (gridLight.hasGridLightNeighbour(i) && side == 2)
+                {
+                    //GL11.glRotatef(-90 + (i*90), 0, 1, 0);
+                }
+                else if (gridLight.hasGridLightNeighbour(i) && side == 3)
+                {
+                    //GL11.glRotatef((i*90), 0, 1, 0);
+                }
+                else if (gridLight.hasGridLightNeighbour(i) && side == 4)
+                {
+                    //GL11.glRotatef((i-1) * 90, 0, 1, 0);
+                }
+                else if (gridLight.hasGridLightNeighbour(i) && side == 5)
+                {
+                    //GL11.glRotatef((i+1) * 90, 0, 1, 0);
+                }
+            }
         }
     }
 
@@ -127,6 +157,8 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             this.modelCon1.renderModel(0.0625f);
         } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose()){
             this.modelCon2a.renderModel(0.0625f);
+        }else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose() == false){
+            this.modelCon2b.renderModel(0.0625f);
         } else {
             this.model.renderModel(0.0625f);
         }
