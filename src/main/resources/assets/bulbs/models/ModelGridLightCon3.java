@@ -9,9 +9,13 @@
 
 
 
-package net.minecraft.src;
+package assets.bulbs.models;
 
-public class ModelmodelLight extends ModelBase
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.entity.Entity;
+
+public class ModelGridLightCon3 extends ModelBase
 {
   //fields
     ModelRenderer Shape1;
@@ -33,7 +37,7 @@ public class ModelmodelLight extends ModelBase
     ModelRenderer side2;
     ModelRenderer side3;
   
-  public ModelmodelLight()
+  public  ModelGridLightCon3()
   {
     textureWidth = 64;
     textureHeight = 64;
@@ -151,7 +155,7 @@ public class ModelmodelLight extends ModelBase
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(f, f1, f2, f3, f4, f5);
+    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     Shape1.render(f5);
     side1.render(f5);
     Shape7.render(f5);
@@ -171,6 +175,28 @@ public class ModelmodelLight extends ModelBase
     side2.render(f5);
     side3.render(f5);
   }
+
+  public void renderModel(float f5)
+  {
+      Shape1.render(f5);
+      side1.render(f5);
+      Shape7.render(f5);
+      Shape8.render(f5);
+      Shape9.render(f5);
+      Shape10.render(f5);
+      Shape11.render(f5);
+      top2.render(f5);
+      bottom.render(f5);
+      Shape13.render(f5);
+      top3.render(f5);
+      top1.render(f5);
+      Shape5.render(f5);
+      bottom2.render(f5);
+      light2.render(f5);
+      top4.render(f5);
+      side2.render(f5);
+      side3.render(f5);
+  }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
@@ -179,9 +205,9 @@ public class ModelmodelLight extends ModelBase
     model.rotateAngleZ = z;
   }
   
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5)
+  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
   {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5);
+    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
   }
 
 }
