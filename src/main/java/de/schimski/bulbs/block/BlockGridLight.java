@@ -45,8 +45,8 @@ public class BlockGridLight extends BlockBulbsContainer{
     }
 
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister p_149651_1_) {
-        this.blockIcon = p_149651_1_.registerIcon(Reference.MOD_ID + ":" + "itemGridLight");
+    public void registerBlockIcons(IIconRegister iconRegister) {
+        this.blockIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "itemGridLight");
     }
 
     /**
@@ -122,6 +122,11 @@ public class BlockGridLight extends BlockBulbsContainer{
     {
         TileEntity tileEntity = world.getTileEntity(x, y, z);
         if (tileEntity == null || player.isSneaking()) {
+            return false;
+        } else if (player.getHeldItem() == null){
+            TileEntityGridLight gridLight = (TileEntityGridLight)tileEntity;
+            LogHelper.info("Count: " +gridLight.neighbourCount());
+            LogHelper.info(gridLight.hasGridLightNeighbour(0) + " - " + gridLight.hasGridLightNeighbour(1) + " - " + gridLight.hasGridLightNeighbour(2)+ " - "+gridLight.hasGridLightNeighbour(3));
             return false;
         }
         player.openGui(bulbs.instance, 0, world,x,y,z);

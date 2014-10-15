@@ -123,7 +123,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             this.modelCon1.renderModel(0.0625f);
         } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose()){
             this.modelCon2a.renderModel(0.0625f);
-        }else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose() == false){
+        }else if ((gridLight.neighbourCount() == 2) && !gridLight.neighboursAreClose()){
             this.modelCon2b.renderModel(0.0625f);
         } else if (gridLight.neighbourCount() == 3) {
             this.modelCon3.renderModel(0.0625f);
@@ -138,8 +138,8 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
     {
         TileEntityGridLight gridLight = (TileEntityGridLight)(entity);
         GL11.glPushMatrix();
-        alignTileEntityAccordingMetadata(x, y, z, gridLight.blockMetadata);
-        rotateTilEntityAccordingNBT(gridLight, gridLight.getBlockMetadata());
+        alignTileEntityAccordingMetadata(x, y, z, gridLight.getState());
+        rotateTilEntityAccordingNBT(gridLight, gridLight.getState());
         this.bindTexture(texture);
             GL11.glPushMatrix();
             renderModel(gridLight);
