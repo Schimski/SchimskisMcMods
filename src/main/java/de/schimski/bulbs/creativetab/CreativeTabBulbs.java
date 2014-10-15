@@ -1,5 +1,6 @@
 package de.schimski.bulbs.creativetab;
 
+import de.schimski.bulbs.init.ModBlocks;
 import de.schimski.bulbs.init.ModItems;
 import de.schimski.bulbs.reference.Reference;
 import net.minecraft.creativetab.CreativeTabs;

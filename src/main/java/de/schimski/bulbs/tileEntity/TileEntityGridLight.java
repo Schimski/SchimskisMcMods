@@ -9,28 +9,28 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 
-public class TileEntityGridLight extends TileEntity implements IInventory{
+public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
+
     private boolean[] boolConnect = {false, false, false, false};
-    public NBTTagCompound nbtTag;
-    private ItemStack[] inv;
+    private ItemStack[] inventory;
 
-    /*
-    public TileEntityGridLight()
-    {
-        super();
-    }*/
+    public TileEntityGridLight() {
+        this(-1);
+    }
 
     public TileEntityGridLight (int metadata)
     {
         super();
-        this.blockMetadata = metadata;
-        this.nbtTag = new NBTTagCompound();
-        inv = new ItemStack[9];
-        readFromNBT(nbtTag);
+        inventory = new ItemStack[1];
+        if (metadata >= 0) {
+            this.state = (byte) metadata;
+        }
     }
 
+    public byte getState() {
+        return state;
+    }
 
     public boolean neighboursAreClose()
     {
@@ -39,7 +39,7 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
 
     public void setNeighbour(int side, boolean connect) {
         boolConnect[side] = connect;
-        this.writeToNBT(this.nbtTag);
+        writeToNBT(new NBTTagCompound());
         Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
     }
 
@@ -52,6 +52,7 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
+        //LogHelper.info("Reading NBT");
         super.readFromNBT(nbt);
         for (int i = 0; i < boolConnect.length; i++)
         {
@@ -62,16 +63,16 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
         for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             byte slot = tag.getByte("Slot");
-            if (slot >= 0 && slot < inv.length) {
-                inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+            if (slot >= 0 && slot < inventory.length) {
+                inventory[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
         }
-
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbt)
     {
+        //LogHelper.info("Writing NBT");
         if (nbt != null) {
             super.writeToNBT(nbt);
             for (int i = 0; i <boolConnect.length; i++)
@@ -81,8 +82,8 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
         }
 
         NBTTagList itemList = new NBTTagList();
-        for (int i = 0; i < inv.length; i++) {
-            ItemStack stack = inv[i];
+        for (int i = 0; i < inventory.length; i++) {
+            ItemStack stack = inventory[i];
             if (stack != null) {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte("Slot", (byte) i);
@@ -130,12 +131,12 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
     @Override
     public int getSizeInventory()
     {
-        return inv.length;
+        return inventory.length;
     }
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        return inv[slot];
+        return inventory[slot];
     }
 
     @Override
@@ -166,7 +167,7 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack)
     {
-        inv[slot] = stack;
+        inventory[slot] = stack;
         if (stack != null && stack.stackSize > getInventoryStackLimit()) {
             stack.stackSize = getInventoryStackLimit();
         }
@@ -182,9 +183,10 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
         return false;
     }
 
+
     @Override
     public int getInventoryStackLimit() {
-        return 64;
+        return 1;
     }
 
     @Override
@@ -203,7 +205,8 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
     }
 
     @Override
-    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_) {
+    public boolean isItemValidForSlot(int p_94041_1_, ItemStack p_94041_2_)
+    {
         return false;
     }
 }

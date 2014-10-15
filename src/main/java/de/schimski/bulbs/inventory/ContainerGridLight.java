@@ -1,5 +1,6 @@
 package de.schimski.bulbs.inventory;
 
+import de.schimski.bulbs.inventory.slot.SlotBulbs;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -9,18 +10,18 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerGridLight extends Container {
 
-    protected TileEntityGridLight tileEntity;
+    protected TileEntityGridLight tileEntityGridLight;
 
-    public ContainerGridLight (InventoryPlayer inventoryPlayer, TileEntityGridLight te){
-        tileEntity = te;
+    public ContainerGridLight (InventoryPlayer inventoryPlayer, TileEntityGridLight tileEntity){
+        tileEntityGridLight = tileEntity;
 
         //the Slot constructor takes the IInventory and the slot number in that it binds to
         //and the x-y coordinates it resides on-screen
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                addSlotToContainer(new Slot(tileEntity, j + i * 3, 90 + j * 18, 19 + i * 18));
-            }
-        }
+        //for (int i = 0; i < 3; i++) {
+          //  for (int j = 0; j < 3; j++) {
+                addSlotToContainer(new SlotBulbs(tileEntityGridLight, 0, 90, 18));
+            //}
+        //}
 
         //commonly used vanilla code that adds the player's inventory
         bindPlayerInventory(inventoryPlayer);
@@ -28,7 +29,7 @@ public class ContainerGridLight extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return tileEntity.isUseableByPlayer(player);
+        return tileEntityGridLight.isUseableByPlayer(player);
     }
 
 
@@ -52,14 +53,14 @@ public class ContainerGridLight extends Container {
         {
             ItemStack itemStack = slot.getStack();
             newItemStack = itemStack.copy();
-            if (slotIndex < 9)
+            if (slotIndex < 1)
             {
-                if (!this.mergeItemStack(itemStack, 9, inventorySlots.size(), false))
+                if (!this.mergeItemStack(itemStack, 1, inventorySlots.size(), false))
                 {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(itemStack, 0, 9, false))
+            else if (!this.mergeItemStack(itemStack, 0, 1, false))
             {
                 return null;
             }
