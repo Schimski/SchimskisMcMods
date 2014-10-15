@@ -1,5 +1,6 @@
 package de.schimski.bulbs.tileEntity;
 
+import de.schimski.bulbs.init.ModBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -13,8 +14,8 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityGridLight extends TileEntity implements IInventory{
     private boolean[] boolConnect = {false, false, false, false};
-    public NBTTagCompound nbtTag;
-    private ItemStack[] inv;
+    private NBTTagCompound nbtTag;
+    private ItemStack[] inventory;
 
     /*
     public TileEntityGridLight()
@@ -25,9 +26,10 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
     public TileEntityGridLight (int metadata)
     {
         super();
+        //
         this.blockMetadata = metadata;
         this.nbtTag = new NBTTagCompound();
-        inv = new ItemStack[9];
+        inventory = new ItemStack[9];
         readFromNBT(nbtTag);
     }
 
@@ -62,8 +64,8 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
         for (int i = 0; i < tagList.tagCount(); i++) {
             NBTTagCompound tag = tagList.getCompoundTagAt(i);
             byte slot = tag.getByte("Slot");
-            if (slot >= 0 && slot < inv.length) {
-                inv[slot] = ItemStack.loadItemStackFromNBT(tag);
+            if (slot >= 0 && slot < inventory.length) {
+                inventory[slot] = ItemStack.loadItemStackFromNBT(tag);
             }
         }
 
@@ -81,8 +83,8 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
         }
 
         NBTTagList itemList = new NBTTagList();
-        for (int i = 0; i < inv.length; i++) {
-            ItemStack stack = inv[i];
+        for (int i = 0; i < inventory.length; i++) {
+            ItemStack stack = inventory[i];
             if (stack != null) {
                 NBTTagCompound tag = new NBTTagCompound();
                 tag.setByte("Slot", (byte) i);
@@ -130,12 +132,12 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
     @Override
     public int getSizeInventory()
     {
-        return inv.length;
+        return inventory.length;
     }
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        return inv[slot];
+        return inventory[slot];
     }
 
     @Override
@@ -166,7 +168,7 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack)
     {
-        inv[slot] = stack;
+        inventory[slot] = stack;
         if (stack != null && stack.stackSize > getInventoryStackLimit()) {
             stack.stackSize = getInventoryStackLimit();
         }
@@ -199,7 +201,7 @@ public class TileEntityGridLight extends TileEntity implements IInventory{
 
     @Override
     public void closeInventory() {
-
+        worldObj.addBlockEvent(xCoord,yCoord,zCoord, ModBlocks.gridLight,1,0);
     }
 
     @Override
