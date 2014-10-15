@@ -13,9 +13,10 @@ public class GuiGridLight extends GuiContainer{
 
     private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/gui/gridLight.png");
 
-    public GuiGridLight (InventoryPlayer inventoryPlayer, TileEntityGridLight tileEntity) {
-        //the container is instanciated and passed to the superclass for handling
-        super(new ContainerGridLight(inventoryPlayer, tileEntity));
+    public GuiGridLight (InventoryPlayer inventoryPlayer, TileEntityGridLight tileEntityGridLight) {
+        super(new ContainerGridLight(inventoryPlayer, tileEntityGridLight));
+        this.xSize = 229;
+        this.ySize = 184;
     }
 
     @Override
@@ -29,13 +30,6 @@ public class GuiGridLight extends GuiContainer{
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float opacity, int x, int y) {
-        /*//draw your Gui here, only thing you need to change is the path
-        int texture = mc.renderEngine.getTexture("/gui/trap.png");
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture(texture);
-        int x = (width - xSize) / 2;
-        int y = (height - ySize) / 2;
-        this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);*/
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(texture);
         int xStart = (width - xSize) / 2;
