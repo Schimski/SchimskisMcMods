@@ -13,7 +13,7 @@ public class messageBulbsHandler implements IMessageHandler<messageBulbs, IMessa
         //LogHelper.info("MessageReceived");
 
         TileEntityGridLight gridLight = (TileEntityGridLight)Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y,message.z);
-
+        //LogHelper.info("X: " + message.x + "Y: " + message.y + "Z: " + message.z);
 
         //LogHelper.info(connectNeighbours[i]);
         for (int i = 0; i<message.connectNeighbours.length; i++)

@@ -167,13 +167,7 @@ public class BlockGridLight extends BlockBulbsContainer{
         }
     }
 
-    @Override
-    public boolean onBlockEventReceived(World world, int x, int y, int z, int eventId, int eventData)
-    {
-        super.onBlockEventReceived(world, x, y, z, eventId, eventData);
-        TileEntity tileentity = world.getTileEntity(x, y, z);
-        return tileentity != null && tileentity.receiveClientEvent(eventId, eventData);
-    }
+
 
 
     @Override
