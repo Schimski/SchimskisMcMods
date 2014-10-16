@@ -44,7 +44,17 @@ public class BlockBulbsContainer extends BlockContainer {
     }
 
     @Override
+    public boolean onBlockEventReceived(World world, int x, int y, int z, int eventId, int eventData)
+    {
+        super.onBlockEventReceived(world, x, y, z, eventId, eventData);
+        TileEntity tileentity = world.getTileEntity(x, y, z);
+        return tileentity != null && tileentity.receiveClientEvent(eventId, eventData);
+    }
+
+    @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
         return null;
     }
+
+
 }

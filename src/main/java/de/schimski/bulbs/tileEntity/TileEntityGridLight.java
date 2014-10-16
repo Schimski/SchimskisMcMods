@@ -1,5 +1,7 @@
 package de.schimski.bulbs.tileEntity;
 
+import de.schimski.bulbs.init.ModBlocks;
+import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -14,6 +16,7 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
 
     private boolean[] boolConnect = {false, false, false, false};
     private ItemStack[] inventory;
+    private int lightLevel;
 
     public TileEntityGridLight() {
         this(-1);
@@ -41,6 +44,17 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         boolConnect[side] = connect;
         writeToNBT(new NBTTagCompound());
         Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+    }
+
+    private void updateLightLevel() {
+        lightLevel = (inventory[0] != null) ? inventory[0].getItemDamage() : -1;
+        if (inventory[0] != null) {
+            LogHelper.info(inventory[0].getItemDamage());
+            LogHelper.info("LightLevel: " + (lightLevel));
+            LogHelper.info("LightLevelFloat: " +  ((lightLevel + 1 )*(float)1/16));
+        }
+
+        this.worldObj.getBlock(xCoord, yCoord, zCoord).setLightLevel( (lightLevel + 1) * (float)1/16);
     }
 
     @Override
@@ -161,6 +175,7 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         if (stack != null) {
             setInventorySlotContents(slot, null);
         }
+        LogHelper.info("Closing stack");
         return stack;
     }
 
@@ -171,6 +186,7 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         if (stack != null && stack.stackSize > getInventoryStackLimit()) {
             stack.stackSize = getInventoryStackLimit();
         }
+        updateLightLevel();
     }
 
     @Override
@@ -201,7 +217,9 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
 
     @Override
     public void closeInventory() {
-
+        updateLightLevel();
+        worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
+        //worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 1, 2);
     }
 
     @Override

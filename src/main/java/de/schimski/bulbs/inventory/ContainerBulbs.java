@@ -16,7 +16,7 @@ public abstract class ContainerBulbs extends Container
         return true;
     }
 
-    //@Override
+    @Override
     protected boolean mergeItemStack(ItemStack itemStack, int fromSlot, int toSlot, boolean backwards)
     {
         boolean flag1 = false;

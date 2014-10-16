@@ -5,7 +5,6 @@ import de.schimski.bulbs.item.ItemBulbs;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
@@ -26,6 +25,12 @@ public class ContainerGridLight extends ContainerBulbs {
 
         //commonly used vanilla code that adds the player's inventory
         bindPlayerInventory(inventoryPlayer);
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer player) {
+        super.onContainerClosed(player);
+        tileEntityGridLight.closeInventory();
     }
 
     @Override
