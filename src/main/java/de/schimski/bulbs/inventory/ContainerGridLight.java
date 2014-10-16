@@ -20,7 +20,7 @@ public class ContainerGridLight extends ContainerBulbs {
         //and the x-y coordinates it resides on-screen
         //for (int i = 0; i < 3; i++) {
         //  for (int j = 0; j < 3; j++) {
-        addSlotToContainer(new SlotBulbs(tileEntityGridLight, 0, 108, 37));
+        addSlotToContainer(new SlotBulbs(tileEntityGridLight, 0, 107, 37));
         //}
         //}
 
