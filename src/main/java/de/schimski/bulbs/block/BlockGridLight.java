@@ -34,8 +34,8 @@ public class BlockGridLight extends BlockBulbsContainer{
     {
         super();
         this.setBlockName("gridLight");
-        this.setLightLevel(1f);
         this.setHardness(0.5f);
+        this.setTickRandomly(true);
     }
 
     @SideOnly(Side.CLIENT)
@@ -47,6 +47,39 @@ public class BlockGridLight extends BlockBulbsContainer{
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "itemGridLight");
+    }
+
+    @Override
+    public void randomDisplayTick(World world, int x, int y, int z, Random random) {
+        /*LogHelper.info("Random Tick");
+        super.randomDisplayTick(world, x, y, z, random);
+       if (random.nextInt(10) == 1) {
+           TileEntityGridLight tileEntity = (TileEntityGridLight) world.getTileEntity(x, y, z);
+           this.setLightLevel(tileEntity.getLightLevel());
+           tileEntity.updateLightLevel(true);
+       }*/
+    }
+
+/*
+    @Override
+    public int getLightValue(IBlockAccess world, int x, int y, int z) {
+
+    }
+*/
+    @Override
+    public boolean onBlockEventReceived(World world, int x, int y, int z, int eventId, int eventData)
+    {
+        super.onBlockEventReceived(world, x, y, z, eventId, eventData);
+        TileEntityGridLight tileEntity = (TileEntityGridLight) world.getTileEntity(x, y, z);
+        LogHelper.info("Event");
+        if (eventId == 5) {
+            LogHelper.info("LightLevelEvent");
+            LogHelper.info(tileEntity.getLightLevel());
+            this.setLightLevel(tileEntity.getLightLevel());
+            tileEntity.updateLightLevel(true);
+        }
+
+        return tileEntity != null && tileEntity.receiveClientEvent(eventId, eventData);
     }
 
     /**
@@ -90,7 +123,7 @@ public class BlockGridLight extends BlockBulbsContainer{
         TileEntity entity = world.getTileEntity(x,y,z);
         if (entity != null)
         {
-            if (entity.getClass().getName().equals("de.schimski.bulbs.tileEntity.TileEntityGridLight")) {
+            if (entity instanceof TileEntityGridLight) {
                 connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:gridLight", entity.getBlockMetadata());
                 passNeighboursToTileEntity((TileEntityGridLight)(entity));
             }
@@ -171,9 +204,6 @@ public class BlockGridLight extends BlockBulbsContainer{
             }
         }
     }
-
-
-
 
     @Override
     public int getRenderType() {

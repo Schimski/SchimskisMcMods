@@ -16,8 +16,10 @@ public class messageBulbsHandler implements IMessageHandler<messageBulbs, IMessa
         //LogHelper.info("X: " + message.x + "Y: " + message.y + "Z: " + message.z);
 
         //LogHelper.info(connectNeighbours[i]);
-        for (int i = 0; i<message.connectNeighbours.length; i++)
-            gridLight.setNeighbour(i, message.connectNeighbours[i]);
+        if (gridLight != null) {
+            for (int i = 0; i < message.connectNeighbours.length; i++)
+                gridLight.setNeighbour(i, message.connectNeighbours[i]);
+        }
         return null;
     }
 }

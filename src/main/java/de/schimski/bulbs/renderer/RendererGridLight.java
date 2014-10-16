@@ -3,14 +3,17 @@ package de.schimski.bulbs.renderer;
 import assets.bulbs.models.*;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
+import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class RendererGridLight extends TileEntitySpecialRenderer{
 
-    private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/models/gridLight.png");
+    private static final ResourceLocation[] texture = new ResourceLocation[17];
+    public static final String[] gridLightTypes = new String[] {"gridLight", "gridLightBlack", "gridLightRed", "gridLightGreen", "gridLightBrown", "gridLightBlue", "gridLightPurple", "gridLightCyan", "gridLightLightGray", "gridLightGray", "gridLightPink", "gridLightLimeGreen", "gridLightYellow", "gridLightLightBlue", "gridLightMagenta", "gridLightOrange", "gridLightWhite"};
     private ModelGridLight model;
     private ModelGridLightCon1 modelCon1;
     private ModelGridLightCon2a modelCon2a;
@@ -28,6 +31,10 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         this.modelCon2b = new ModelGridLightCon2b();
         this.modelCon3 = new ModelGridLightCon3();
         this.modelCon4 = new ModelGridLightCon4();
+
+        for (int i = 0; i<17; i++) {
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/" + gridLightTypes[i] + ".png");
+        }
     }
 
     private void alignTileEntityAccordingMetadata(double x, double y, double z, int metadata)
@@ -133,6 +140,15 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             this.model.renderModel(0.0625f);
         }
     }
+    
+    private void selectAndBindTexture(TileEntityGridLight gridLight) {
+        int textureIndex = 0;
+        ItemStack stack = gridLight.getStackInSlot(0);
+        if (stack != null) {
+            textureIndex = stack.getItemDamage()+1;
+        }
+        this.bindTexture(texture[textureIndex]);
+    }
 
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float p_147500_8_)
     {
@@ -140,7 +156,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         GL11.glPushMatrix();
         alignTileEntityAccordingMetadata(x, y, z, gridLight.getState());
         rotateTilEntityAccordingNBT(gridLight, gridLight.getState());
-        this.bindTexture(texture);
+        selectAndBindTexture(gridLight);
             GL11.glPushMatrix();
             renderModel(gridLight);
             GL11.glPopMatrix();

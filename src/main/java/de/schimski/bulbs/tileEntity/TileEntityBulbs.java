@@ -1,16 +1,14 @@
 package de.schimski.bulbs.tileEntity;
 
 import de.schimski.bulbs.block.BlockBulbsContainer;
+import de.schimski.bulbs.init.ModBlocks;
+import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityBulbs extends TileEntity {
     protected byte state;
     protected byte bulbColor;
 
-    /**
-     * Server sync counter (once per 20 ticks)
-     */
-    private int ticksSinceSync;
 
     public TileEntityBulbs() {
         super();
@@ -18,18 +16,14 @@ public class TileEntityBulbs extends TileEntity {
         bulbColor = -1;
     }
 
-    public void setLightLevel(float lightLevel)
+    public boolean canUpdate()
     {
-        ((BlockBulbsContainer) this.getWorldObj().getBlock(xCoord, yCoord, zCoord)).setLightLevel(lightLevel);
+        return true;
     }
 
     @Override
     public void updateEntity() {
-        super.updateEntity();
-        if (++ticksSinceSync % 20 * 4 == 0) {
-            //LogHelper.info("TickSync: " + ticksSinceSync);
-            //worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 1, 2);
-        }
+
     }
 
         @Override

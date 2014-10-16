@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ItemBulbs extends Item{
 
-    public static final String[] bulbTypes = new String[] {"lightBulbBlack", "lightBulbRed", "lightBulbGreen", "lightBulbBrown", "lightBulbBlue", "lightBulbPurple", "lightBulbCyan", "lightBulbSilver", "lightBulbGray", "lightBulbPink", "lightBulbLime", "lightBulbYellow", "lightBulbLightBlue", "lightBulbMagenta", "lightBulbOrange", "lightBulbWhite"};
+    public static final String[] bulbTypes = new String[] {"lightBulbBlack", "lightBulbRed", "lightBulbGreen", "lightBulbBrown", "lightBulbBlue", "lightBulbPurple", "lightBulbCyan", "lightBulbLightGray", "lightBulbGray", "lightBulbPink", "lightBulbLimeGreen", "lightBulbYellow", "lightBulbLightBlue", "lightBulbMagenta", "lightBulbOrange", "lightBulbWhite"};
 
     @SideOnly(Side.CLIENT)
     private IIcon[] bulbIcons;

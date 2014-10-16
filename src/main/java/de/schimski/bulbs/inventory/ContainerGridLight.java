@@ -27,6 +27,8 @@ public class ContainerGridLight extends ContainerBulbs {
         bindPlayerInventory(inventoryPlayer);
     }
 
+
+
     @Override
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
