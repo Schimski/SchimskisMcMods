@@ -48,6 +48,13 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         //  this.lightLevel = 0;
     }
 
+    public void updateBlockMetadata() {
+        ItemStack stack = getStackInSlot(0);
+        int metadata = stack != null ? stack.getItemDamage() : 0;
+        LogHelper.info("Updating Blocks with LighLevel " + metadata);
+        worldObj.setBlockMetadataWithNotify(xCoord,yCoord, zCoord, metadata,2);
+    }
+
     public boolean neighboursAreClose()
     {
         return this.neighbourCount() == 2 && ((boolConnect[0] && (boolConnect[3] || boolConnect[1])) || (boolConnect[2] && (boolConnect[3] || boolConnect[1])));
@@ -62,13 +69,13 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
 
     public void updateEntity()
     {
-        /*
+
         super.updateEntity();
         LogHelper.info("TickSync: " + ticksSinceSync);
         if (++ticksSinceSync % 80 * 4 == 0) {
             LogHelper.info("Syncing");
-            worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 5, 2);
-        }*/
+            updateBlockMetadata();
+        }
     }
 
     /*public float getLightLevel() {
@@ -276,6 +283,9 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         //updateLightLevel(true);
         //LogHelper.info("internal lightlevel: " + this.getLightLevel());
         //worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 5, 1);
+
+        updateBlockMetadata();
+
     }
 
     @Override

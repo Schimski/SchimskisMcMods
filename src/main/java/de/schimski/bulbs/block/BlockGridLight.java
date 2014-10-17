@@ -65,7 +65,7 @@ public class BlockGridLight extends BlockBulbsContainer{
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
         int metadata = world.getBlockMetadata(x, y, z);
-        LogHelper.info(metadata);
+        //LogHelper.info(metadata);
         this.setLightLevel((float) metadata/15);
         return metadata;
     }
@@ -151,7 +151,9 @@ public class BlockGridLight extends BlockBulbsContainer{
 
     public void onPostBlockPlaced(World world, int x, int y, int z, int side)
     {
-        world.setBlockMetadataWithNotify(x, y, z, 8, 2);
+        TileEntityGridLight gridLight = (TileEntityGridLight) world.getTileEntity(x,y,z);
+        gridLight.updateBlockMetadata();
+        LogHelper.info("PostBLockPlaced");
     }
 
     public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_)
@@ -175,6 +177,8 @@ public class BlockGridLight extends BlockBulbsContainer{
         player.openGui(bulbs.instance, 0, world,x,y,z);
         return true;
     }
+
+
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta)
