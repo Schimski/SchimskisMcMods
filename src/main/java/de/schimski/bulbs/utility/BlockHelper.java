@@ -1,5 +1,6 @@
 package de.schimski.bulbs.utility;
 
+import de.schimski.bulbs.tileEntity.TileEntityBulbs;
 import net.minecraft.block.Block;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -15,18 +16,18 @@ public class BlockHelper {
         }
     }
 
-    public static boolean checkBlockNameAndMetadata(World world, int x, int y, int z, String unlocalizedBlockName, int metadata)
+    public static boolean checkBlockNameAndTileState(World world, int x, int y, int z, String unlocalizedBlockName, byte tileState)
     {
         //LogHelper.info(world.getBlock(x, y, z).getUnlocalizedName());
         //LogHelper.info(world.getBlockMetadata(x,y,z));
-        if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName) && (world.getBlockMetadata(x,y,z) == metadata)) {
+        if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName) && (((TileEntityBulbs)world.getTileEntity(x,y,z)).getState() == tileState)) {
             return true;
         } else {
             return false;
         }
     }
 
-    public static boolean[] compareBlocks4Sides(World world, int x, int y, int z, String unlocalizedName, int blockMetadata) {
+    public static boolean[] compareBlocks4Sides(World world, int x, int y, int z, String unlocalizedName, byte tileState) {
 
         boolean[] r6 = {false, false, false, false, false, false};
         boolean[] result = {false, false, false, false};
@@ -39,14 +40,14 @@ public class BlockHelper {
         case 4/5 (X-Axis): check z and y
         */
 
-        r6[0] = checkBlockNameAndMetadata(world,x+1, y, z, unlocalizedName, blockMetadata);
-        r6[1] = checkBlockNameAndMetadata(world,x-1, y, z, unlocalizedName, blockMetadata);
-        r6[2] = checkBlockNameAndMetadata(world,x, y+1, z, unlocalizedName, blockMetadata);
-        r6[3] = checkBlockNameAndMetadata(world,x, y-1, z, unlocalizedName, blockMetadata);
-        r6[4] = checkBlockNameAndMetadata(world,x, y, z+1, unlocalizedName, blockMetadata);
-        r6[5] = checkBlockNameAndMetadata(world,x, y, z-1, unlocalizedName, blockMetadata);
+        r6[0] = checkBlockNameAndTileState(world, x + 1, y, z, unlocalizedName, tileState);
+        r6[1] = checkBlockNameAndTileState(world, x - 1, y, z, unlocalizedName, tileState);
+        r6[2] = checkBlockNameAndTileState(world, x, y + 1, z, unlocalizedName, tileState);
+        r6[3] = checkBlockNameAndTileState(world, x, y - 1, z, unlocalizedName, tileState);
+        r6[4] = checkBlockNameAndTileState(world, x, y, z + 1, unlocalizedName, tileState);
+        r6[5] = checkBlockNameAndTileState(world, x, y, z - 1, unlocalizedName, tileState);
 
-        switch (blockMetadata)
+        switch (tileState)
         {
             case 0: case 1:
                 result[0] = r6[0];

@@ -12,15 +12,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.EnumSkyBlock;
 
 public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
 
     private boolean[] boolConnect = {false, false, false, false};
     private ItemStack[] inventory;
-    private int lightLevel = -1;
-    private float lightLevelFloat = 0;
+    //private int lightLevel = -1;
+    //private float lightLevelFloat = 0;
 
 
     /**
@@ -32,19 +30,22 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         this(-1);
     }
 
-    public TileEntityGridLight (int metadata)
-    {
+    public TileEntityGridLight (int metadata) {
         super();
         inventory = new ItemStack[1];
         if (metadata >= 0) {
             this.state = (byte) metadata;
         }
-        this.lightLevelFloat = 0;
-        this.lightLevel = 0;
-    }
 
-    public byte getState() {
-        return state;
+        /*
+        * Flag 1 will
+        * cause a block update. Flag 2 will send the change to clients (you almost always want this). Flag 4 prevents the
+        * block from being re-rendered, if this is a client world. Flags can be added together.
+        */
+
+        //worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, 0, 2);
+        //  this.lightLevelFloat = 0;
+        //  this.lightLevel = 0;
     }
 
     public boolean neighboursAreClose()
@@ -70,11 +71,11 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         }*/
     }
 
-    public float getLightLevel() {
+    /*public float getLightLevel() {
         return lightLevelFloat;
-    }
+    }*/
 
-    public void updateLightLevel(boolean forceUpdate) {
+    /*public void updateLightLevel(boolean forceUpdate) {
         LogHelper.info("Try updating");
         int lightLevelNew = (inventory[0] != null) ? inventory[0].getItemDamage() : -1;
         LogHelper.info(lightLevelNew);
@@ -85,9 +86,9 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
             addLight();
             //Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
         }
-    }
+    }*/
 
-    private void addLight() {
+    /*private void addLight() {
         LogHelper.info("Recalculating Light with lightLevel " + lightLevel);
         this.worldObj.setLightValue(EnumSkyBlock.Block, xCoord, yCoord, zCoord, lightLevel);
         //this.worldObj.markBlockRangeForRenderUpdate(xCoord, yCoord, xCoord, 3,3,3);
@@ -102,7 +103,7 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
                 }
             }
         }
-    }
+    }*/
 
     @Override
     public boolean canUpdate()
@@ -119,6 +120,8 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         {
             boolConnect[i] = nbt.getBoolean("connect" + String.valueOf(i));
         }
+
+        state = nbt.getByte("state");
 
         NBTTagList tagList = nbt.getTagList("Inventory",10);
         for (int i = 0; i < tagList.tagCount(); i++) {
@@ -141,6 +144,8 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
                 nbt.setBoolean("connect" + String.valueOf(i), boolConnect[i]);
             }
         }
+
+        nbt.setByte("state", state);
 
         NBTTagList itemList = new NBTTagList();
         for (int i = 0; i < inventory.length; i++) {
@@ -232,9 +237,9 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
         if (stack != null && stack.stackSize > getInventoryStackLimit()) {
             stack.stackSize = getInventoryStackLimit();
         }
-        LogHelper.info("Contents set");
-        updateLightLevel(true);
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 5, 1);
+        //LogHelper.info("Contents set");
+        //updateLightLevel(true);
+        //worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 5, 1);
     }
 
     @Override
@@ -260,17 +265,17 @@ public class TileEntityGridLight extends TileEntityBulbs implements IInventory{
 
     @Override
     public void openInventory() {
-        updateLightLevel(true);
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 5, 1);
+        //updateLightLevel(true);
+        //worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 5, 1);
     }
 
     @Override
     public void closeInventory() {
         //worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
-        LogHelper.info("Close inventory");
-        updateLightLevel(true);
-        LogHelper.info("internal lightlevel: " + this.getLightLevel());
-        worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 5, 1);
+        //LogHelper.info("Close inventory");
+        //updateLightLevel(true);
+        //LogHelper.info("internal lightlevel: " + this.getLightLevel());
+        //worldObj.addBlockEvent(xCoord, yCoord, zCoord, ModBlocks.gridLight, 5, 1);
     }
 
     @Override

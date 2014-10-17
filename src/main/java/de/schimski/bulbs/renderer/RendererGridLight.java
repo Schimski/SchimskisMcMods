@@ -37,24 +37,24 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         }
     }
 
-    private void alignTileEntityAccordingMetadata(double x, double y, double z, int metadata)
+    private void alignTileEntityAccordingState(double x, double y, double z, int state)
     {
-        if (metadata == 0) {
+        if (state == 0) {
             GL11.glTranslatef((float)x + 0.5f, (float)y - 0.5f, (float)z + 0.5f);
-        } else if (metadata == 1) {
+        } else if (state == 1) {
             GL11.glTranslatef((float)x + 0.5f, (float)y + 1.5f, (float)z + 0.5f);
             GL11.glRotatef(180, 1, 0, 0);
-        } else if (metadata == 2) {
+        } else if (state == 2) {
             GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z - 0.5f);
             GL11.glRotatef(90, 0, -1, 0);
             GL11.glRotatef(90, 0, 0, -1);
-        } else if (metadata == 3) {
+        } else if (state == 3) {
             GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z + 1.5f);
             GL11.glRotatef(90, -1, 0, 0);
-        } else if (metadata == 4) {
+        } else if (state == 4) {
             GL11.glTranslatef((float)x - 0.5f, (float)y + 0.5f, (float)z + 0.5f);
             GL11.glRotatef(90, 0, 0, -1);
-        } else if (metadata == 5) {
+        } else if (state == 5) {
             GL11.glTranslatef((float)x + 1.5f, (float)y + 0.5f, (float)z + 0.5f);;
             GL11.glRotatef(90, 0, 0, 1);
         }
@@ -154,7 +154,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
     {
         TileEntityGridLight gridLight = (TileEntityGridLight)(entity);
         GL11.glPushMatrix();
-        alignTileEntityAccordingMetadata(x, y, z, gridLight.getState());
+        alignTileEntityAccordingState(x, y, z, gridLight.getState());
         rotateTilEntityAccordingNBT(gridLight, gridLight.getState());
         selectAndBindTexture(gridLight);
             GL11.glPushMatrix();

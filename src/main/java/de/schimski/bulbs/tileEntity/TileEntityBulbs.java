@@ -26,6 +26,10 @@ public class TileEntityBulbs extends TileEntity {
 
     }
 
+    public byte getState() {
+        return state;
+    }
+
         @Override
     public boolean receiveClientEvent(int eventID, int otherInt)
     {
