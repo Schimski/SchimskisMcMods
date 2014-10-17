@@ -1,8 +1,6 @@
 package de.schimski.bulbs.utility;
 
-import de.schimski.bulbs.tileEntity.TileEntityBulbs;
-import net.minecraft.block.Block;
-import net.minecraft.world.IBlockAccess;
+import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import net.minecraft.world.World;
 
 public class BlockHelper {
@@ -20,7 +18,7 @@ public class BlockHelper {
     {
         //LogHelper.info(world.getBlock(x, y, z).getUnlocalizedName());
         //LogHelper.info(world.getBlockMetadata(x,y,z));
-        if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName) && (((TileEntityBulbs)world.getTileEntity(x,y,z)).getState() == tileState)) {
+        if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName) && (((TileEntityLightContainer)world.getTileEntity(x,y,z)).getState() == tileState)) {
             return true;
         } else {
             return false;

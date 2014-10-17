@@ -6,7 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.bulbs;
 import de.schimski.bulbs.network.messageBulbs;
 import de.schimski.bulbs.reference.Reference;
-import de.schimski.bulbs.tileEntity.TileEntityBulbs;
+import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.utility.BlockHelper;
 import de.schimski.bulbs.utility.LogHelper;
@@ -36,7 +36,7 @@ public class BlockGridLight extends BlockBulbsContainer{
         super();
         this.setBlockName("gridLight");
         this.setHardness(0.5f);
-        this.setTickRandomly(true);
+        //this.setTickRandomly(true);
     }
 
     @SideOnly(Side.CLIENT)
@@ -49,7 +49,7 @@ public class BlockGridLight extends BlockBulbsContainer{
     public void registerBlockIcons(IIconRegister iconRegister) {
         this.blockIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "itemGridLight");
     }
-
+/*
     @Override
     public void randomDisplayTick(World world, int x, int y, int z, Random random) {
         /*LogHelper.info("Random Tick");
@@ -58,14 +58,14 @@ public class BlockGridLight extends BlockBulbsContainer{
            TileEntityGridLight tileEntity = (TileEntityGridLight) world.getTileEntity(x, y, z);
            this.setLightLevel(tileEntity.getLightLevel());
            tileEntity.updateLightLevel(true);
-       }*/
+       }
     }
-
+*/
 
     @Override
     public int getLightValue(IBlockAccess world, int x, int y, int z) {
         int metadata = world.getBlockMetadata(x, y, z);
-        //LogHelper.info(metadata);
+        //LogHelper.info("Metadata: " + metadata);
         this.setLightLevel((float) metadata/15);
         return metadata;
     }
@@ -74,24 +74,13 @@ public class BlockGridLight extends BlockBulbsContainer{
     @Override
     public boolean onBlockEventReceived(World world, int x, int y, int z, int eventId, int eventData)
     {
-        /*
-        super.onBlockEventReceived(world, x, y, z, eventId, eventData);
-        TileEntityGridLight tileEntity = (TileEntityGridLight) world.getTileEntity(x, y, z);
-        LogHelper.info("Event");
-        if (eventId == 5) {
-            LogHelper.info("LightLevelEvent");
-            LogHelper.info(tileEntity.getLightLevel());
-            this.setLightLevel(tileEntity.getLightLevel());
-            tileEntity.updateLightLevel(true);
-        }
-
-        return tileEntity != null && tileEntity.receiveClientEvent(eventId, eventData);*/
         return false;
     }
 
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
+
     public void setBlockBoundsBasedOnState(IBlockAccess block, int x, int y, int z)
     {
         // Sets the bounds of the block.  minX, minY, minZ, maxX, maxY, maxZ
@@ -121,7 +110,9 @@ public class BlockGridLight extends BlockBulbsContainer{
 
     public int onBlockPlaced(World world, int x, int y, int z, int side, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_) {
 
-        // save neighbours for the tileEntity later on
+        /*
+         *  save neighbours for the tileEntity later on
+         */
 
         connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:gridLight", (byte)side);
 
@@ -130,7 +121,7 @@ public class BlockGridLight extends BlockBulbsContainer{
 
     public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbourBlock)
     {
-        TileEntityBulbs entity = (TileEntityBulbs) world.getTileEntity(x,y,z);
+        TileEntityLightContainer entity = (TileEntityLightContainer) world.getTileEntity(x,y,z);
         if (entity != null)
         {
             if (entity instanceof TileEntityGridLight) {
@@ -142,8 +133,7 @@ public class BlockGridLight extends BlockBulbsContainer{
         {
             //LogHelper.info("ClientMode");
         } else {
-            //LogHelper.info("ServerMode");
-            //LogHelper.info("Sending Message to Client");
+
             bulbs.network.sendToAllAround(new messageBulbs(x+":"+y+":"+z+":"+connectNeighbours[0]+":"+connectNeighbours[1]+":"+connectNeighbours[2]+":"+connectNeighbours[3]), new NetworkRegistry.TargetPoint(world.provider.dimensionId,x,y,z,300));
         }
 
@@ -151,9 +141,9 @@ public class BlockGridLight extends BlockBulbsContainer{
 
     public void onPostBlockPlaced(World world, int x, int y, int z, int side)
     {
-        TileEntityGridLight gridLight = (TileEntityGridLight) world.getTileEntity(x,y,z);
-        gridLight.updateBlockMetadata();
-        LogHelper.info("PostBLockPlaced");
+        //TileEntityGridLight gridLight = (TileEntityGridLight) world.getTileEntity(x,y,z);
+        //gridLight.updateBlockMetadata();
+        //LogHelper.info("PostBLockPlaced");
     }
 
     public void onBlockClicked(World p_149699_1_, int p_149699_2_, int p_149699_3_, int p_149699_4_, EntityPlayer p_149699_5_)
@@ -162,23 +152,6 @@ public class BlockGridLight extends BlockBulbsContainer{
             LogHelper.info(p_149699_5_.getHeldItem().getDisplayName());
         }
     }
-
-    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_)
-    {
-        TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if (tileEntity == null || player.isSneaking()) {
-            return false;
-        } else if (player.getHeldItem() == null){
-            //TileEntityGridLight gridLight = (TileEntityGridLight)tileEntity;
-            //LogHelper.info("Count: " +gridLight.neighbourCount());
-            //LogHelper.info(gridLight.hasGridLightNeighbour(0) + " - " + gridLight.hasGridLightNeighbour(1) + " - " + gridLight.hasGridLightNeighbour(2)+ " - "+gridLight.hasGridLightNeighbour(3));
-            return false;
-        }
-        player.openGui(bulbs.instance, 0, world,x,y,z);
-        return true;
-    }
-
-
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int meta)
