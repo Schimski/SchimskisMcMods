@@ -1,15 +1,17 @@
 package de.schimski.bulbs.inventory;
 
+import net.minecraft.block.BlockContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
 
 public abstract class ContainerBulbs extends Container
 {
-    protected final int PLAYER_INVENTORY_ROWS = 3;
-    protected final int PLAYER_INVENTORY_COLUMNS = 9;
-    
+    //protected final int PLAYER_INVENTORY_ROWS = 3;
+    //protected final int PLAYER_INVENTORY_COLUMNS = 9;
+
     @Override
     public boolean canInteractWith(EntityPlayer entityPlayer)
     {

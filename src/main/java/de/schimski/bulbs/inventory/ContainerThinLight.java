@@ -2,19 +2,19 @@ package de.schimski.bulbs.inventory;
 
 import de.schimski.bulbs.inventory.slot.SlotBulbs;
 import de.schimski.bulbs.item.ItemBulbs;
-import de.schimski.bulbs.tileEntity.TileEntityGridLight;
+import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerGridLight extends ContainerBulbs {
+public class ContainerThinLight extends ContainerBulbs {
 
-    protected TileEntityGridLight tileEntityGridLight;
+    protected TileEntityThinLight tileEntityThinLight;
 
-    public ContainerGridLight (InventoryPlayer inventoryPlayer, TileEntityGridLight tileEntity){
-        tileEntityGridLight = tileEntity;
-        addSlotToContainer(new SlotBulbs(tileEntityGridLight, 0, 107, 37));
+    public ContainerThinLight(InventoryPlayer inventoryPlayer, TileEntityThinLight tileEntity){
+        tileEntityThinLight = tileEntity;
+        addSlotToContainer(new SlotBulbs(tileEntityThinLight, 0, 107, 37));
 
         //commonly used vanilla code that adds the player's inventory
         bindPlayerInventory(inventoryPlayer);
@@ -25,12 +25,12 @@ public class ContainerGridLight extends ContainerBulbs {
     @Override
     public void onContainerClosed(EntityPlayer player) {
         super.onContainerClosed(player);
-        tileEntityGridLight.closeInventory();
+        tileEntityThinLight.closeInventory();
     }
 
     @Override
     public boolean canInteractWith(EntityPlayer player) {
-        return tileEntityGridLight.isUseableByPlayer(player);
+        return tileEntityThinLight.isUseableByPlayer(player);
     }
 
 
@@ -51,7 +51,7 @@ public class ContainerGridLight extends ContainerBulbs {
 
         ItemStack newItemStack = null;
         Slot slot = (Slot) inventorySlots.get(slotIndex);
-        SlotBulbs gridLightSlot = (SlotBulbs) inventorySlots.get(0);
+        SlotBulbs thinLightSlot = (SlotBulbs) inventorySlots.get(0);
         if (slot != null && slot.getHasStack()) {
 
             ItemStack itemStack = slot.getStack();
@@ -59,11 +59,11 @@ public class ContainerGridLight extends ContainerBulbs {
 
 
 
-            if (!gridLightSlot.getHasStack() && slotIndex > 0 && itemStack.getItem() instanceof ItemBulbs) {
+            if (!thinLightSlot.getHasStack() && slotIndex > 0 && itemStack.getItem() instanceof ItemBulbs) {
 
-                // Slot in gridLight is empty
+                // Slot in thinLight is empty
                 // clicked itemStack is a lightBulb
-                // Click from inventory to gridLight
+                // Click from inventory to thinLight
 
                 newItemStack.stackSize = 1;
                 itemStack.stackSize--;
@@ -71,10 +71,10 @@ public class ContainerGridLight extends ContainerBulbs {
                 slot.putStack(itemStack);
                 slot.onSlotChanged();
 
-                gridLightSlot.putStack(newItemStack);
-                gridLightSlot.onSlotChanged();
+                thinLightSlot.putStack(newItemStack);
+                thinLightSlot.onSlotChanged();
 
-                // We do not want the rest of the stack to change position in inventory if 1 item has been sent to the gridLight
+                // We do not want the rest of the stack to change position in inventory if 1 item has been sent to the thinLight
 
                 if (itemStack.stackSize == 0)
                 {
@@ -95,27 +95,27 @@ public class ContainerGridLight extends ContainerBulbs {
 
                 return null;
 
-            } else if (gridLightSlot.getHasStack() && slotIndex == 0) {
+            } else if (thinLightSlot.getHasStack() && slotIndex == 0) {
 
-                // Slot in gridLight is NOT empty
-                // Click from gridLight to inventory or ActionBar
+                // Slot in thinLight is NOT empty
+                // Click from thinLight to inventory or ActionBar
 
                 if (!this.mergeItemStack(itemStack, 1, inventorySlots.size(), false))
                 {
                         return null;
                 }
-            } else if (/*gridLightSlot.getHasStack() && */ slotIndex > 0 && (slotIndex < inventorySlots.size()-9)) {
+            } else if (/*thinLightSlot.getHasStack() && */ slotIndex > 0 && (slotIndex < inventorySlots.size()-9)) {
 
-                // Slot in gridLight is NOT empty
+                // Slot in thinLight is NOT empty
                 // Click from inventory to ActionBar
 
                 if (!this.mergeItemStack(itemStack, inventorySlots.size()-9, inventorySlots.size(), false))
                 {
                     return null;
                 }
-            } else if (/*gridLightSlot.getHasStack() && */ slotIndex >= (inventorySlots.size()-9)) {
+            } else if (/*thinLightSlot.getHasStack() && */ slotIndex >= (inventorySlots.size()-9)) {
 
-                // Slot in gridLight is NOT empty
+                // Slot in thinLight is NOT empty
                 // Click from ActionBar to inventory
 
                 if (!this.mergeItemStack(itemStack, 1, inventorySlots.size() - 9, false)) {

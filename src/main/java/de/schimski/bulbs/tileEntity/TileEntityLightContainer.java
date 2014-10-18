@@ -81,6 +81,19 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
 
     /*
+     *  Helper Method for finding errors
+     *  should be removed when done
+     */
+
+    public String getBoolConnect() {
+        String result = "";
+        for(boolean i : boolConnect) {
+            result += " " + i;
+        }
+        return result;
+    }
+
+    /*
      *  Methods to keep CLient and Server synced
      */
 
@@ -138,7 +151,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
      * used in renderer
      */
 
-    public boolean hasGridLightNeighbour(int side) {
+    public boolean hasConnectingLightNeighbour(int side) {
         return boolConnect[side];
     }
 

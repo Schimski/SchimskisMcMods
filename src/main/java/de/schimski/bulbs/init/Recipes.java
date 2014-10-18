@@ -9,5 +9,6 @@ public class Recipes {
     public static void init()
     {
         GameRegistry.addRecipe(new ItemStack(ModBlocks.gridLight, 4), "   ", "   ", "ddd", 'd', new ItemStack(Items.stick));
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.thinLight, 4), "   ", "ddd", "   ", 'd', new ItemStack(Items.stick));
     }
 }

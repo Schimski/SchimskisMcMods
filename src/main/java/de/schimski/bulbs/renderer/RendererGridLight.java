@@ -4,10 +4,14 @@ import assets.bulbs.models.*;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.utility.LogHelper;
+import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.RenderHandEvent;
 import org.lwjgl.opengl.GL11;
 
 public class RendererGridLight extends TileEntitySpecialRenderer{
@@ -65,47 +69,47 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         if (gridLight.neighbourCount() == 1 || gridLight.neighboursAreClose() || gridLight.neighbourCount() == 3) {
             for (int i = 0; i < 4; i++) {
                 if (gridLight.neighbourCount() == 1) {
-                    if (gridLight.hasGridLightNeighbour(i) && side == 0) {
+                    if (gridLight.hasConnectingLightNeighbour(i) && side == 0) {
                         GL11.glRotatef(-i * 90, 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && side == 1) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && side == 1) {
                         GL11.glRotatef(i * 90, 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && side == 3) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && side == 3) {
                         GL11.glRotatef(i * 90, 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && side == 2) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && side == 2) {
                         GL11.glRotatef((i + 3) * 90, 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && side == 4) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && side == 4) {
                         GL11.glRotatef((i + 3) * 90, 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && side == 5) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && side == 5) {
                         GL11.glRotatef((i + 1) * 90, 0, 1, 0);
                     }
                 } else if (gridLight.neighbourCount() == 2 && gridLight.neighboursAreClose()) {
                     int j = (i < 3) ? i + 1 : 0;
-                    if (gridLight.hasGridLightNeighbour(i) && gridLight.hasGridLightNeighbour(j) && side == 0) {
+                    if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 0) {
                         GL11.glRotatef(-(i + 1) * 90, 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && gridLight.hasGridLightNeighbour(j) && side == 1) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 1) {
                         GL11.glRotatef(i * 90, 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && gridLight.hasGridLightNeighbour(j) && side == 2) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 2) {
                         GL11.glRotatef(-90 + (i * 90), 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && gridLight.hasGridLightNeighbour(j) && side == 3) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 3) {
                         GL11.glRotatef((i * 90), 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && gridLight.hasGridLightNeighbour(j) && side == 4) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 4) {
                         GL11.glRotatef((i - 1) * 90, 0, 1, 0);
-                    } else if (gridLight.hasGridLightNeighbour(i) && gridLight.hasGridLightNeighbour(j) && side == 5) {
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 5) {
                         GL11.glRotatef((i + 1) * 90, 0, 1, 0);
                     }
                 }
                 else if (gridLight.neighbourCount() == 3)
                 {
-                    if (gridLight.hasGridLightNeighbour(i) == false && (side == 1 || side == 3)) {
+                    if (gridLight.hasConnectingLightNeighbour(i) == false && (side == 1 || side == 3)) {
                         GL11.glRotatef((i - 1) * 90, 0, 1, 0);
                     }
-                    else if (gridLight.hasGridLightNeighbour(i) == false && side == 0) {
+                    else if (gridLight.hasConnectingLightNeighbour(i) == false && side == 0) {
                         GL11.glRotatef((3-i) * 90, 0, 1, 0);
                     }
-                    else if (gridLight.hasGridLightNeighbour(i) == false && (side == 4 || side == 2)) {
+                    else if (gridLight.hasConnectingLightNeighbour(i) == false && (side == 4 || side == 2)) {
                         GL11.glRotatef((-2+i) * 90, 0, 1, 0);
                     }
-                    else if (gridLight.hasGridLightNeighbour(i) == false && side == 5) {
+                    else if (gridLight.hasConnectingLightNeighbour(i) == false && side == 5) {
                         GL11.glRotatef(i * 90, 0, 1, 0);
                     }
                 }
@@ -113,11 +117,11 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         }
         if (gridLight.neighbourCount() == 2 && gridLight.neighboursAreClose() == false)
         {
-            if (gridLight.hasGridLightNeighbour(2)  && (side == 4 || side == 5 || side == 2))
+            if (gridLight.hasConnectingLightNeighbour(2)  && (side == 4 || side == 5 || side == 2))
             {
                 GL11.glRotatef(90, 0, 1, 0);
             }
-            else if (gridLight.hasGridLightNeighbour(1) && (side == 3 || side == 0 || side == 1))
+            else if (gridLight.hasConnectingLightNeighbour(1) && (side == 3 || side == 0 || side == 1))
             {
                 GL11.glRotatef(90, 0, 1, 0);
             }
@@ -161,5 +165,6 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             renderModel(gridLight);
             GL11.glPopMatrix();
         GL11.glPopMatrix();
+
     }
 }

@@ -7,33 +7,25 @@ import de.schimski.bulbs.bulbs;
 import de.schimski.bulbs.network.messageBulbs;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
-import de.schimski.bulbs.tileEntity.TileEntityGridLight;
+import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 import de.schimski.bulbs.utility.BlockHelper;
-import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-import java.util.Random;
 
-
-public class BlockGridLight extends BlockBulbsContainer{
+public class BlockThinLight extends BlockBulbsContainer{
 
     @SideOnly(Side.CLIENT)
     protected IIcon blockIcon;
 
-    public BlockGridLight()
+    public BlockThinLight()
     {
         super();
-        this.setBlockName("gridLight");
+        this.setBlockName("thinLight");
         this.setHardness(0.5f);
     }
 
@@ -45,7 +37,7 @@ public class BlockGridLight extends BlockBulbsContainer{
 
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        this.blockIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "itemGridLight");
+        this.blockIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "itemThinLight");
     }
 
     public int onBlockPlaced(World world, int x, int y, int z, int side, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_) {
@@ -58,8 +50,8 @@ public class BlockGridLight extends BlockBulbsContainer{
         TileEntityLightContainer entity = (TileEntityLightContainer) world.getTileEntity(x,y,z);
         if (entity != null)
         {
-            if (entity instanceof TileEntityGridLight) {
-                connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:gridLight", entity.getState());
+            if (entity instanceof TileEntityThinLight) {
+                connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:thinLight", entity.getState());
                 passNeighboursToTileEntity(entity);
             }
         }
@@ -67,11 +59,11 @@ public class BlockGridLight extends BlockBulbsContainer{
         {
             //LogHelper.info("ClientMode");
         } else {
-
             bulbs.network.sendToAllAround(new messageBulbs(x+":"+y+":"+z+":"+connectNeighbours[0]+":"+connectNeighbours[1]+":"+connectNeighbours[2]+":"+connectNeighbours[3]), new NetworkRegistry.TargetPoint(world.provider.dimensionId,x,y,z,300));
         }
 
     }
+
 
     /**
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
@@ -81,7 +73,7 @@ public class BlockGridLight extends BlockBulbsContainer{
     {
         // Sets the bounds of the block.  minX, minY, minZ, maxX, maxY, maxZ
         float p = 1/16f;
-        switch (((TileEntityGridLight)block.getTileEntity(x,y,z)).getState()) {
+        switch (((TileEntityThinLight)block.getTileEntity(x,y,z)).getState()) {
             case 0:
                 this.setBlockBounds(2*p, 14*p, 2*p, 14*p, 16*p, 14*p);
                 break;
@@ -127,8 +119,8 @@ public class BlockGridLight extends BlockBulbsContainer{
 
     public TileEntity createTileEntity(World world, int metadata)
     {
-        TileEntityGridLight gridLight = new TileEntityGridLight(metadata);
-        passNeighboursToTileEntity(gridLight);
-        return gridLight;
+        TileEntityThinLight thinLight = new TileEntityThinLight(metadata);
+        passNeighboursToTileEntity(thinLight);
+        return thinLight;
     }
 }

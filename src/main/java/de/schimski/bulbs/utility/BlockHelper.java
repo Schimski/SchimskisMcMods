@@ -5,8 +5,7 @@ import net.minecraft.world.World;
 
 public class BlockHelper {
 
-    public static boolean checkBlockName(World world, int x, int y, int z, String unlocalizedBlockName)
-    {
+    public static boolean checkBlockName(World world, int x, int y, int z, String unlocalizedBlockName) {
         if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName)) {
             return true;
         } else {
@@ -14,10 +13,12 @@ public class BlockHelper {
         }
     }
 
-    public static boolean checkBlockNameAndTileState(World world, int x, int y, int z, String unlocalizedBlockName, byte tileState)
-    {
-        //LogHelper.info(world.getBlock(x, y, z).getUnlocalizedName());
-        //LogHelper.info(world.getBlockMetadata(x,y,z));
+    public static boolean checkBlockNameAndTileState(World world, int x, int y, int z, String unlocalizedBlockName, byte tileState) {
+        LogHelper.info(world.getBlock(x, y, z).getUnlocalizedName() + "  -  " + unlocalizedBlockName);
+        if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName)) {
+            LogHelper.info(((TileEntityLightContainer)world.getTileEntity(x,y,z)).getState() + "  -  "  + tileState);
+        }
+
         if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName) && (((TileEntityLightContainer)world.getTileEntity(x,y,z)).getState() == tileState)) {
             return true;
         } else {
@@ -29,14 +30,6 @@ public class BlockHelper {
 
         boolean[] r6 = {false, false, false, false, false, false};
         boolean[] result = {false, false, false, false};
-        //String unlocalizedName = world.getBlock(x,y,z).getUnlocalizedName();
-        //int blockMetadata = world.getBlockMetadata(x,y,z);
-
-        /*
-        case 0/1 (Y-Axis): check x and z
-        case 2/3 (Z-Axis): check x and y
-        case 4/5 (X-Axis): check z and y
-        */
 
         r6[0] = checkBlockNameAndTileState(world, x + 1, y, z, unlocalizedName, tileState);
         r6[1] = checkBlockNameAndTileState(world, x - 1, y, z, unlocalizedName, tileState);
@@ -45,8 +38,8 @@ public class BlockHelper {
         r6[4] = checkBlockNameAndTileState(world, x, y, z + 1, unlocalizedName, tileState);
         r6[5] = checkBlockNameAndTileState(world, x, y, z - 1, unlocalizedName, tileState);
 
-        switch (tileState)
-        {
+        switch (tileState) {
+
             case 0: case 1:
                 result[0] = r6[0];
                 result[1] = r6[4];
@@ -78,7 +71,6 @@ public class BlockHelper {
                 result[3] = r6[2];
                 break;
             default:
-                //default route
                 break;
         }
 

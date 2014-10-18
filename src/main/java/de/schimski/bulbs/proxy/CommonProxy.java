@@ -5,12 +5,14 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
+import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 
 public abstract class CommonProxy implements IProxy{
     public void registerTileEntities()
     {
 
         GameRegistry.registerTileEntity(TileEntityGridLight.class, "gridLight");
+        GameRegistry.registerTileEntity(TileEntityThinLight.class, "thinLight");
         //GameRegistry.registerTileEntityWithAlternatives(TileEntityGridLight.class, "gridLight", "tile.GridLight);
         //GameRegistry.registerTileEntityWithAlternatives(TileEntityGlassBell.class, Names.Blocks.GLASS_BELL, "tile." + Names.Blocks.GLASS_BELL);
         //GameRegistry.registerTileEntity(TileEntityResearchStation.class, Names.Blocks.RESEARCH_STATION);
@@ -21,6 +23,5 @@ public abstract class CommonProxy implements IProxy{
         GameRegistry.registerTileEntityWithAlternatives(TileEntityAlchemicalChestMedium.class, Names.Blocks.ALCHEMICAL_CHEST + "Medium", "tile." + Names.Blocks.ALCHEMICAL_CHEST + "Medium");
         GameRegistry.registerTileEntityWithAlternatives(TileEntityAlchemicalChestLarge.class, Names.Blocks.ALCHEMICAL_CHEST + "Large", "tile." + Names.Blocks.ALCHEMICAL_CHEST + "Large");
         */
-
     }
 }
