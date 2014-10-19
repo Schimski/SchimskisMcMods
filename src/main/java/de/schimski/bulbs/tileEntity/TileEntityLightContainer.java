@@ -227,6 +227,11 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         }
     }
 
+    public void updateLightLevel() {
+
+        lightLevel = getStackInSlot(0) != null ? lightLevel != 0 ? lightLevel : 15 : 0;
+        updateBlockMetadata();
+    }
 
     /*
      *  returns the state (side) of the light

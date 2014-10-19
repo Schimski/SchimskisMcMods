@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
 public class RendererThinLight extends TileEntitySpecialRenderer{
 
     private static final ResourceLocation[] texture = new ResourceLocation[17];
-    public static final String[] thinLightTypes = new String[] {"thinLightX2", "thinLightBlack", "thinLightRed", "thinLightGreen", "thinLightBrown", "thinLightBlue", "thinLightPurple", "thinLightCyan", "thinLightLightGray", "thinLightGray", "thinLightPink", "thinLightLimeGreen", "thinLightYellow", "thinLightLightBlue", "thinLightMagenta", "thinLightOrange", "thinLightWhite"};
+    public static final String[] thinLightTypes = new String[] {"thinLight", "thinLightBlack", "thinLightRed", "thinLightGreen", "thinLightBrown", "thinLightBlue", "thinLightPurple", "thinLightCyan", "thinLightLightGray", "thinLightGray", "thinLightPink", "thinLightLimeGreen", "thinLightYellow", "thinLightLightBlue", "thinLightMagenta", "thinLightOrange", "thinLightWhite"};
     private ModelThinLight model;
     private ModelThinLightCon1Con2b modelCon1Con2b;
     private ModelThinLightCon2a modelCon2a;
@@ -32,7 +32,7 @@ public class RendererThinLight extends TileEntitySpecialRenderer{
 
 
         for (int i = 0; i<17; i++) {
-            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/" + thinLightTypes[i] + ".png");
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/thinLight/" + thinLightTypes[i] + "X2.png");
         }
     }
 

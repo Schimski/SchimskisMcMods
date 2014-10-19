@@ -1,10 +1,13 @@
 package de.schimski.bulbs.block;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.bulbs;
 import de.schimski.bulbs.creativetab.CreativeTabBulbs;
+import de.schimski.bulbs.item.ItemBulbs;
 import de.schimski.bulbs.network.messageBulbs;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
@@ -81,24 +84,21 @@ public class BlockBulbsContainer extends BlockContainer {
 
     protected void dropInventory(World world, int x, int y, int z)
     {
+        LogHelper.info("dropping Inventory");
         TileEntity tileEntity = world.getTileEntity(x, y, z);
-        if (!(tileEntity instanceof IInventory))
-        {
+        if (!(tileEntity instanceof IInventory)) {
             return;
         }
         IInventory inventory = (IInventory) tileEntity;
-        for (int i = 0; i < inventory.getSizeInventory(); i++)
-        {
+        for (int i = 0; i < inventory.getSizeInventory(); i++) {
             ItemStack itemStack = inventory.getStackInSlot(i);
-            if (itemStack != null && itemStack.stackSize > 0)
-            {
+            if (itemStack != null && itemStack.stackSize > 0) {
                 Random rand = new Random();
                 float dX = rand.nextFloat() * 0.8F + 0.1F;
                 float dY = rand.nextFloat() * 0.8F + 0.1F;
                 float dZ = rand.nextFloat() * 0.8F + 0.1F;
                 EntityItem entityItem = new EntityItem(world, x + dX, y + dY, z + dZ, itemStack.copy());
-                if (itemStack.hasTagCompound())
-                {
+                if (itemStack.hasTagCompound()) {
                     entityItem.getEntityItem().setTagCompound((NBTTagCompound) itemStack.getTagCompound().copy());
                 }
                 float factor = 0.05F;
@@ -119,6 +119,22 @@ public class BlockBulbsContainer extends BlockContainer {
         } else if (player.getHeldItem() == null) {
             LogHelper.info("Connections: " + tileEntity.getBoolConnect());
             LogHelper.info("State: " + tileEntity.getState());
+            return true;
+        } else if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemBulbs) {// && player.isSneaking()) {
+
+            if (!world.isRemote && tileEntity.getStackInSlot(0) != null) {
+                world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, tileEntity.getStackInSlot(0)));
+                tileEntity.decrStackSize(0,1);
+                LogHelper.info("dropping");
+            }
+            ItemStack newStack = player.getHeldItem().copy();
+            newStack.stackSize = 1;
+            tileEntity.setInventorySlotContents(0, newStack);
+            player.getHeldItem().stackSize = player.getHeldItem().stackSize - 1;
+            tileEntity.updateLightLevel();
+//            if (player.getHeldItem().stackSize == 0) {
+  //              player.inventory.siz
+    //a        }
             return true;
         } else {
             if (tileEntity instanceof TileEntityGridLight) {

@@ -37,7 +37,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         this.modelCon4 = new ModelGridLightCon4();
 
         for (int i = 0; i<17; i++) {
-            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/" + gridLightTypes[i] + ".png");
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/" + gridLightTypes[i] + ".png");
         }
     }
 
