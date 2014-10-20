@@ -1,7 +1,7 @@
 package de.schimski.bulbs.inventory;
 
 import de.schimski.bulbs.inventory.slot.SlotBulbs;
-import de.schimski.bulbs.item.ItemBulbs;
+import de.schimski.bulbs.item.ItemBulbNormal;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -59,7 +59,7 @@ public class ContainerThinLight extends ContainerBulbs {
 
 
 
-            if (!thinLightSlot.getHasStack() && slotIndex > 0 && itemStack.getItem() instanceof ItemBulbs) {
+            if (!thinLightSlot.getHasStack() && slotIndex > 0 && itemStack.getItem() instanceof ItemBulbNormal) {
 
                 // Slot in thinLight is empty
                 // clicked itemStack is a lightBulb

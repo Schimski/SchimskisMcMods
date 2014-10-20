@@ -1,19 +1,14 @@
 package de.schimski.bulbs.block;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.bulbs;
 import de.schimski.bulbs.creativetab.CreativeTabBulbs;
 import de.schimski.bulbs.item.ItemBulbs;
-import de.schimski.bulbs.network.messageBulbs;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
-import de.schimski.bulbs.utility.BlockHelper;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -120,7 +115,7 @@ public class BlockBulbsContainer extends BlockContainer {
             LogHelper.info("Connections: " + tileEntity.getBoolConnect());
             LogHelper.info("State: " + tileEntity.getState());
             return true;
-        } else if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemBulbs) {// && player.isSneaking()) {
+        } else if (player.getHeldItem().getItem() instanceof ItemBulbs) {// && player.isSneaking()) {
 
             if (!world.isRemote && tileEntity.getStackInSlot(0) != null) {
                 world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, tileEntity.getStackInSlot(0)));
