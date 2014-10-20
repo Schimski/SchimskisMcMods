@@ -1,5 +1,6 @@
 package de.schimski.bulbs.tileEntity;
 
+import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -347,4 +348,5 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
     {
         return false;
     }
+
 }

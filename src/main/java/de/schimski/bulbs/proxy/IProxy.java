@@ -8,4 +8,5 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 public interface IProxy {
     public abstract void initRenderingAndTextures();
     public abstract void registerTileEntities();
+    public abstract void setCustomRenderers();
 }

@@ -9,6 +9,11 @@ public class ServerProxy extends CommonProxy {
 
     @Override
     public void initRenderingAndTextures() {
+        // nope
+    }
 
+    @Override
+    public void setCustomRenderers() {
+        // nope
     }
 }

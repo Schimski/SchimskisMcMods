@@ -9,9 +9,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class RendererThinLight extends TileEntitySpecialRenderer{
+public class RendererThinLight extends TileEntitySpecialRenderer {
 
     private static final ResourceLocation[] texture = new ResourceLocation[17];
+ //   private static ResourceLocation textureX32;
     public static final String[] thinLightTypes = new String[] {"thinLight", "thinLightBlack", "thinLightRed", "thinLightGreen", "thinLightBrown", "thinLightBlue", "thinLightPurple", "thinLightCyan", "thinLightLightGray", "thinLightGray", "thinLightPink", "thinLightLimeGreen", "thinLightYellow", "thinLightLightBlue", "thinLightMagenta", "thinLightOrange", "thinLightWhite"};
     private ModelThinLight model;
     private ModelThinLightCon1Con2b modelCon1Con2b;
@@ -19,7 +20,13 @@ public class RendererThinLight extends TileEntitySpecialRenderer{
     private ModelThinLightCon3 modelCon3;
     private ModelThinLightCon4 modelCon4;
 
-    static int myRenderID;
+    private ModelThinLightX32 modelThinLightX32;
+    private ModelThinLightCon1X32 modelThinLightCon1X32;
+    private ModelThinLightCon2FarX32 modelThinLightCon2FarX32;
+
+    private float renderScale = 0.03125f; //0.0625f
+
+    //static int myRenderID;
 
 
 
@@ -30,31 +37,37 @@ public class RendererThinLight extends TileEntitySpecialRenderer{
         this.modelCon3 = new ModelThinLightCon3();
         this.modelCon4 = new ModelThinLightCon4();
 
+        this.modelThinLightX32 = new ModelThinLightX32();
+        this.modelThinLightCon1X32 = new ModelThinLightCon1X32();
+        this.modelThinLightCon2FarX32 = new ModelThinLightCon2FarX32();
+
 
         for (int i = 0; i<17; i++) {
-            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/thinLight/" + thinLightTypes[i] + "X2.png");
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/thinLight/" + thinLightTypes[i] + "X32.png");
         }
+
+        //textureX32 = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/thinLight/thinLightX32.png");
     }
 
     private void alignTileEntityAccordingState(double x, double y, double z, int state)
     {
         if (state == 0) {
-            GL11.glTranslatef((float)x + 0.5f, (float)y - 0.5f, (float)z + 0.5f);
+            GL11.glTranslatef((float)x + 0.5f, (float)y +0.25f, (float)z + 0.5f);
         } else if (state == 1) {
-            GL11.glTranslatef((float)x + 0.5f, (float)y + 1.5f, (float)z + 0.5f);
+            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.75f, (float)z + 0.5f);
             GL11.glRotatef(180, 1, 0, 0);
         } else if (state == 2) {
-            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z - 0.5f);
+            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z +0.25f);
             GL11.glRotatef(90, 0, -1, 0);
             GL11.glRotatef(90, 0, 0, -1);
         } else if (state == 3) {
-            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z + 1.5f);
+            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.75f);
             GL11.glRotatef(90, -1, 0, 0);
         } else if (state == 4) {
-            GL11.glTranslatef((float)x - 0.5f, (float)y + 0.5f, (float)z + 0.5f);
+            GL11.glTranslatef((float)x +0.25f, (float)y + 0.5f, (float)z + 0.5f);
             GL11.glRotatef(90, 0, 0, -1);
         } else if (state == 5) {
-            GL11.glTranslatef((float)x + 1.5f, (float)y + 0.5f, (float)z + 0.5f);;
+            GL11.glTranslatef((float)x + 0.75f, (float)y + 0.5f, (float)z + 0.5f);
             GL11.glRotatef(90, 0, 0, 1);
         }
     }
@@ -67,7 +80,7 @@ public class RendererThinLight extends TileEntitySpecialRenderer{
                     if (thinLight.hasConnectingLightNeighbour(i) && side == 0) {
                         GL11.glRotatef((2-i) * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && side == 1) {
-                        GL11.glRotatef((i-2) * 90, 0, 1, 0);
+                        GL11.glRotatef(i * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && side == 2) {
                         GL11.glRotatef((i + 1) * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && side == 3) {
@@ -93,25 +106,22 @@ public class RendererThinLight extends TileEntitySpecialRenderer{
                         GL11.glRotatef(i * 90, 0, 1, 0);
                     }
                 }
-                else if (thinLight.neighbourCount() == 3)
-                {
-                    if (thinLight.hasConnectingLightNeighbour(i) == false && (side == 1 || side == 3)) {
+                else if (thinLight.neighbourCount() == 3) {
+                    if (!thinLight.hasConnectingLightNeighbour(i) && (side == 1 || side == 3)) {
                         GL11.glRotatef((i + 1) * 90, 0, 1, 0);
                     }
-                    else if (thinLight.hasConnectingLightNeighbour(i) == false && side == 0) {
+                    else if (!thinLight.hasConnectingLightNeighbour(i) && side == 0) {
                         GL11.glRotatef((1-i) * 90, 0, 1, 0);
                     }
-                    else if (thinLight.hasConnectingLightNeighbour(i) == false && (side == 4 || side == 2)) {
+                    else if (!thinLight.hasConnectingLightNeighbour(i) && (side == 4 || side == 2)) {
                         GL11.glRotatef(i * 90, 0, 1, 0);
                     }
-                    else if (thinLight.hasConnectingLightNeighbour(i) == false && side == 5) {
+                    else if (!thinLight.hasConnectingLightNeighbour(i) && side == 5) {
                         GL11.glRotatef((i + 2) * 90, 0, 1, 0);
                     }
                 }
             }
-        }
-        if (thinLight.neighbourCount() == 2 && thinLight.neighboursAreClose() == false)
-        {
+        } else if (thinLight.neighbourCount() == 2 && !thinLight.neighboursAreClose()) {
             if (thinLight.hasConnectingLightNeighbour(2)  && (side == 4 || side == 5 || side == 2))
             {
                 GL11.glRotatef(90, 0, 1, 0);
@@ -120,31 +130,53 @@ public class RendererThinLight extends TileEntitySpecialRenderer{
             {
                 GL11.glRotatef(90, 0, 1, 0);
             }
+        } else if (thinLight.neighbourCount() == 0) {
+            if (side == 4 || side == 5 || side == 2) {
+                GL11.glRotatef(90, 0, 1, 0);
+            }
         }
     }
 
     private void renderModel(TileEntityThinLight thinLight)
     {
         if (thinLight.neighbourCount() == 1) {
-            this.modelCon1Con2b.renderModel(0.0625f);
+                this.modelThinLightCon1X32.renderModel(renderScale);
+            } else if ((thinLight.neighbourCount() == 2) && thinLight.neighboursAreClose()){
+                this.modelCon2a.renderModel(renderScale);
+            }else if ((thinLight.neighbourCount() == 2) && !thinLight.neighboursAreClose()){
+                this.modelThinLightCon2FarX32.renderModel(renderScale);
+            } else if (thinLight.neighbourCount() == 3) {
+                this.modelCon3.renderModel(renderScale);
+            } else if (thinLight.neighbourCount() == 4) {
+                this.modelCon4.renderModel(renderScale);
+            } else {
+                this.modelThinLightX32.renderModel(renderScale);
+            }
+        }
+
+    private void renderModelAlpha(TileEntityThinLight thinLight) {
+
+        if (thinLight.neighbourCount() == 1) {
+           this.modelThinLightCon1X32.renderAlpha(renderScale);
         } else if ((thinLight.neighbourCount() == 2) && thinLight.neighboursAreClose()){
-            this.modelCon2a.renderModel(0.0625f);
+
         }else if ((thinLight.neighbourCount() == 2) && !thinLight.neighboursAreClose()){
-            this.modelCon1Con2b.renderModel(0.0625f);
+           this.modelThinLightCon2FarX32.renderAlpha(renderScale);
         } else if (thinLight.neighbourCount() == 3) {
-            this.modelCon3.renderModel(0.0625f);
+
         } else if (thinLight.neighbourCount() == 4) {
-            this.modelCon4.renderModel(0.0625f);
+
         } else {
-            this.model.renderModel(0.0625f);
+            this.modelThinLightX32.renderAlpha(renderScale);
         }
     }
-    
+
+
     private void selectAndBindTexture(TileEntityThinLight thinLight) {
         int textureIndex = 0;
         ItemStack stack = thinLight.getStackInSlot(0);
         if (stack != null) {
-            textureIndex = stack.getItemDamage()+1;
+            textureIndex = stack.getItemDamage() + 1;
         }
         this.bindTexture(texture[textureIndex]);
     }
@@ -155,11 +187,24 @@ public class RendererThinLight extends TileEntitySpecialRenderer{
         GL11.glPushMatrix();
         alignTileEntityAccordingState(x, y, z, thinLight.getState());
         rotateTilEntityAccordingNBT(thinLight, thinLight.getState());
+
+//        GL11.glDisable(GL11.GL_CULL_FACE);
+
         selectAndBindTexture(thinLight);
-            GL11.glPushMatrix();
+
+        GL11.glPushMatrix();
+
             renderModel(thinLight);
-            GL11.glPopMatrix();
         GL11.glPopMatrix();
 
+        GL11.glPushMatrix();
+            GL11.glEnable(GL11.GL_BLEND);
+            //this.bindTexture(textureX32);
+            renderModelAlpha(thinLight);
+            GL11.glPopMatrix();
+            GL11.glDisable(GL11.GL_BLEND);
+        GL11.glPopMatrix();
+
+//        GL11.glEnable(GL11.GL_CULL_FACE);
     }
 }

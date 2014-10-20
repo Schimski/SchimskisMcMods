@@ -54,6 +54,9 @@ public class bulbs {
         // Initialize mod tile entities
         proxy.registerTileEntities();
 
+        // Initialize custom block renderers
+        proxy.setCustomRenderers();
+
         Recipes.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         LogHelper.info("Initialization Complete");

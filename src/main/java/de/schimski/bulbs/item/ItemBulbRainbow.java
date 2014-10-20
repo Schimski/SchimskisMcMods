@@ -21,15 +21,12 @@ public class ItemBulbRainbow extends ItemBulbs {
     public ItemBulbRainbow()
     {
         super();
-        this.setHasSubtypes(true);
-        this.setMaxDamage(0);
         this.setCreativeTab(CreativeTabBulbs.BULBS_TAB);
     }
 
     @Override
     public String getUnlocalizedName(ItemStack itemStack)
     {
-        int i = MathHelper.clamp_int(itemStack.getItemDamage(), 0, 15);
         return String.format("item.%s%s", Reference.MOD_ID.toLowerCase() + ":", "lightBulbRainbow");
     }
 
@@ -40,19 +37,9 @@ public class ItemBulbRainbow extends ItemBulbs {
 
 
     @Override
-    public String getUnlocalizedName()
-    {
+    public String getUnlocalizedName() {
         return String.format("item.%s%s", Reference.MOD_ID.toLowerCase() + ":", getUnwrappedUnlocalizedName(super.getUnlocalizedName()));
-
     }
-
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
-        for (int i = 0; i < 16; ++i) {
-            list.add(new ItemStack(item, 1, i));
-        }
-    }
-
 
     @SideOnly(Side.CLIENT)
     @Override

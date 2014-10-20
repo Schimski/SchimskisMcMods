@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.bulbs;
 import de.schimski.bulbs.network.messageBulbs;
+import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
@@ -17,7 +18,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 
-public class BlockThinLight extends BlockBulbsContainer{
+public class BlockThinLight extends BlockBulbsContainer {
 
     @SideOnly(Side.CLIENT)
     protected IIcon blockIcon;
@@ -97,7 +98,7 @@ public class BlockThinLight extends BlockBulbsContainer{
 
     @Override
     public int getRenderType() {
-        return -1;
+        return ClientProxy.thinLightRenderType;
     }
 
     @Override
@@ -117,10 +118,10 @@ public class BlockThinLight extends BlockBulbsContainer{
 
 
 
-    public TileEntity createTileEntity(World world, int metadata)
-    {
+    public TileEntity createTileEntity(World world, int metadata) {
         TileEntityThinLight thinLight = new TileEntityThinLight(metadata);
         passNeighboursToTileEntity(thinLight);
         return thinLight;
     }
+
 }
