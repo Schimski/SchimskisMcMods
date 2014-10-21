@@ -12,45 +12,29 @@ import org.lwjgl.opengl.GL11;
 public class RendererThinLight extends TileEntitySpecialRenderer {
 
     private static final ResourceLocation[] texture = new ResourceLocation[17];
- //   private static ResourceLocation textureX32;
     public static final String[] thinLightTypes = new String[] {"thinLight", "thinLightBlack", "thinLightRed", "thinLightGreen", "thinLightBrown", "thinLightBlue", "thinLightPurple", "thinLightCyan", "thinLightLightGray", "thinLightGray", "thinLightPink", "thinLightLimeGreen", "thinLightYellow", "thinLightLightBlue", "thinLightMagenta", "thinLightOrange", "thinLightWhite"};
-    private ModelThinLight model;
-    private ModelThinLightCon1Con2b modelCon1Con2b;
-    private ModelThinLightCon2a modelCon2a;
-    private ModelThinLightCon3 modelCon3;
-    private ModelThinLightCon4 modelCon4;
 
     private ModelThinLightX32 modelThinLightX32;
     private ModelThinLightCon1X32 modelThinLightCon1X32;
     private ModelThinLightCon2FarX32 modelThinLightCon2FarX32;
     private ModelThinLightCon2CloseX32 modelThinLightCon2CloseX32;
     private ModelThinLightCon3X32 modelThinLightCon3X32;
+    private ModelThinLightCon4X32 modelThinLightCon4X32;
 
     private float renderScale = 0.03125f; //0.0625f
 
-    //static int myRenderID;
-
-
-
     public RendererThinLight() {
-        this.model = new ModelThinLight();
-        this.modelCon1Con2b = new ModelThinLightCon1Con2b();
-        this.modelCon2a = new ModelThinLightCon2a();
-        this.modelCon3 = new ModelThinLightCon3();
-        this.modelCon4 = new ModelThinLightCon4();
-
         this.modelThinLightX32 = new ModelThinLightX32();
         this.modelThinLightCon1X32 = new ModelThinLightCon1X32();
         this.modelThinLightCon2FarX32 = new ModelThinLightCon2FarX32();
         this.modelThinLightCon2CloseX32 = new ModelThinLightCon2CloseX32();
         this.modelThinLightCon3X32 = new ModelThinLightCon3X32();
+        this.modelThinLightCon4X32 = new ModelThinLightCon4X32();
 
 
         for (int i = 0; i<17; i++) {
             texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/thinLight/" + thinLightTypes[i] + "X32.png");
         }
-
-        //textureX32 = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/thinLight/thinLightX32.png");
     }
 
     private void alignTileEntityAccordingState(double x, double y, double z, int state)
@@ -115,13 +99,13 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
                         GL11.glRotatef((i - 1) * 90, 0, 1, 0);
                     }
                     else if (!thinLight.hasConnectingLightNeighbour(i) && side == 0) {
-                        GL11.glRotatef((1-i) * 90, 0, 1, 0);
+                        GL11.glRotatef((3-i) * 90, 0, 1, 0);
                     }
                     else if (!thinLight.hasConnectingLightNeighbour(i) && (side == 4 || side == 2)) {
-                        GL11.glRotatef(i * 90, 0, 1, 0);
+                        GL11.glRotatef((i+2) * 90, 0, 1, 0);
                     }
                     else if (!thinLight.hasConnectingLightNeighbour(i) && side == 5) {
-                        GL11.glRotatef((i + 2) * 90, 0, 1, 0);
+                        GL11.glRotatef((i) * 90, 0, 1, 0);
                     }
                 }
             }
@@ -152,7 +136,7 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
         } else if (thinLight.neighbourCount() == 3) {
             modelThinLightCon3X32.renderModel(renderScale);
         } else if (thinLight.neighbourCount() == 4) {
-            modelCon4.renderModel(renderScale);
+            modelThinLightCon4X32.renderModel(renderScale);
         } else {
             modelThinLightX32.renderModel(renderScale);
         }
@@ -169,7 +153,7 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
         } else if (thinLight.neighbourCount() == 3) {
             modelThinLightCon3X32.renderAlpha(renderScale);
         } else if (thinLight.neighbourCount() == 4) {
-
+            modelThinLightCon4X32.renderAlpha(renderScale);
         } else {
             this.modelThinLightX32.renderAlpha(renderScale);
         }
@@ -192,23 +176,17 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
         alignTileEntityAccordingState(x, y, z, thinLight.getState());
         rotateTilEntityAccordingNBT(thinLight, thinLight.getState());
 
-//        GL11.glDisable(GL11.GL_CULL_FACE);
-
         selectAndBindTexture(thinLight);
 
         GL11.glPushMatrix();
-
             renderModel(thinLight);
         GL11.glPopMatrix();
 
         GL11.glPushMatrix();
             GL11.glEnable(GL11.GL_BLEND);
-            //this.bindTexture(textureX32);
             renderModelAlpha(thinLight);
             GL11.glPopMatrix();
             GL11.glDisable(GL11.GL_BLEND);
         GL11.glPopMatrix();
-
-//        GL11.glEnable(GL11.GL_CULL_FACE);
     }
 }

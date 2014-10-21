@@ -3,15 +3,11 @@ package de.schimski.bulbs.renderer;
 import assets.bulbs.models.*;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
-import de.schimski.bulbs.utility.LogHelper;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
+import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.RenderHandEvent;
 import org.lwjgl.opengl.GL11;
 
 public class RendererGridLight extends TileEntitySpecialRenderer{
@@ -24,9 +20,13 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
     private ModelGridLightCon2b modelCon2b;
     private ModelGridLightCon3 modelCon3;
     private ModelGridLightCon4 modelCon4;
-    static int myRenderID;
 
+    private ModelGridLightX32 modelGridLightX32;
+    private ModelGridLightCon1X32 modelGridLightCon1X32;
 
+    private float renderScale = 0.03125f; //0.0625f
+
+    private ResourceLocation textureX32;
 
     public RendererGridLight() {
         this.model = new ModelGridLight();
@@ -36,9 +36,14 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         this.modelCon3 = new ModelGridLightCon3();
         this.modelCon4 = new ModelGridLightCon4();
 
+        modelGridLightX32 = new ModelGridLightX32();
+        modelGridLightCon1X32 = new ModelGridLightCon1X32();
+
         for (int i = 0; i<17; i++) {
             texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/" + gridLightTypes[i] + ".png");
         }
+
+        textureX32 = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/gridLightWhiteX32.png");
     }
 
     private void alignTileEntityAccordingState(double x, double y, double z, int state)
@@ -59,7 +64,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             GL11.glTranslatef((float)x - 0.5f, (float)y + 0.5f, (float)z + 0.5f);
             GL11.glRotatef(90, 0, 0, -1);
         } else if (state == 5) {
-            GL11.glTranslatef((float)x + 1.5f, (float)y + 0.5f, (float)z + 0.5f);;
+            GL11.glTranslatef((float)x + 1.5f, (float)y + 0.5f, (float)z + 0.5f);
             GL11.glRotatef(90, 0, 0, 1);
         }
     }
@@ -100,22 +105,22 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
                 }
                 else if (gridLight.neighbourCount() == 3)
                 {
-                    if (gridLight.hasConnectingLightNeighbour(i) == false && (side == 1 || side == 3)) {
+                    if (!gridLight.hasConnectingLightNeighbour(i) && (side == 1 || side == 3)) {
                         GL11.glRotatef((i - 1) * 90, 0, 1, 0);
                     }
-                    else if (gridLight.hasConnectingLightNeighbour(i) == false && side == 0) {
+                    else if (!gridLight.hasConnectingLightNeighbour(i) && side == 0) {
                         GL11.glRotatef((3-i) * 90, 0, 1, 0);
                     }
-                    else if (gridLight.hasConnectingLightNeighbour(i) == false && (side == 4 || side == 2)) {
+                    else if (!gridLight.hasConnectingLightNeighbour(i) && (side == 4 || side == 2)) {
                         GL11.glRotatef((-2+i) * 90, 0, 1, 0);
                     }
-                    else if (gridLight.hasConnectingLightNeighbour(i) == false && side == 5) {
+                    else if (!gridLight.hasConnectingLightNeighbour(i) && side == 5) {
                         GL11.glRotatef(i * 90, 0, 1, 0);
                     }
                 }
             }
         }
-        if (gridLight.neighbourCount() == 2 && gridLight.neighboursAreClose() == false)
+        if (gridLight.neighbourCount() == 2 && !gridLight.neighboursAreClose())
         {
             if (gridLight.hasConnectingLightNeighbour(2)  && (side == 4 || side == 5 || side == 2))
             {
@@ -131,7 +136,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
     private void renderModel(TileEntityGridLight gridLight)
     {
         if (gridLight.neighbourCount() == 1) {
-            this.modelCon1.renderModel(0.0625f);
+            modelGridLightCon1X32.renderModel(renderScale);
         } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose()){
             this.modelCon2a.renderModel(0.0625f);
         }else if ((gridLight.neighbourCount() == 2) && !gridLight.neighboursAreClose()){
@@ -141,7 +146,26 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         } else if (gridLight.neighbourCount() == 4) {
             this.modelCon4.renderModel(0.0625f);
         } else {
-            this.model.renderModel(0.0625f);
+        //    this.model.renderModel(0.0625f);
+            modelGridLightX32.renderModel(renderScale);
+
+        }
+    }
+
+    private void renderModelAlpha(TileEntityGridLight gridLight) {
+
+        if (gridLight.neighbourCount() == 1) {
+            modelGridLightCon1X32.renderAlpha(renderScale);
+        } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose()){
+
+        }else if ((gridLight.neighbourCount() == 2) && !gridLight.neighboursAreClose()){
+
+        } else if (gridLight.neighbourCount() == 3) {
+
+        } else if (gridLight.neighbourCount() == 4) {
+
+        } else {
+            modelGridLightX32.renderAlpha(renderScale);
         }
     }
     
@@ -151,20 +175,38 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         if (stack != null) {
             textureIndex = stack.getItemDamage()+1;
         }
-        this.bindTexture(texture[textureIndex]);
+        if (gridLight.neighbourCount() <2) {
+            this.bindTexture(textureX32);
+        } else {
+            this.bindTexture(texture[textureIndex]);
+        }
     }
 
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float p_147500_8_)
     {
         TileEntityGridLight gridLight = (TileEntityGridLight)(entity);
         GL11.glPushMatrix();
-        alignTileEntityAccordingState(x, y, z, gridLight.getState());
-        rotateTilEntityAccordingNBT(gridLight, gridLight.getState());
-        selectAndBindTexture(gridLight);
+            alignTileEntityAccordingState(x, y, z, gridLight.getState());
+            rotateTilEntityAccordingNBT(gridLight, gridLight.getState());
+            selectAndBindTexture(gridLight);
+
+
             GL11.glPushMatrix();
-            renderModel(gridLight);
+                GL11.glDisable(GL11.GL_CULL_FACE);
+                renderModel(gridLight);
+                GL11.glEnable(GL11.GL_CULL_FACE);
             GL11.glPopMatrix();
+
+            GL11.glPushMatrix();
+                GL11.glEnable(GL11.GL_BLEND);
+                renderModelAlpha(gridLight);
+                GL11.glDisable(GL11.GL_BLEND);
+            GL11.glPopMatrix();
+
+
         GL11.glPopMatrix();
+
+
 
     }
 }
