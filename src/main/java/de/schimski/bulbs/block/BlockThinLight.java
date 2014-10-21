@@ -38,7 +38,7 @@ public class BlockThinLight extends BlockBulbsContainer {
 
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        this.blockIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "itemThinLight");
+        //this.blockIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "itemThinLight");
     }
 
     public int onBlockPlaced(World world, int x, int y, int z, int side, float p_149660_6_, float p_149660_7_, float p_149660_8_, int p_149660_9_) {

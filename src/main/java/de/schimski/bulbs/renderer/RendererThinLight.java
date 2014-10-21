@@ -23,6 +23,8 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
     private ModelThinLightX32 modelThinLightX32;
     private ModelThinLightCon1X32 modelThinLightCon1X32;
     private ModelThinLightCon2FarX32 modelThinLightCon2FarX32;
+    private ModelThinLightCon2CloseX32 modelThinLightCon2CloseX32;
+    private ModelThinLightCon3X32 modelThinLightCon3X32;
 
     private float renderScale = 0.03125f; //0.0625f
 
@@ -40,6 +42,8 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
         this.modelThinLightX32 = new ModelThinLightX32();
         this.modelThinLightCon1X32 = new ModelThinLightCon1X32();
         this.modelThinLightCon2FarX32 = new ModelThinLightCon2FarX32();
+        this.modelThinLightCon2CloseX32 = new ModelThinLightCon2CloseX32();
+        this.modelThinLightCon3X32 = new ModelThinLightCon3X32();
 
 
         for (int i = 0; i<17; i++) {
@@ -78,37 +82,37 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
             for (int i = 0; i < 4; i++) {
                 if (thinLight.neighbourCount() == 1) {
                     if (thinLight.hasConnectingLightNeighbour(i) && side == 0) {
-                        GL11.glRotatef((2-i) * 90, 0, 1, 0);
+                        GL11.glRotatef(-i * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && side == 1) {
                         GL11.glRotatef(i * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && side == 2) {
-                        GL11.glRotatef((i + 1) * 90, 0, 1, 0);
+                        GL11.glRotatef((i + 3) * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && side == 3) {
-                        GL11.glRotatef((i-2) * 90, 0, 1, 0);
+                        GL11.glRotatef(i * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && side == 4) {
-                        GL11.glRotatef((i + 1) * 90, 0, 1, 0);
+                        GL11.glRotatef((i + 3) * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && side == 5) {
-                        GL11.glRotatef((i - 1) * 90, 0, 1, 0);
+                        GL11.glRotatef((i + 1) * 90, 0, 1, 0);
                     }
                 } else if (thinLight.neighbourCount() == 2 && thinLight.neighboursAreClose()) {
                     int j = (i < 3) ? i + 1 : 0;
                     if (thinLight.hasConnectingLightNeighbour(i) && thinLight.hasConnectingLightNeighbour(j) && side == 0) {
-                        GL11.glRotatef((2- i) * 90, 0, 1, 0);
+                        GL11.glRotatef(-i * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && thinLight.hasConnectingLightNeighbour(j) && side == 1) {
-                        GL11.glRotatef((i-1) * 90, 0, 1, 0);
+                        GL11.glRotatef((i+1) * 90, 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && thinLight.hasConnectingLightNeighbour(j) && side == 2) {
-                        GL11.glRotatef(((i-2) * 90), 0, 1, 0);
+                        GL11.glRotatef((i * 90), 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && thinLight.hasConnectingLightNeighbour(j) && side == 3) {
-                        GL11.glRotatef(((i-1) * 90), 0, 1, 0);
+                        GL11.glRotatef(((i+1) * 90), 0, 1, 0);
                     } else if (thinLight.hasConnectingLightNeighbour(i) && thinLight.hasConnectingLightNeighbour(j) && side == 4) {
-                        GL11.glRotatef((i - 2) * 90, 0, 1, 0);
-                    } else if (thinLight.hasConnectingLightNeighbour(i) && thinLight.hasConnectingLightNeighbour(j) && side == 5) {
                         GL11.glRotatef(i * 90, 0, 1, 0);
+                    } else if (thinLight.hasConnectingLightNeighbour(i) && thinLight.hasConnectingLightNeighbour(j) && side == 5) {
+                        GL11.glRotatef((i+2) * 90, 0, 1, 0);
                     }
                 }
                 else if (thinLight.neighbourCount() == 3) {
                     if (!thinLight.hasConnectingLightNeighbour(i) && (side == 1 || side == 3)) {
-                        GL11.glRotatef((i + 1) * 90, 0, 1, 0);
+                        GL11.glRotatef((i - 1) * 90, 0, 1, 0);
                     }
                     else if (!thinLight.hasConnectingLightNeighbour(i) && side == 0) {
                         GL11.glRotatef((1-i) * 90, 0, 1, 0);
@@ -140,30 +144,30 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
     private void renderModel(TileEntityThinLight thinLight)
     {
         if (thinLight.neighbourCount() == 1) {
-                this.modelThinLightCon1X32.renderModel(renderScale);
-            } else if ((thinLight.neighbourCount() == 2) && thinLight.neighboursAreClose()){
-                this.modelCon2a.renderModel(renderScale);
-            }else if ((thinLight.neighbourCount() == 2) && !thinLight.neighboursAreClose()){
-                this.modelThinLightCon2FarX32.renderModel(renderScale);
-            } else if (thinLight.neighbourCount() == 3) {
-                this.modelCon3.renderModel(renderScale);
-            } else if (thinLight.neighbourCount() == 4) {
-                this.modelCon4.renderModel(renderScale);
-            } else {
-                this.modelThinLightX32.renderModel(renderScale);
-            }
+            modelThinLightCon1X32.renderModel(renderScale);
+        } else if ((thinLight.neighbourCount() == 2) && thinLight.neighboursAreClose()){
+            modelThinLightCon2CloseX32.renderModel(renderScale);
+        }else if ((thinLight.neighbourCount() == 2) && !thinLight.neighboursAreClose()){
+            modelThinLightCon2FarX32.renderModel(renderScale);
+        } else if (thinLight.neighbourCount() == 3) {
+            modelThinLightCon3X32.renderModel(renderScale);
+        } else if (thinLight.neighbourCount() == 4) {
+            modelCon4.renderModel(renderScale);
+        } else {
+            modelThinLightX32.renderModel(renderScale);
         }
+    }
 
     private void renderModelAlpha(TileEntityThinLight thinLight) {
 
         if (thinLight.neighbourCount() == 1) {
-           this.modelThinLightCon1X32.renderAlpha(renderScale);
+           modelThinLightCon1X32.renderAlpha(renderScale);
         } else if ((thinLight.neighbourCount() == 2) && thinLight.neighboursAreClose()){
-
+           modelThinLightCon2CloseX32.renderAlpha(renderScale);
         }else if ((thinLight.neighbourCount() == 2) && !thinLight.neighboursAreClose()){
-           this.modelThinLightCon2FarX32.renderAlpha(renderScale);
+           modelThinLightCon2FarX32.renderAlpha(renderScale);
         } else if (thinLight.neighbourCount() == 3) {
-
+            modelThinLightCon3X32.renderAlpha(renderScale);
         } else if (thinLight.neighbourCount() == 4) {
 
         } else {
