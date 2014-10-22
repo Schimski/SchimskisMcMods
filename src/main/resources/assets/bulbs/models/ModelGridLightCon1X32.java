@@ -26,7 +26,7 @@ public class ModelGridLightCon1X32 extends ModelBase
   public ModelGridLightCon1X32()
   {
     textureWidth = 256;
-    textureHeight = 128;
+    textureHeight = 192;
     
       Bottom = new ModelRenderer(this, 0, 0);
       Bottom.addBox(-12F, 0F, -12F, 28, 2, 24);

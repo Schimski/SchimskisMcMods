@@ -26,7 +26,7 @@ public class ModelGridLightCon2FarX32 extends ModelBase
   public ModelGridLightCon2FarX32()
   {
     textureWidth = 256;
-    textureHeight = 128;
+    textureHeight = 192;
     
       Bottom = new ModelRenderer(this, 0, 0);
       Bottom.addBox(-16F, 0F, -12F, 32, 2, 24);

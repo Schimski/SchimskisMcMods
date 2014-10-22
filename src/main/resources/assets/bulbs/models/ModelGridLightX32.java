@@ -26,7 +26,7 @@ public class ModelGridLightX32 extends ModelBase
   public ModelGridLightX32()
   {
     textureWidth = 256;
-    textureHeight = 128;
+    textureHeight = 192;
 
       Bottom = new ModelRenderer(this, 0, 0);
       Bottom.addBox(-12F, 0F, -12F, 24, 2, 24);

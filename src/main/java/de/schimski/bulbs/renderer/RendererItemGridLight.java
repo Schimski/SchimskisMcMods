@@ -1,7 +1,6 @@
 package de.schimski.bulbs.renderer;
 
-import assets.bulbs.models.ModelGridLight;
-import assets.bulbs.models.ModelThinLightX32;
+import assets.bulbs.models.ModelGridLightX32;
 import de.schimski.bulbs.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -12,13 +11,13 @@ import org.lwjgl.opengl.GL11;
 
 public class RendererItemGridLight implements IItemRenderer {
 
-    protected ModelGridLight blockModel;
+    protected ModelGridLightX32 blockModel;
     protected ResourceLocation blockTexture;
     TileEntitySpecialRenderer render;
 
     public RendererItemGridLight() {
-        blockModel = new ModelGridLight();
-        blockTexture = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/gridLightCyan.png");
+        blockModel = new ModelGridLightX32();
+        blockTexture = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/gridLightWhiteX32.png");
         render = new RendererThinLight();
 
     }
@@ -62,31 +61,32 @@ public class RendererItemGridLight implements IItemRenderer {
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         switch (type) {
             case EQUIPPED:
+
             case EQUIPPED_FIRST_PERSON:
-                GL11.glPushMatrix();
+            GL11.glPushMatrix();
                 // rotates the item
                 GL11.glRotatef(90, 0, 0, 1);
                 GL11.glRotatef(0, 0, 1, 0);
-                GL11.glRotatef(-90, 1, 0, 0);
-                GL11.glTranslatef(0.5f, 1.5f,-0.9f);
-                GL11.glScalef(-3F, -3F, -3F);
+                GL11.glRotatef(-75, 1, 0, 0);
+                GL11.glTranslatef(0.5f, 0.5f, -0.4f);
+                GL11.glScalef(-1.5F, -1.5F, -1.5F);
                 Minecraft.getMinecraft().renderEngine
                         .bindTexture(this.blockTexture);
                 // renders the item
 
                 GL11.glPushMatrix();
-
-                blockModel.renderModel(0.02f);
+                    GL11.glDisable(GL11.GL_CULL_FACE);
+                    blockModel.renderModel(0.02f);
+                    GL11.glEnable(GL11.GL_CULL_FACE);
                 GL11.glPopMatrix();
 
-                /*GL11.glPushMatrix();
-                GL11.glEnable(GL11.GL_BLEND);
-
-                blockModel.renderAlpha(0.02f);
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glPopMatrix();*/
-
+                GL11.glPushMatrix();
+                    GL11.glEnable(GL11.GL_BLEND);
+                    blockModel.renderAlpha(0.02f);
+                    GL11.glDisable(GL11.GL_BLEND);
                 GL11.glPopMatrix();
+
+            GL11.glPopMatrix();
 
             default:
                 break;
@@ -106,18 +106,18 @@ public class RendererItemGridLight implements IItemRenderer {
                         .bindTexture(this.blockTexture);
                 // renders the item
                 GL11.glPushMatrix();
-
-                blockModel.renderModel(0.02f);
+                    GL11.glDisable(GL11.GL_CULL_FACE);
+                    blockModel.renderModel(0.02f);
+                    GL11.glEnable(GL11.GL_CULL_FACE);
                 GL11.glPopMatrix();
 
-                /*GL11.glPushMatrix();
-                GL11.glEnable(GL11.GL_BLEND);
-
-                blockModel.renderAlpha(0.02f);
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glPopMatrix();*/
-
+                GL11.glPushMatrix();
+                    GL11.glEnable(GL11.GL_BLEND);
+                    blockModel.renderAlpha(0.02f);
+                    GL11.glDisable(GL11.GL_BLEND);
                 GL11.glPopMatrix();
+
+            GL11.glPopMatrix();
             default:
                 break;
         }
@@ -129,24 +129,24 @@ public class RendererItemGridLight implements IItemRenderer {
                 GL11.glRotatef(0, 0, 0, 1);
                 GL11.glRotatef(0, 0, 1, 0);
                 GL11.glRotatef(180, 1, 0, 0);
-                GL11.glTranslatef(0f, -2f, 0f);
-                GL11.glScalef(4F, 4F, 4F);
+                GL11.glTranslatef(0f, -1f, 0f);
+                GL11.glScalef(2F, 2F, 2F);
                 Minecraft.getMinecraft().renderEngine
                         .bindTexture(this.blockTexture);
                 // renders the item
                 GL11.glPushMatrix();
-
-                blockModel.renderModel(0.02f);
+                    GL11.glDisable(GL11.GL_CULL_FACE);
+                    blockModel.renderModel(0.02f);
+                    GL11.glEnable(GL11.GL_CULL_FACE);
                 GL11.glPopMatrix();
 
-                /*GL11.glPushMatrix();
-                GL11.glEnable(GL11.GL_BLEND);
-
-                blockModel.renderAlpha(0.02f);
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glPopMatrix();*/
-
+                GL11.glPushMatrix();
+                    GL11.glEnable(GL11.GL_BLEND);
+                    blockModel.renderAlpha(0.02f);
+                    GL11.glDisable(GL11.GL_BLEND);
                 GL11.glPopMatrix();
+
+            GL11.glPopMatrix();
             default:
                 break;
         }

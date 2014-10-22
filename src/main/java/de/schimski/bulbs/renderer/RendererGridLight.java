@@ -13,40 +13,27 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
 
     private static final ResourceLocation[] texture = new ResourceLocation[17];
     public static final String[] gridLightTypes = new String[] {"gridLight", "gridLightBlack", "gridLightRed", "gridLightGreen", "gridLightBrown", "gridLightBlue", "gridLightPurple", "gridLightCyan", "gridLightLightGray", "gridLightGray", "gridLightPink", "gridLightLimeGreen", "gridLightYellow", "gridLightLightBlue", "gridLightMagenta", "gridLightOrange", "gridLightWhite"};
-    private ModelGridLight model;
-    private ModelGridLightCon1 modelCon1;
-    private ModelGridLightCon2a modelCon2a;
-    private ModelGridLightCon2b modelCon2b;
-    private ModelGridLightCon3 modelCon3;
-    private ModelGridLightCon4 modelCon4;
 
     private ModelGridLightX32 modelGridLightX32;
     private ModelGridLightCon1X32 modelGridLightCon1X32;
     private ModelGridLightCon2FarX32 modelGridLightCon2FarX32;
     private ModelGridLightCon2CloseX32 modelGridLightCon2CloseX32;
+    private ModelGridLightCon3X32 modelGridLightCon3X32;
+    private ModelGridLightCon4X32 modelGridLightCon4X32;
 
     private float renderScale = 0.03125f; //0.0625f
 
-    private ResourceLocation textureX32;
-
     public RendererGridLight() {
-        this.model = new ModelGridLight();
-        this.modelCon1 = new ModelGridLightCon1();
-        this.modelCon2a = new ModelGridLightCon2a();
-        this.modelCon2b = new ModelGridLightCon2b();
-        this.modelCon3 = new ModelGridLightCon3();
-        this.modelCon4 = new ModelGridLightCon4();
-
         modelGridLightX32 = new ModelGridLightX32();
         modelGridLightCon1X32 = new ModelGridLightCon1X32();
         modelGridLightCon2FarX32 = new ModelGridLightCon2FarX32();
         modelGridLightCon2CloseX32 =  new ModelGridLightCon2CloseX32();
+        modelGridLightCon3X32 = new ModelGridLightCon3X32();
+        modelGridLightCon4X32 =  new ModelGridLightCon4X32();
 
         for (int i = 0; i<17; i++) {
-            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/" + gridLightTypes[i] + ".png");
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/" + gridLightTypes[i] + "X32.png");
         }
-
-        textureX32 = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/gridLightWhiteX32.png");
     }
 
     private void alignTileEntityAccordingState(double x, double y, double z, int state)
@@ -143,11 +130,11 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose()){
             modelGridLightCon2CloseX32.renderModel(renderScale);
         }else if ((gridLight.neighbourCount() == 2) && !gridLight.neighboursAreClose()){
-          modelGridLightCon2FarX32.renderModel(renderScale);
+            modelGridLightCon2FarX32.renderModel(renderScale);
         } else if (gridLight.neighbourCount() == 3) {
-            this.modelCon3.renderModel(0.0625f);
+            modelGridLightCon3X32.renderModel(renderScale);
         } else if (gridLight.neighbourCount() == 4) {
-            this.modelCon4.renderModel(0.0625f);
+            modelGridLightCon4X32.renderModel(renderScale);
         } else {
         //    this.model.renderModel(0.0625f);
             modelGridLightX32.renderModel(renderScale);
@@ -164,9 +151,9 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         }else if ((gridLight.neighbourCount() == 2) && !gridLight.neighboursAreClose()){
             modelGridLightCon2FarX32.renderAlpha(renderScale);
         } else if (gridLight.neighbourCount() == 3) {
-
+            modelGridLightCon3X32.renderAlpha(renderScale);
         } else if (gridLight.neighbourCount() == 4) {
-
+            modelGridLightCon4X32.renderAlpha(renderScale);
         } else {
             modelGridLightX32.renderAlpha(renderScale);
         }
@@ -178,11 +165,8 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         if (stack != null) {
             textureIndex = stack.getItemDamage()+1;
         }
-        if (gridLight.neighbourCount() <3 ) {
-            this.bindTexture(textureX32);
-        } else {
-            this.bindTexture(texture[textureIndex]);
-        }
+
+        bindTexture(texture[textureIndex]);
     }
 
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float p_147500_8_)
