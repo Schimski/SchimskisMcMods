@@ -68,4 +68,10 @@ public class bulbs {
         LogHelper.info("PostInitialization Complete");
     }
 
+    /*
+     *  Extremely official ToDo:
+     *
+     *  - Change thinLight textures to match the bulbcolor not only for alpha
+     */
+
 }

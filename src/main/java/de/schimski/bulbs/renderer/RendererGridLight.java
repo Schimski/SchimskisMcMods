@@ -3,7 +3,6 @@ package de.schimski.bulbs.renderer;
 import assets.bulbs.models.*;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
-import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -23,6 +22,8 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
 
     private ModelGridLightX32 modelGridLightX32;
     private ModelGridLightCon1X32 modelGridLightCon1X32;
+    private ModelGridLightCon2FarX32 modelGridLightCon2FarX32;
+    private ModelGridLightCon2CloseX32 modelGridLightCon2CloseX32;
 
     private float renderScale = 0.03125f; //0.0625f
 
@@ -38,6 +39,8 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
 
         modelGridLightX32 = new ModelGridLightX32();
         modelGridLightCon1X32 = new ModelGridLightCon1X32();
+        modelGridLightCon2FarX32 = new ModelGridLightCon2FarX32();
+        modelGridLightCon2CloseX32 =  new ModelGridLightCon2CloseX32();
 
         for (int i = 0; i<17; i++) {
             texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/gridLight/" + gridLightTypes[i] + ".png");
@@ -49,22 +52,22 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
     private void alignTileEntityAccordingState(double x, double y, double z, int state)
     {
         if (state == 0) {
-            GL11.glTranslatef((float)x + 0.5f, (float)y - 0.5f, (float)z + 0.5f);
+            GL11.glTranslatef((float)x + 0.5f, (float)y +0.25f, (float)z + 0.5f);
         } else if (state == 1) {
-            GL11.glTranslatef((float)x + 0.5f, (float)y + 1.5f, (float)z + 0.5f);
+            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.75f, (float)z + 0.5f);
             GL11.glRotatef(180, 1, 0, 0);
         } else if (state == 2) {
-            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z - 0.5f);
+            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z +0.25f);
             GL11.glRotatef(90, 0, -1, 0);
             GL11.glRotatef(90, 0, 0, -1);
         } else if (state == 3) {
-            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z + 1.5f);
+            GL11.glTranslatef((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.75f);
             GL11.glRotatef(90, -1, 0, 0);
         } else if (state == 4) {
-            GL11.glTranslatef((float)x - 0.5f, (float)y + 0.5f, (float)z + 0.5f);
+            GL11.glTranslatef((float)x +0.25f, (float)y + 0.5f, (float)z + 0.5f);
             GL11.glRotatef(90, 0, 0, -1);
         } else if (state == 5) {
-            GL11.glTranslatef((float)x + 1.5f, (float)y + 0.5f, (float)z + 0.5f);
+            GL11.glTranslatef((float) x + 0.75f, (float) y + 0.5f, (float) z + 0.5f);
             GL11.glRotatef(90, 0, 0, 1);
         }
     }
@@ -90,17 +93,17 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
                 } else if (gridLight.neighbourCount() == 2 && gridLight.neighboursAreClose()) {
                     int j = (i < 3) ? i + 1 : 0;
                     if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 0) {
-                        GL11.glRotatef(-(i + 1) * 90, 0, 1, 0);
+                        GL11.glRotatef(-i * 90, 0, 1, 0);
                     } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 1) {
-                        GL11.glRotatef(i * 90, 0, 1, 0);
+                        GL11.glRotatef((i+1) * 90, 0, 1, 0);
                     } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 2) {
-                        GL11.glRotatef(-90 + (i * 90), 0, 1, 0);
-                    } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 3) {
                         GL11.glRotatef((i * 90), 0, 1, 0);
+                    } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 3) {
+                        GL11.glRotatef(((i+1) * 90), 0, 1, 0);
                     } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 4) {
-                        GL11.glRotatef((i - 1) * 90, 0, 1, 0);
+                        GL11.glRotatef(i * 90, 0, 1, 0);
                     } else if (gridLight.hasConnectingLightNeighbour(i) && gridLight.hasConnectingLightNeighbour(j) && side == 5) {
-                        GL11.glRotatef((i + 1) * 90, 0, 1, 0);
+                        GL11.glRotatef((i+2) * 90, 0, 1, 0);
                     }
                 }
                 else if (gridLight.neighbourCount() == 3)
@@ -138,9 +141,9 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         if (gridLight.neighbourCount() == 1) {
             modelGridLightCon1X32.renderModel(renderScale);
         } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose()){
-            this.modelCon2a.renderModel(0.0625f);
+            modelGridLightCon2CloseX32.renderModel(renderScale);
         }else if ((gridLight.neighbourCount() == 2) && !gridLight.neighboursAreClose()){
-            this.modelCon2b.renderModel(0.0625f);
+          modelGridLightCon2FarX32.renderModel(renderScale);
         } else if (gridLight.neighbourCount() == 3) {
             this.modelCon3.renderModel(0.0625f);
         } else if (gridLight.neighbourCount() == 4) {
@@ -157,9 +160,9 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         if (gridLight.neighbourCount() == 1) {
             modelGridLightCon1X32.renderAlpha(renderScale);
         } else if ((gridLight.neighbourCount() == 2) && gridLight.neighboursAreClose()){
-
+            modelGridLightCon2CloseX32.renderAlpha(renderScale);
         }else if ((gridLight.neighbourCount() == 2) && !gridLight.neighboursAreClose()){
-
+            modelGridLightCon2FarX32.renderAlpha(renderScale);
         } else if (gridLight.neighbourCount() == 3) {
 
         } else if (gridLight.neighbourCount() == 4) {
@@ -175,7 +178,7 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
         if (stack != null) {
             textureIndex = stack.getItemDamage()+1;
         }
-        if (gridLight.neighbourCount() <2) {
+        if (gridLight.neighbourCount() <3 ) {
             this.bindTexture(textureX32);
         } else {
             this.bindTexture(texture[textureIndex]);
