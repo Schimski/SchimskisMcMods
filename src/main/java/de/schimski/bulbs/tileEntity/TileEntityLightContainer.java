@@ -52,14 +52,6 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
     private boolean[] boolConnect;
 
-    /*
-    * probaply never needed as only subclasses are called with the standard constructor
-    *
-
-    public TileEntityLightContainer() {
-        this(-1);
-    }
-    */
 
     public TileEntityLightContainer(int metadata) {
         super();
@@ -310,11 +302,6 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
     }
 
     @Override
-    public String getInventoryName() {
-        return "bulbs.gridLight";
-    }
-
-    @Override
     public boolean hasCustomInventoryName() {
         return false;
     }
@@ -329,6 +316,12 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
     public boolean isUseableByPlayer(EntityPlayer player) {
         return worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && player.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64;
     }
+
+    @Override
+    public String getInventoryName() {
+        return null;
+    }
+
 
     @Override
     public void openInventory() {

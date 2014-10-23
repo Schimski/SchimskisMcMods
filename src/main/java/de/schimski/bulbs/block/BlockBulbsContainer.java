@@ -8,6 +8,7 @@ import de.schimski.bulbs.item.ItemBulbs;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
+import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.block.Block;
@@ -114,6 +115,19 @@ public class BlockBulbsContainer extends BlockContainer {
         } else if (player.getHeldItem() == null) {
             LogHelper.info("Connections: " + tileEntity.getBoolConnect());
             LogHelper.info("State: " + tileEntity.getState());
+            if (tileEntity.getStackInSlot(0) != null) {
+                LogHelper.info(tileEntity.getStackInSlot(0).stackSize);
+            } else {
+                LogHelper.info("Stack null");
+                if (tileEntity instanceof TileEntityGridLight) {
+                    player.openGui(bulbs.instance, 0, world, x, y, z);
+                } else if (tileEntity instanceof TileEntityThinLight) {
+                    player.openGui(bulbs.instance, 1, world, x, y, z);
+                } else if (tileEntity instanceof TileEntityOfficeLight1) {
+                    player.openGui(bulbs.instance, 2, world, x, y, z);
+                }
+            }
+
             return true;
         } else if (player.getHeldItem().getItem() instanceof ItemBulbs) {// && player.isSneaking()) {
 
@@ -136,6 +150,8 @@ public class BlockBulbsContainer extends BlockContainer {
                 player.openGui(bulbs.instance, 0, world, x, y, z);
             } else if (tileEntity instanceof TileEntityThinLight) {
                 player.openGui(bulbs.instance, 1, world, x, y, z);
+            } else if (tileEntity instanceof TileEntityOfficeLight1) {
+                player.openGui(bulbs.instance, 2, world, x, y, z);
             }
             return true;
         }

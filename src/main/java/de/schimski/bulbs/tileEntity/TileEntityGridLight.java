@@ -9,4 +9,10 @@ public class TileEntityGridLight extends TileEntityLightContainer{
     public TileEntityGridLight (int metadata) {
         super(metadata);
     }
+
+    @Override
+    public String getInventoryName() {
+        return "bulbs.gridLight";
+    }
+
 }

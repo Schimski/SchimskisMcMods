@@ -13,6 +13,12 @@ public class TileEntityThinLight extends TileEntityLightContainer {
         super(metadata);
     }
 
+    @Override
+    public String getInventoryName() {
+        return "bulbs.thinLight";
+    }
+
+
     /*
     @Override
     public boolean shouldRenderInPass(int pass)
