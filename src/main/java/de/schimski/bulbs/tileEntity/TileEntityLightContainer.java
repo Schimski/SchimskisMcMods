@@ -53,6 +53,14 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
     private boolean[] boolConnect;
 
 
+    /*
+     *  Rotationangle if rotatable
+     */
+
+    private int rotation;
+
+
+
     public TileEntityLightContainer(int metadata) {
         super();
         this.lightLevel = 15;
@@ -67,9 +75,11 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
      */
 
     public void increaseLightLevel() {
-        lightLevel = (lightLevel + 1) % 16;
-        LogHelper.info(lightLevel);
-        updateBlockMetadata();
+        if (this.getStackInSlot(0) != null){
+            lightLevel = (lightLevel + 1) % 16;
+            LogHelper.info(lightLevel);
+            updateBlockMetadata();
+        }
     }
 
 
@@ -86,8 +96,22 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         return result;
     }
 
+
     /*
-     *  Methods to keep CLient and Server synced
+     *  Methods to set and get rotation
+     *  If tileEntity is rotatable is set in the block
+     */
+
+    public void increaseRotation() {
+        rotation = (rotation + 90) % 360;
+    }
+
+    public int getRotation() {
+        return rotation;
+    }
+
+    /*
+     *  Methods to keep Client and Server synced
      */
 
     @Override

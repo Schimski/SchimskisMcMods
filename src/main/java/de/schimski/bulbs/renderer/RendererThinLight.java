@@ -178,6 +178,8 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
 
         selectAndBindTexture(thinLight);
 
+
+
         GL11.glPushMatrix();
             renderModel(thinLight);
         GL11.glPopMatrix();

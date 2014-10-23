@@ -1,6 +1,7 @@
 package de.schimski.bulbs.handler;
 
 import cpw.mods.fml.common.network.IGuiHandler;
+import de.schimski.bulbs.bulbs;
 import de.schimski.bulbs.client.gui.inventory.GuiGridLight;
 import de.schimski.bulbs.client.gui.inventory.GuiOfficeLight1;
 import de.schimski.bulbs.client.gui.inventory.GuiThinLight;
@@ -10,7 +11,9 @@ import de.schimski.bulbs.inventory.ContainerThinLight;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
+import ibxm.Player;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GuiHandler implements IGuiHandler{
@@ -46,6 +49,4 @@ public class GuiHandler implements IGuiHandler{
 
         return null;
     }
-
-
 }

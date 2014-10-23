@@ -4,12 +4,15 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.bulbs;
 import de.schimski.bulbs.creativetab.CreativeTabBulbs;
+import de.schimski.bulbs.handler.GuiHandler;
 import de.schimski.bulbs.item.ItemBulbs;
+import de.schimski.bulbs.item.ItemScrewDriver;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
+import de.schimski.bulbs.utility.GuiHelper;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -29,9 +32,11 @@ import java.util.Random;
 public class BlockBulbsContainer extends BlockContainer {
 
     protected boolean[] connectNeighbours;
+    protected boolean canRotate;
 
     public BlockBulbsContainer(Material material) {
         super(material);
+        this.canRotate = false;
         this.setCreativeTab(CreativeTabBulbs.BULBS_TAB);
     }
 
@@ -110,30 +115,23 @@ public class BlockBulbsContainer extends BlockContainer {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
         TileEntityLightContainer tileEntity = (TileEntityLightContainer) world.getTileEntity(x, y, z);
         if (tileEntity != null && player.isSneaking() && player.getHeldItem() == null) {
+
+            //  Dimming when empty Hand and sneaking
+
             tileEntity.increaseLightLevel();
             return true;
-        } else if (player.getHeldItem() == null) {
-            //LogHelper.info("Connections: " + tileEntity.getBoolConnect());
-            //LogHelper.info("State: " + tileEntity.getState());
-            if (tileEntity.getStackInSlot(0) != null) {
-                //LogHelper.info(tileEntity.getStackInSlot(0).stackSize);
-            } else {
-                //LogHelper.info("Stack null");
-                if (tileEntity instanceof TileEntityGridLight) {
-                    player.openGui(bulbs.instance, 0, world, x, y, z);
-                } else if (tileEntity instanceof TileEntityThinLight) {
-                    player.openGui(bulbs.instance, 1, world, x, y, z);
-                } else if (tileEntity instanceof TileEntityOfficeLight1) {
-                    player.openGui(bulbs.instance, 2, world, x, y, z);
-                }
-            }
 
+
+        } else if (player.getHeldItem() == null) {
+
+            GuiHelper.openGui(tileEntity, player, world, x, y, z);
             return true;
+
         } else if (player.getHeldItem().getItem() instanceof ItemBulbs) {// && player.isSneaking()) {
 
             if (!world.isRemote && tileEntity.getStackInSlot(0) != null) {
                 world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, tileEntity.getStackInSlot(0)));
-                tileEntity.decrStackSize(0,1);
+                tileEntity.decrStackSize(0, 1);
                 //LogHelper.info("dropping");
             }
             ItemStack newStack = player.getHeldItem().copy();
@@ -142,17 +140,14 @@ public class BlockBulbsContainer extends BlockContainer {
             player.getHeldItem().stackSize = player.getHeldItem().stackSize - 1;
             tileEntity.updateLightLevel();
 //            if (player.getHeldItem().stackSize == 0) {
-  //              player.inventory.siz
-    //a        }
+            //              player.inventory.siz
+            //a        }
+            return true;
+        } else if (player.getHeldItem().getItem() instanceof ItemScrewDriver && canRotate) {
+            tileEntity.increaseRotation();
             return true;
         } else {
-            if (tileEntity instanceof TileEntityGridLight) {
-                player.openGui(bulbs.instance, 0, world, x, y, z);
-            } else if (tileEntity instanceof TileEntityThinLight) {
-                player.openGui(bulbs.instance, 1, world, x, y, z);
-            } else if (tileEntity instanceof TileEntityOfficeLight1) {
-                player.openGui(bulbs.instance, 2, world, x, y, z);
-            }
+            GuiHelper.openGui(tileEntity, player, world, x, y, z);
             return true;
         }
     }
