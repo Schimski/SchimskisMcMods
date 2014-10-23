@@ -185,9 +185,11 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             GL11.glPopMatrix();
 
             GL11.glPushMatrix();
+                GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glEnable(GL11.GL_BLEND);
                 renderModelAlpha(gridLight);
                 GL11.glDisable(GL11.GL_BLEND);
+                GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
 
 

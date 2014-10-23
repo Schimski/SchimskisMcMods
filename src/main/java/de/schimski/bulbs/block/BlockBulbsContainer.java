@@ -113,12 +113,12 @@ public class BlockBulbsContainer extends BlockContainer {
             tileEntity.increaseLightLevel();
             return true;
         } else if (player.getHeldItem() == null) {
-            LogHelper.info("Connections: " + tileEntity.getBoolConnect());
-            LogHelper.info("State: " + tileEntity.getState());
+            //LogHelper.info("Connections: " + tileEntity.getBoolConnect());
+            //LogHelper.info("State: " + tileEntity.getState());
             if (tileEntity.getStackInSlot(0) != null) {
-                LogHelper.info(tileEntity.getStackInSlot(0).stackSize);
+                //LogHelper.info(tileEntity.getStackInSlot(0).stackSize);
             } else {
-                LogHelper.info("Stack null");
+                //LogHelper.info("Stack null");
                 if (tileEntity instanceof TileEntityGridLight) {
                     player.openGui(bulbs.instance, 0, world, x, y, z);
                 } else if (tileEntity instanceof TileEntityThinLight) {
@@ -134,7 +134,7 @@ public class BlockBulbsContainer extends BlockContainer {
             if (!world.isRemote && tileEntity.getStackInSlot(0) != null) {
                 world.spawnEntityInWorld(new EntityItem(world, player.posX, player.posY, player.posZ, tileEntity.getStackInSlot(0)));
                 tileEntity.decrStackSize(0,1);
-                LogHelper.info("dropping");
+                //LogHelper.info("dropping");
             }
             ItemStack newStack = player.getHeldItem().copy();
             newStack.stackSize = 1;

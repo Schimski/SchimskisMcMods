@@ -5,6 +5,7 @@ import assets.bulbs.models.ModelOfficeLight1.ModelOfficeLight1;
 import de.schimski.bulbs.init.ModBlocks;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
+import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -172,20 +173,33 @@ public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
     {
         TileEntityOfficeLight1 officeLight1 = (TileEntityOfficeLight1)(entity);
 
-        Tessellator tessellator = Tessellator.instance;
+        //Tessellator tessellator = Tessellator.instance;
         //This will make your block brightness dependent from surroundings lighting.
-        //tessellator.setColorOpaque_F(f, f, f);
-        tessellator.setBrightness(15728880);
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)65536, (float)65536);
+        //tessellator.setColorOpaque_F(1,1,1);
+        //tessellator.setBrightness(15728880);
+/*
+        int var5 = (int) (((float)entity.getWorldObj().getBlockLightValue(entity.xCoord, entity.yCoord, entity.zCoord)) / 15F *240F);
 
+        LogHelper.info("LightValue0: " + (float)entity.getWorldObj().getBlockLightValue(entity.xCoord, entity.yCoord, entity.zCoord));
+        LogHelper.info("LightValue: " + var5);
+        int var6 = var5 % 65536;
+        LogHelper.info("LightValue2: " + var6);
+        int var7 = var5 / 65536;
+        LogHelper.info("LightValue3: " + var7);
+
+        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, var6 / 1.0F, var7 / 1.0F);
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+        //OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+*/
 
         GL11.glPushMatrix();
             alignTileEntityAccordingState(x, y, z, officeLight1.getState());
             rotateTilEntityAccordingNBT(officeLight1, officeLight1.getState());
             selectAndBindTexture(officeLight1);
 
-        GL11.glDisable(GL11.GL_LIGHTING);
-        OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+
+        //OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
 
             GL11.glPushMatrix();
                 GL11.glDisable(GL11.GL_CULL_FACE);
@@ -194,12 +208,14 @@ public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
             GL11.glPopMatrix();
 
             GL11.glPushMatrix();
+                GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glEnable(GL11.GL_BLEND);
                 renderModelAlpha(officeLight1);
                 GL11.glDisable(GL11.GL_BLEND);
+                GL11.glEnable(GL11.GL_LIGHTING);
             GL11.glPopMatrix();
 
-        GL11.glEnable(GL11.GL_LIGHTING);
+
 
         GL11.glPopMatrix();
     }
