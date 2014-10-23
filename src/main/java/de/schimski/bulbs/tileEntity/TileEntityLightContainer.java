@@ -57,7 +57,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
      *  Rotationangle if rotatable
      */
 
-    private int rotation;
+    protected int rotation;
 
 
 

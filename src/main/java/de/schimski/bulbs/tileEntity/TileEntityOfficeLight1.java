@@ -16,6 +16,12 @@ public class TileEntityOfficeLight1 extends TileEntityLightContainer {
         return "bulbs.officeLight1";
     }
 
+
+    @Override
+    public void increaseRotation() {
+
+        rotation = (rotation + 90) % 180;
+    }
     /*
     @Override
     public boolean shouldRenderInPass(int pass)

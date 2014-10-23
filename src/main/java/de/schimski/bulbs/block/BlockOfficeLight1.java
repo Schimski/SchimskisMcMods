@@ -27,6 +27,7 @@ public class BlockOfficeLight1 extends BlockBulbsContainer{
         super();
         this.setBlockName("officeLight1");
         this.setHardness(0.5f);
+        this.canRotate = true;
     }
 
     @SideOnly(Side.CLIENT)

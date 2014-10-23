@@ -58,66 +58,7 @@ public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
 
     private void rotateTilEntityAccordingNBT(TileEntityOfficeLight1 officeLight1, int side)
     {
-       /*if (officeLight1.neighbourCount() == 1 || officeLight1.neighboursAreClose() || officeLight1.neighbourCount() == 3) {
-            for (int i = 0; i < 4; i++) {
-                if (officeLight1.neighbourCount() == 1) {
-                    if (officeLight1.hasConnectingLightNeighbour(i) && side == 0) {
-                        GL11.glRotatef(-i * 90, 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && side == 1) {
-                        GL11.glRotatef(i * 90, 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && side == 3) {
-                        GL11.glRotatef(i * 90, 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && side == 2) {
-                        GL11.glRotatef((i + 3) * 90, 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && side == 4) {
-                        GL11.glRotatef((i + 3) * 90, 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && side == 5) {
-                        GL11.glRotatef((i + 1) * 90, 0, 1, 0);
-                    }
-                } else if (officeLight1.neighbourCount() == 2 && officeLight1.neighboursAreClose()) {
-                    int j = (i < 3) ? i + 1 : 0;
-                    if (officeLight1.hasConnectingLightNeighbour(i) && officeLight1.hasConnectingLightNeighbour(j) && side == 0) {
-                        GL11.glRotatef(-i * 90, 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && officeLight1.hasConnectingLightNeighbour(j) && side == 1) {
-                        GL11.glRotatef((i+1) * 90, 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && officeLight1.hasConnectingLightNeighbour(j) && side == 2) {
-                        GL11.glRotatef((i * 90), 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && officeLight1.hasConnectingLightNeighbour(j) && side == 3) {
-                        GL11.glRotatef(((i+1) * 90), 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && officeLight1.hasConnectingLightNeighbour(j) && side == 4) {
-                        GL11.glRotatef(i * 90, 0, 1, 0);
-                    } else if (officeLight1.hasConnectingLightNeighbour(i) && officeLight1.hasConnectingLightNeighbour(j) && side == 5) {
-                        GL11.glRotatef((i+2) * 90, 0, 1, 0);
-                    }
-                }
-                else if (officeLight1.neighbourCount() == 3)
-                {
-                    if (!officeLight1.hasConnectingLightNeighbour(i) && (side == 1 || side == 3)) {
-                        GL11.glRotatef((i - 1) * 90, 0, 1, 0);
-                    }
-                    else if (!officeLight1.hasConnectingLightNeighbour(i) && side == 0) {
-                        GL11.glRotatef((3-i) * 90, 0, 1, 0);
-                    }
-                    else if (!officeLight1.hasConnectingLightNeighbour(i) && (side == 4 || side == 2)) {
-                        GL11.glRotatef((-2+i) * 90, 0, 1, 0);
-                    }
-                    else if (!officeLight1.hasConnectingLightNeighbour(i) && side == 5) {
-                        GL11.glRotatef(i * 90, 0, 1, 0);
-                    }
-                }
-            }
-        }
-        if (officeLight1.neighbourCount() == 2 && !officeLight1.neighboursAreClose())
-        {
-            if (officeLight1.hasConnectingLightNeighbour(2)  && (side == 4 || side == 5 || side == 2))
-            {
-                GL11.glRotatef(90, 0, 1, 0);
-            }
-            else if (officeLight1.hasConnectingLightNeighbour(1) && (side == 3 || side == 0 || side == 1))
-            {
-                GL11.glRotatef(90, 0, 1, 0);
-            }
-        }*/
+        GL11.glRotatef(officeLight1.getRotation(), 0, 1, 0);
     }
 
     private void renderModel(TileEntityOfficeLight1 officeLight1)
@@ -200,6 +141,8 @@ public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
 
 
         //OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240f, 240f);
+
+
 
             GL11.glPushMatrix();
                 GL11.glDisable(GL11.GL_CULL_FACE);
