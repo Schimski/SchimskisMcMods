@@ -23,8 +23,8 @@ public class ModelBlockLightX32 extends ModelBase
   
   public ModelBlockLightX32()
   {
-    textureWidth = 128;
-    textureHeight = 128;
+    textureWidth = 192;
+    textureHeight = 192;
     
       Light = new ModelRenderer(this, 0, 0);
       Light.addBox(-15F, -31F, -15F, 30, 30, 30);
@@ -33,7 +33,7 @@ public class ModelBlockLightX32 extends ModelBase
       Light.mirror = true;
       setRotation(Light, 0F, 0F, 0F);
       Alpha = new ModelRenderer(this, 0, 64);
-      Alpha.addBox(-16F, -32F, -16F, 32, 32, 32);
+      Alpha.addBox(-17F, -33F, -17F, 34, 34, 34);
       Alpha.setRotationPoint(0F, 24F, 0F);
       Alpha.setTextureSize(128, 128);
       Alpha.mirror = true;

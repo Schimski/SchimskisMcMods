@@ -19,7 +19,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
      * Side of the Block the light sticks to
      */
 
-    private byte state;
+    protected byte state;
 
     /*
      * for the moment unused lightcolor
@@ -73,6 +73,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         this.boolConnect = new boolean[] {false, false, false, false};
         this.state =  metadata >= 0 ? (byte) metadata : 0;
         this.canRotate = false;
+        this.rotation=0;
     }
 
 
@@ -196,6 +197,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
         nbt.setByte("state", state);
         nbt.setInteger("lightLevel", lightLevel);
+        nbt.setInteger("rotation", rotation);
 
         NBTTagList itemList = new NBTTagList();
         for (int i = 0; i < inventory.length; i++) {
@@ -221,6 +223,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
         state = nbt.getByte("state");
         lightLevel = nbt.getInteger("lightLevel");
+        rotation = nbt.getInteger("rotation");
 
         NBTTagList tagList = nbt.getTagList("Inventory",10);
         for (int i = 0; i < tagList.tagCount(); i++) {

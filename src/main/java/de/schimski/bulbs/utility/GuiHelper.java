@@ -1,10 +1,7 @@
 package de.schimski.bulbs.utility;
 
 import de.schimski.bulbs.bulbs;
-import de.schimski.bulbs.tileEntity.TileEntityBlockLight;
-import de.schimski.bulbs.tileEntity.TileEntityGridLight;
-import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
-import de.schimski.bulbs.tileEntity.TileEntityThinLight;
+import de.schimski.bulbs.tileEntity.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -21,6 +18,8 @@ public class GuiHelper {
             player.openGui(bulbs.instance, 2, world, x, y, z);
         } else if (tileEntity instanceof TileEntityBlockLight) {
             player.openGui(bulbs.instance, 3, world, x, y, z);
+        } else if (tileEntity instanceof TileEntityPoleLight) {
+            player.openGui(bulbs.instance, 4, world, x, y, z);
         }
     }
 }

@@ -1,6 +1,7 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelBlockLightX32.ModelBlockLightX32;
+import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityBlockLight;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -16,7 +17,7 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
 
     private ModelBlockLightX32 modelBlockLight;
 
-    private float renderScale = 0.03125f; //0.0625f
+    private float renderScale = 0.03125f; //0.03125f; //0.0625f
 
     public RendererBlockLight() {
         modelBlockLight = new ModelBlockLightX32();
@@ -81,20 +82,22 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
             rotateTilEntityAccordingNBT(blockLight);
             selectAndBindTexture(blockLight);
 
-            GL11.glPushMatrix();
+            if (ClientProxy.renderPass == 0) {
+
+                GL11.glPushMatrix();
                 GL11.glDisable(GL11.GL_CULL_FACE);
                 renderModel();
                 GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glPopMatrix();
-
-            GL11.glPushMatrix();
+                GL11.glPopMatrix();
+            } else {
+                GL11.glPushMatrix();
                 GL11.glDisable(GL11.GL_LIGHTING);
                 GL11.glEnable(GL11.GL_BLEND);
                 renderModelAlpha();
                 GL11.glDisable(GL11.GL_BLEND);
                 GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glPopMatrix();
-
+                GL11.glPopMatrix();
+            }
         GL11.glPopMatrix();
     }
 }

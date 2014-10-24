@@ -1,6 +1,6 @@
 package de.schimski.bulbs.renderer;
 
-import assets.bulbs.models.ModelGridLightX32;
+import assets.bulbs.models.ModelGridLightX32.ModelGridLightX32;
 import de.schimski.bulbs.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;

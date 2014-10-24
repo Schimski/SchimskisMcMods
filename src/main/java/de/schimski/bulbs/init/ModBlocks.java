@@ -12,6 +12,7 @@ public class ModBlocks
     public static final BlockThinLight thinLight = new BlockThinLight();
     public static final BlockOfficeLight1 officeLight1 = new BlockOfficeLight1();
     public static final BlockBlockLight blockLight = new BlockBlockLight();
+    public static final BlockPoleLight poleLight = new BlockPoleLight();
 
     public static void init()
     {
@@ -19,5 +20,6 @@ public class ModBlocks
         GameRegistry.registerBlock(thinLight, "thinLight");
         GameRegistry.registerBlock(officeLight1, "officeLight1");
         GameRegistry.registerBlock(blockLight, "blockLight");
+        GameRegistry.registerBlock(poleLight, "poleLight");
     }
 }

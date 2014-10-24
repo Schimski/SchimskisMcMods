@@ -1,14 +1,11 @@
 package de.schimski.bulbs.renderer;
 
-import assets.bulbs.models.ModelThinLightX32;
+import assets.bulbs.models.ModelThinLightX32.ModelThinLightX32;
 import de.schimski.bulbs.reference.Reference;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 

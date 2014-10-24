@@ -9,7 +9,7 @@
 
 
 
-package assets.bulbs.models;
+package assets.bulbs.models.ModelGridLightX32;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
