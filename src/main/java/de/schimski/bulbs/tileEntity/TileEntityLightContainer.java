@@ -59,6 +59,11 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
     protected int rotation;
 
+    /*
+     *  tileEntity is rotatable, dafault: false;
+     */
+
+    protected boolean canRotate;
 
 
     public TileEntityLightContainer(int metadata) {
@@ -67,6 +72,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         this.inventory = new ItemStack[1];
         this.boolConnect = new boolean[] {false, false, false, false};
         this.state =  metadata >= 0 ? (byte) metadata : 0;
+        this.canRotate = false;
     }
 
 
@@ -108,6 +114,10 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
     public int getRotation() {
         return rotation;
+    }
+
+    public boolean isRotatable() {
+        return this.canRotate;
     }
 
     /*

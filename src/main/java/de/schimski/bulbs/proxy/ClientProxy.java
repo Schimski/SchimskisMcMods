@@ -5,6 +5,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import de.schimski.bulbs.block.BlockThinLight;
 import de.schimski.bulbs.init.ModBlocks;
 import de.schimski.bulbs.renderer.*;
+import de.schimski.bulbs.tileEntity.TileEntityBlockLight;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
@@ -27,6 +28,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGridLight.class, new RendererGridLight());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityThinLight.class, new RendererThinLight());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOfficeLight1.class, new RendererOfficeLight1());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBlockLight.class, new RendererBlockLight());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.thinLight), new RendererItemThinLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.gridLight), new RendererItemGridLight());

@@ -1,35 +1,28 @@
 package de.schimski.bulbs.renderer;
 
-import assets.bulbs.models.*;
-import assets.bulbs.models.ModelOfficeLight1.ModelOfficeLight1;
-import de.schimski.bulbs.init.ModBlocks;
+import assets.bulbs.models.ModelBlockLightX32.ModelBlockLightX32;
 import de.schimski.bulbs.reference.Reference;
-import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
-import de.schimski.bulbs.utility.LogHelper;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
+import de.schimski.bulbs.tileEntity.TileEntityBlockLight;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
-public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
+public class RendererBlockLight extends TileEntitySpecialRenderer{
 
     private static final ResourceLocation[] texture = new ResourceLocation[17];
-    public static final String[] officeLight1Types = new String[] {"officeLight1", "officeLight1Black", "officeLight1Red", "officeLight1Green", "officeLight1Brown", "officeLight1Blue", "officeLight1Purple", "officeLight1Cyan", "officeLight1LightGray", "officeLight1Gray", "officeLight1Pink", "officeLight1LimeGreen", "officeLight1Yellow", "officeLight1LightBlue", "officeLight1Magenta", "officeLight1Orange", "officeLight1White"};
+    public static final String[] blockLightTypes = new String[] {"blockLight", "blockLightBlack", "blockLightRed", "blockLightGreen", "blockLightBrown", "blockLightBlue", "blockLightPurple", "blockLightCyan", "blockLightLightGray", "blockLightGray", "blockLightPink", "blockLightLimeGreen", "blockLightYellow", "blockLightLightBlue", "blockLightMagenta", "blockLightOrange", "blockLightWhite"};
 
-    private ModelOfficeLight1 modelOfficeLight1;
+    private ModelBlockLightX32 modelBlockLight;
 
     private float renderScale = 0.03125f; //0.0625f
 
-    public RendererOfficeLight1() {
-        modelOfficeLight1 = new ModelOfficeLight1();
+    public RendererBlockLight() {
+        modelBlockLight = new ModelBlockLightX32();
 
         for (int i = 0; i<17; i++) {
-            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/officeLight1/" + officeLight1Types[i] + "X32.png");
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/blockLight/" + blockLightTypes[i] + "X32.png");
         }
     }
 
@@ -56,23 +49,22 @@ public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
         }
     }
 
-    private void rotateTilEntityAccordingNBT(TileEntityOfficeLight1 officeLight1)
+    private void rotateTilEntityAccordingNBT(TileEntityBlockLight blockLight)
     {
-        GL11.glRotatef(officeLight1.getRotation(), 0, 1, 0);
+        GL11.glRotatef(blockLight.getRotation(), 0, 1, 0);
     }
 
     private void renderModel() {
-        modelOfficeLight1.renderModel(renderScale);
+        modelBlockLight.renderModel(renderScale);
     }
 
     private void renderModelAlpha( ) {
-
-        modelOfficeLight1.renderAlpha(renderScale);
+        modelBlockLight.renderAlpha(renderScale);
     }
     
-    private void selectAndBindTexture(TileEntityOfficeLight1 officeLight1) {
+    private void selectAndBindTexture(TileEntityBlockLight blockLight) {
         int textureIndex = 0;
-        ItemStack stack = officeLight1.getStackInSlot(0);
+        ItemStack stack = blockLight.getStackInSlot(0);
         if (stack != null) {
             textureIndex = stack.getItemDamage()+1;
         }
@@ -82,12 +74,12 @@ public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
 
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float p_147500_8_)
     {
-        TileEntityOfficeLight1 officeLight1 = (TileEntityOfficeLight1)(entity);
+        TileEntityBlockLight blockLight = (TileEntityBlockLight)(entity);
 
         GL11.glPushMatrix();
-            alignTileEntityAccordingState(x, y, z, officeLight1.getState());
-            rotateTilEntityAccordingNBT(officeLight1);
-            selectAndBindTexture(officeLight1);
+            alignTileEntityAccordingState(x, y, z, blockLight.getState());
+            rotateTilEntityAccordingNBT(blockLight);
+            selectAndBindTexture(blockLight);
 
             GL11.glPushMatrix();
                 GL11.glDisable(GL11.GL_CULL_FACE);

@@ -11,12 +11,13 @@ public class ModBlocks
     public static final BlockGridLight gridLight = new BlockGridLight();
     public static final BlockThinLight thinLight = new BlockThinLight();
     public static final BlockOfficeLight1 officeLight1 = new BlockOfficeLight1();
+    public static final BlockBlockLight blockLight = new BlockBlockLight();
 
     public static void init()
     {
         GameRegistry.registerBlock(gridLight, "gridLight");
         GameRegistry.registerBlock(thinLight, "thinLight");
         GameRegistry.registerBlock(officeLight1, "officeLight1");
-
+        GameRegistry.registerBlock(blockLight, "blockLight");
     }
 }

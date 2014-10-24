@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.bulbs;
 import de.schimski.bulbs.network.messageBulbs;
 import de.schimski.bulbs.reference.Reference;
+import de.schimski.bulbs.tileEntity.TileEntityBlockLight;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
 import de.schimski.bulbs.utility.BlockHelper;
@@ -17,15 +18,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 
-public class BlockOfficeLight1 extends BlockBulbsContainer{
+public class BlockBlockLight extends BlockBulbsContainer{
 
     @SideOnly(Side.CLIENT)
     protected IIcon blockIcon;
 
-    public BlockOfficeLight1()
+    public BlockBlockLight()
     {
         super();
-        this.setBlockName("officeLight1");
+        this.setBlockName("blockLight");
         this.setHardness(0.5f);
     }
 
@@ -50,8 +51,8 @@ public class BlockOfficeLight1 extends BlockBulbsContainer{
         TileEntityLightContainer entity = (TileEntityLightContainer) world.getTileEntity(x,y,z);
         if (entity != null)
         {
-            if (entity instanceof TileEntityOfficeLight1) {
-                connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:officeLight1", entity.getState());
+            if (entity instanceof TileEntityBlockLight) {
+                connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:blockLight", entity.getState());
                 passNeighboursToTileEntity(entity);
             }
         }
@@ -69,30 +70,8 @@ public class BlockOfficeLight1 extends BlockBulbsContainer{
      * Updates the blocks bounds based on its current state. Args: world, x, y, z
      */
 
-    public void setBlockBoundsBasedOnState(IBlockAccess block, int x, int y, int z)
-    {/*
-        // Sets the bounds of the block.  minX, minY, minZ, maxX, maxY, maxZ
-        float p = 1/16f;
-        switch (((TileEntityOfficeLight1)block.getTileEntity(x,y,z)).getState()) {
-            case 0:
-                this.setBlockBounds(2*p, 14*p, 2*p, 14*p, 16*p, 14*p);
-                break;
-            case 1:
-                this.setBlockBounds(2*p, 0, 2*p, 14*p, 3*p, 14*p);
-                break;
-            case 2:
-                this.setBlockBounds(2*p, 2*p, 13*p, 14*p, 14*p, 16*p);
-                break;
-            case 3:
-                this.setBlockBounds(2*p, 2*p, 0*p, 14*p, 14*p, 3*p);
-                break;
-            case 4:
-                this.setBlockBounds(13*p, 2*p, 2*p, 16*p, 14*p, 14*p);
-                break;
-            case 5:
-                this.setBlockBounds(0*p, 2*p, 2*p, 3*p, 14*p, 14*p);
-                break;
-        }*/
+    public void setBlockBoundsBasedOnState(IBlockAccess block, int x, int y, int z) {
+        // Not needed as this is a complete block
     }
 
     @Override
@@ -119,8 +98,8 @@ public class BlockOfficeLight1 extends BlockBulbsContainer{
 
     public TileEntity createTileEntity(World world, int metadata)
     {
-        TileEntityOfficeLight1 officeLight1 = new TileEntityOfficeLight1(metadata);
-        passNeighboursToTileEntity(officeLight1);
-        return officeLight1;
+        TileEntityBlockLight blockLight = new TileEntityBlockLight(metadata);
+        passNeighboursToTileEntity(blockLight);
+        return blockLight;
     }
 }

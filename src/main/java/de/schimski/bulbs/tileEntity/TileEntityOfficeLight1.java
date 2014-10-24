@@ -9,6 +9,7 @@ public class TileEntityOfficeLight1 extends TileEntityLightContainer {
 
     public TileEntityOfficeLight1(int metadata) {
         super(metadata);
+        this.canRotate = true;
     }
 
     @Override

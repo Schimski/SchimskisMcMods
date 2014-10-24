@@ -32,11 +32,9 @@ import java.util.Random;
 public class BlockBulbsContainer extends BlockContainer {
 
     protected boolean[] connectNeighbours;
-    protected boolean canRotate;
 
     public BlockBulbsContainer(Material material) {
         super(material);
-        this.canRotate = false;
         this.setCreativeTab(CreativeTabBulbs.BULBS_TAB);
     }
 
@@ -143,7 +141,7 @@ public class BlockBulbsContainer extends BlockContainer {
             //              player.inventory.siz
             //a        }
             return true;
-        } else if (player.getHeldItem().getItem() instanceof ItemScrewDriver && canRotate) {
+        } else if (player.getHeldItem().getItem() instanceof ItemScrewDriver && tileEntity.isRotatable()) {
             tileEntity.increaseRotation();
             return true;
         } else {
