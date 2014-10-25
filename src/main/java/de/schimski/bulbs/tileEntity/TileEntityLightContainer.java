@@ -153,7 +153,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
     /*
      * set boolConnect for given side
      */
-    @SideOnly(Side.CLIENT)
+
     public void setNeighbour(int side, boolean connect) {
         boolConnect[side] = connect;
         writeToNBT(new NBTTagCompound());

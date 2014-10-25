@@ -128,9 +128,7 @@ public class BlockGridLight extends BlockBulbsContainer{
     public TileEntity createTileEntity(World world, int metadata)
     {
         TileEntityGridLight gridLight = new TileEntityGridLight(metadata);
-        if (world.isRemote) {
-            passNeighboursToTileEntity(gridLight);
-        }
+        passNeighboursToTileEntity(gridLight);
         return gridLight;
     }
 }
