@@ -1,5 +1,7 @@
 package de.schimski.bulbs.tileEntity;
 
+import de.schimski.bulbs.proxy.ClientProxy;
+
 public class TileEntityGridLight extends TileEntityLightContainer{
 
     public TileEntityGridLight() {
@@ -15,4 +17,11 @@ public class TileEntityGridLight extends TileEntityLightContainer{
         return "bulbs.gridLight";
     }
 
+
+    @Override
+    public boolean shouldRenderInPass(int pass)
+    {
+        ClientProxy.renderPass = pass;
+        return true;
+    }
 }

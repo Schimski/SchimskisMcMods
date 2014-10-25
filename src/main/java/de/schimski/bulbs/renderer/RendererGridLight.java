@@ -1,6 +1,7 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelGridLightX32.*;
+import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -177,21 +178,21 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             rotateTilEntityAccordingNBT(gridLight, gridLight.getState());
             selectAndBindTexture(gridLight);
 
-
-            GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_CULL_FACE);
-                renderModel(gridLight);
-                GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glPopMatrix();
-
-            GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_LIGHTING);
-                GL11.glEnable(GL11.GL_BLEND);
-                renderModelAlpha(gridLight);
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glPopMatrix();
-
+            if (ClientProxy.renderPass == 0) {
+                GL11.glPushMatrix();
+                    GL11.glDisable(GL11.GL_CULL_FACE);
+                    renderModel(gridLight);
+                    GL11.glEnable(GL11.GL_CULL_FACE);
+                GL11.glPopMatrix();
+            } else {
+                GL11.glPushMatrix();
+                    GL11.glDisable(GL11.GL_LIGHTING);
+                    GL11.glEnable(GL11.GL_BLEND);
+                    renderModelAlpha(gridLight);
+                    GL11.glDisable(GL11.GL_BLEND);
+                    GL11.glEnable(GL11.GL_LIGHTING);
+                GL11.glPopMatrix();
+            }
 
         GL11.glPopMatrix();
 

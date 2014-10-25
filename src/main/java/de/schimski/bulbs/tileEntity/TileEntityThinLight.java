@@ -19,12 +19,12 @@ public class TileEntityThinLight extends TileEntityLightContainer {
     }
 
 
-    /*
+
     @Override
     public boolean shouldRenderInPass(int pass)
     {
         ClientProxy.renderPass = pass;
         return true;
     }
-    */
+
 }

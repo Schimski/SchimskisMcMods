@@ -1,6 +1,7 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelBlockLightX32.ModelBlockLightX32;
+import de.schimski.bulbs.handler.ConfigurationHandler;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityBlockLight;
@@ -18,12 +19,14 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
     private ModelBlockLightX32 modelBlockLight;
 
     private float renderScale = 0.03125f; //0.03125f; //0.0625f
+    private String smoothTextures;
 
     public RendererBlockLight() {
         modelBlockLight = new ModelBlockLightX32();
+        smoothTextures = ConfigurationHandler.smoothTextures ? "" : "Noise";
 
         for (int i = 0; i<17; i++) {
-            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/blockLight/" + blockLightTypes[i] + "X32.png");
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/blockLight/" + blockLightTypes[i] + smoothTextures + "X32.png");
         }
     }
 

@@ -1,3 +1,27 @@
 item.bulbs:lightBulb.name=Light Bulb
+item.bulbs:lightBulbBlack.name=Black Light Bulb
+item.bulbs:lightBulbBlue.name=Blue Light Bulb
+item.bulbs:lightBulbBrown.name=Brown Light Bulb
+item.bulbs:lightBulbCyan.name=Cyan Light Bulb
+item.bulbs:lightBulbGray.name=Gray Light Bulb
+item.bulbs:lightBulbGreen.name=Green Light Bulb
+item.bulbs:lightBulbLightBlue.name=Light Blue Light Bulb
+item.bulbs:lightBulbLightGray.name=Light Gray Light Bulb
+item.bulbs:lightBulbLimeGreen.name=Lime Green Light Bulb
+item.bulbs:lightBulbMagenta.name=Magenta Light Bulb
+item.bulbs:lightBulbOrange.name=Orange Light Bulb
+item.bulbs:lightBulbPink.name=Pink Light Bulb
+item.bulbs:lightBulbPurple.name=Purple Light Bulb
+item.bulbs:lightBulbRed.name=Red Light Bulb
+item.bulbs:lightBulbWhite.name=White Light Bulb
+item.bulbs:lightBulbYellow.name=Yellow Light Bulb
+
+item.bulbs:screwDriver.name=Screwdriver
+item.bulbs:lightBulbRainbow.name=Multicolored Light Bulb
+
 tile.bulbs:gridLight.name=Gridlight
+tile.bulbs:blockLight.name=Blocklight
+tile.bulbs:officeLight1.name=Officelight
+tile.bulbs:poleLight.name=Lightpole
+
 itemGroup.bulbs=Bulbs

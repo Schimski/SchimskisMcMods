@@ -42,7 +42,7 @@ public class BlockBulbsContainer extends BlockContainer {
         this(Material.rock);
    }
 
-
+    @SideOnly(Side.CLIENT)
     protected void passNeighboursToTileEntity(TileEntityLightContainer bulbsEntity) {
         if (connectNeighbours != null)
         {

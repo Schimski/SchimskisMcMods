@@ -1,5 +1,7 @@
 package de.schimski.bulbs.tileEntity;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.Minecraft;
@@ -151,7 +153,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
     /*
      * set boolConnect for given side
      */
-
+    @SideOnly(Side.CLIENT)
     public void setNeighbour(int side, boolean connect) {
         boolConnect[side] = connect;
         writeToNBT(new NBTTagCompound());

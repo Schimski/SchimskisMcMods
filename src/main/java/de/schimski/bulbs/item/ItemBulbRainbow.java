@@ -23,13 +23,13 @@ public class ItemBulbRainbow extends ItemBulbs {
         super();
         this.setCreativeTab(CreativeTabBulbs.BULBS_TAB);
     }
-/*
+
     @Override
     public String getUnlocalizedName(ItemStack itemStack)
     {
         return String.format("item.%s%s", Reference.MOD_ID.toLowerCase() + ":", "lightBulbRainbow");
     }
-*/
+
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int damage) {
         return this.bulbIcon;

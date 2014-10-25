@@ -1,6 +1,8 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelThinLightX32.*;
+import de.schimski.bulbs.handler.ConfigurationHandler;
+import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -23,6 +25,8 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
 
     private float renderScale = 0.03125f; //0.0625f
 
+    private String smoothTextures;
+
     public RendererThinLight() {
         this.modelThinLightX32 = new ModelThinLightX32();
         this.modelThinLightCon1X32 = new ModelThinLightCon1X32();
@@ -31,9 +35,11 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
         this.modelThinLightCon3X32 = new ModelThinLightCon3X32();
         this.modelThinLightCon4X32 = new ModelThinLightCon4X32();
 
+        smoothTextures = ConfigurationHandler.smoothTextures ? "" : "Noise";
+
 
         for (int i = 0; i<17; i++) {
-            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/thinLight/" + thinLightTypes[i] + "X32.png");
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/thinLight/" + thinLightTypes[i] + smoothTextures + "X32.png");
         }
     }
 
@@ -179,18 +185,20 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
         selectAndBindTexture(thinLight);
 
 
-
-        GL11.glPushMatrix();
-            renderModel(thinLight);
-        GL11.glPopMatrix();
-
-        GL11.glPushMatrix();
-            GL11.glDisable(GL11.GL_LIGHTING);
-            GL11.glEnable(GL11.GL_BLEND);
-            renderModelAlpha(thinLight);
+        if (ClientProxy.renderPass == 0) {
+            GL11.glPushMatrix();
+               renderModel(thinLight);
             GL11.glPopMatrix();
-            GL11.glDisable(GL11.GL_BLEND);
-            GL11.glEnable(GL11.GL_LIGHTING);
+        } else {
+            GL11.glPushMatrix();
+                GL11.glDisable(GL11.GL_LIGHTING);
+                GL11.glEnable(GL11.GL_BLEND);
+                renderModelAlpha(thinLight);
+                GL11.glDisable(GL11.GL_BLEND);
+                GL11.glEnable(GL11.GL_LIGHTING);
+            GL11.glPopMatrix();
+        }
+
         GL11.glPopMatrix();
     }
 }

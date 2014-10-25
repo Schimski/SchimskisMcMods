@@ -1,6 +1,7 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelPoleLightX32.ModelPoleLightX32;
+import de.schimski.bulbs.handler.ConfigurationHandler;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityPoleLight;
@@ -19,6 +20,8 @@ public class RendererPoleLight extends TileEntitySpecialRenderer{
     private ModelPoleLightX32 modelPoleLight1ConX32;
     private ModelPoleLightX32 modelPoleLight2ConX32;
 
+    private String smoothTextures;
+
     private float renderScale = 0.03125f; //0.0625f
 
     public RendererPoleLight() {
@@ -26,8 +29,10 @@ public class RendererPoleLight extends TileEntitySpecialRenderer{
         modelPoleLight1ConX32 = new ModelPoleLightX32(31, -32, 24);
         modelPoleLight2ConX32 = new ModelPoleLightX32(32, -32, 16);
 
+        smoothTextures = ConfigurationHandler.smoothTextures ? "" : "Noise";
+
         for (int i = 0; i<17; i++) {
-            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/poleLight/" + poleLightTypes[i] + "X32.png");
+            texture[i] = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/poleLight/" + poleLightTypes[i] + smoothTextures + "X32.png");
         }
     }
 
