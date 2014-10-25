@@ -97,6 +97,7 @@ public class BlockThinLight extends BlockBulbsContainer {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public int getRenderType() {
         return ClientProxy.thinLightRenderType;
     }

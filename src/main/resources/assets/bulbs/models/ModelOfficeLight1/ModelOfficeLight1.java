@@ -128,11 +128,12 @@ public class ModelOfficeLight1 extends ModelBase
         Side4.render(f5);
         Diag1.render(f5);
         Diag2.render(f5);
+        Light.render(f5);
 
     }
 
     public void renderAlpha(float f5) {
-        Light.render(f5);
+
         Diag3.render(f5);
         Diag4.render(f5);
         Alpha.render(f5);

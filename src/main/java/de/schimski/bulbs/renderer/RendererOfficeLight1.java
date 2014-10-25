@@ -1,19 +1,13 @@
 package de.schimski.bulbs.renderer;
 
-import assets.bulbs.models.*;
 import assets.bulbs.models.ModelOfficeLight1.ModelOfficeLight1;
-import de.schimski.bulbs.init.ModBlocks;
+import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
-import de.schimski.bulbs.utility.LogHelper;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
@@ -89,20 +83,21 @@ public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
             rotateTilEntityAccordingNBT(officeLight1);
             selectAndBindTexture(officeLight1);
 
-            GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_CULL_FACE);
-                renderModel();
-                GL11.glEnable(GL11.GL_CULL_FACE);
-            GL11.glPopMatrix();
-
-            GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_LIGHTING);
-                GL11.glEnable(GL11.GL_BLEND);
-                renderModelAlpha();
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glEnable(GL11.GL_LIGHTING);
-            GL11.glPopMatrix();
-
+            if (ClientProxy.renderPass == 0) {
+                GL11.glPushMatrix();
+    //                GL11.glDisable(GL11.GL_CULL_FACE);
+                    renderModel();
+    //                GL11.glEnable(GL11.GL_CULL_FACE);
+                GL11.glPopMatrix();
+            } else {
+                GL11.glPushMatrix();
+                    GL11.glDisable(GL11.GL_LIGHTING);
+                    GL11.glEnable(GL11.GL_BLEND);
+                    renderModelAlpha();
+                    GL11.glDisable(GL11.GL_BLEND);
+                    GL11.glEnable(GL11.GL_LIGHTING);
+                GL11.glPopMatrix();
+            }
         GL11.glPopMatrix();
     }
 }

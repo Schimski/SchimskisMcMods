@@ -30,6 +30,7 @@ public class ClientProxy extends CommonProxy {
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.thinLight), new RendererItemThinLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.gridLight), new RendererItemGridLight());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.officeLight1), new RendererItemOfficeLight1());
 
         thinLightRenderType = RenderingRegistry.getNextAvailableRenderId();
         //RenderingRegistry.registerBlockHandler(new RendererThinLight());

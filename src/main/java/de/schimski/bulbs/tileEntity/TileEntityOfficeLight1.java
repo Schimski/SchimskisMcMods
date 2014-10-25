@@ -1,6 +1,8 @@
 package de.schimski.bulbs.tileEntity;
 
 
+import de.schimski.bulbs.proxy.ClientProxy;
+
 public class TileEntityOfficeLight1 extends TileEntityLightContainer {
 
     public TileEntityOfficeLight1() {
@@ -23,12 +25,12 @@ public class TileEntityOfficeLight1 extends TileEntityLightContainer {
 
         rotation = (rotation + 90) % 180;
     }
-    /*
+
     @Override
     public boolean shouldRenderInPass(int pass)
     {
         ClientProxy.renderPass = pass;
         return true;
     }
-    */
+
 }

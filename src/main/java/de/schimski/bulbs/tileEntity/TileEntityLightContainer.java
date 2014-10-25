@@ -157,7 +157,9 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
     public void setNeighbour(int side, boolean connect) {
         boolConnect[side] = connect;
         writeToNBT(new NBTTagCompound());
-        Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+        if (worldObj != null && worldObj.isRemote) {
+            Minecraft.getMinecraft().renderGlobal.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+        }
     }
 
 
