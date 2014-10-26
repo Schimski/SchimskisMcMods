@@ -36,7 +36,7 @@ public class ModelOfficeLight1 extends ModelBase
     textureHeight = 128;
 
       Bottom = new ModelRenderer(this, -30, 0);
-      Bottom.addBox(-15F, 0F, -15F, 30, 0, 30);
+      Bottom.addBox(-15F, -1F, -15F, 30, 1, 30);
       Bottom.setRotationPoint(0F, 24F, 0F);
       Bottom.setTextureSize(128, 128);
       Bottom.mirror = true;

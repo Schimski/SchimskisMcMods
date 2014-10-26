@@ -63,13 +63,39 @@ public class RendererItemOfficeLight1 implements IItemRenderer {
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         switch (type) {
             case EQUIPPED:
+                GL11.glPushMatrix();
+                // rotates the item
+                GL11.glRotatef(150, 0, 0, 1);
+                GL11.glRotatef(-35, 0, 1, 0);
+                GL11.glRotatef(-115, 1, 0, 0);
+                GL11.glTranslatef(0.0f, 0.1f, -0.6f);
+                GL11.glScalef(-1F, -1F, -1F);
+                Minecraft.getMinecraft().renderEngine
+                        .bindTexture(this.blockTexture);
+                // renders the item
+
+                GL11.glPushMatrix();
+                blockModel.renderModel(0.02f);
+                GL11.glPopMatrix();
+
+                GL11.glPushMatrix();
+                GL11.glDisable(GL11.GL_LIGHTING);
+                GL11.glEnable(GL11.GL_BLEND);
+                blockModel.renderAlpha(0.02f);
+                GL11.glDisable(GL11.GL_BLEND);
+                GL11.glEnable(GL11.GL_LIGHTING);
+                GL11.glPopMatrix();
+
+                GL11.glPopMatrix();
+                break;
+            // Renders the Campfire on ground as a pickable item
             case EQUIPPED_FIRST_PERSON:
                 GL11.glPushMatrix();
                 // rotates the item
-                GL11.glRotatef(160, 0, 0, 1);
-                GL11.glRotatef(-30, 0, 1, 0);
-                GL11.glRotatef(-75, 1, 0, 0);
-                GL11.glTranslatef(0.5f, 0.3f,-0.4f);
+                GL11.glRotatef(150, 0, 0, 1);
+                GL11.glRotatef(-85, 0, 1, 0);
+                GL11.glRotatef(-80, 1, 0, 0);
+                GL11.glTranslatef(0.0f, 0.1f, -1.6f);
                 GL11.glScalef(-1F, -1F, -1F);
                 Minecraft.getMinecraft().renderEngine
                         .bindTexture(this.blockTexture);
@@ -80,9 +106,11 @@ public class RendererItemOfficeLight1 implements IItemRenderer {
                     GL11.glPopMatrix();
 
                     GL11.glPushMatrix();
-                    GL11.glEnable(GL11.GL_BLEND);
-                    blockModel.renderAlpha(0.02f);
-                    GL11.glDisable(GL11.GL_BLEND);
+                GL11.glDisable(GL11.GL_LIGHTING);
+                GL11.glEnable(GL11.GL_BLEND);
+                blockModel.renderAlpha(0.02f);
+                GL11.glDisable(GL11.GL_BLEND);
+                GL11.glEnable(GL11.GL_LIGHTING);
                     GL11.glPopMatrix();
 
                 GL11.glPopMatrix();
