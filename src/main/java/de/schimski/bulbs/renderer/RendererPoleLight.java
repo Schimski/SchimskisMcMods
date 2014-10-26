@@ -25,9 +25,9 @@ public class RendererPoleLight extends TileEntitySpecialRenderer{
     private float renderScale = 0.03125f; //0.0625f
 
     public RendererPoleLight() {
-        modelPoleLight0ConX32 = new ModelPoleLightX32(30, -31, 0);
-        modelPoleLight1ConX32 = new ModelPoleLightX32(31, -32, 24);
-        modelPoleLight2ConX32 = new ModelPoleLightX32(32, -32, 16);
+        modelPoleLight0ConX32 = new ModelPoleLightX32(0);
+        modelPoleLight1ConX32 = new ModelPoleLightX32(1);
+        modelPoleLight2ConX32 = new ModelPoleLightX32(2);
 
         smoothTextures = ConfigurationHandler.smoothTextures ? "" : "Noise";
 

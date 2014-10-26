@@ -25,7 +25,7 @@ public class messageBulbs implements IMessage{
     @Override
     public void fromBytes(ByteBuf buf) {
         text = ByteBufUtils.readUTF8String(buf);
-        LogHelper.info(text);
+        //LogHelper.info(text);
         String[] splitText = text.split(":");
 
         x = Integer.valueOf(splitText[0]);

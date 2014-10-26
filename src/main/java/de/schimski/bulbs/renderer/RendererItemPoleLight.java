@@ -1,29 +1,28 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelOfficeLight1.ModelOfficeLight1;
-import assets.bulbs.models.ModelThinLightX32.ModelThinLightX32;
+import assets.bulbs.models.ModelPoleLightX32.ModelPoleLightX32;
 import de.schimski.bulbs.client.handler.KeyInputEventHandler;
-import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
-import de.schimski.bulbs.utility.GuiHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
-public class RendererItemOfficeLight1 implements IItemRenderer {
+public class RendererItemPoleLight implements IItemRenderer {
 
-    protected ModelOfficeLight1 blockModel;
+    protected ModelPoleLightX32 blockModel;
     protected ResourceLocation blockTexture;
     TileEntitySpecialRenderer render;
 
-    public RendererItemOfficeLight1() {
-        blockModel = new ModelOfficeLight1();
-        blockTexture = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/officeLight1/officeLight1WhiteX32.png");
-        render = new RendererOfficeLight1();
+    public RendererItemPoleLight() {
+        blockModel = new ModelPoleLightX32(0);
+        blockTexture = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/poleLight/poleLightWhiteX32.png");
+        //render = new RendererOfficeLight1();
+        render = new RendererPoleLight();
+
 
     }
     @Override
@@ -68,11 +67,11 @@ public class RendererItemOfficeLight1 implements IItemRenderer {
             case EQUIPPED:
                 GL11.glPushMatrix();
                 // rotates the item
-                GL11.glRotatef(150, 0, 0, 1);
-                GL11.glRotatef(-35, 0, 1, 0);
-                GL11.glRotatef(-115, 1, 0, 0);
-                GL11.glTranslatef(0.0f, 0.1f, -0.6f);
-                GL11.glScalef(-1F, -1F, -1F);
+                GL11.glRotatef(-177, 1, 0, 0);
+                GL11.glRotatef(-191, 0, 1, 0);
+                GL11.glRotatef(-167, 0, 0, 1);
+                GL11.glTranslatef(0.4f, 0, -0.1f);
+                GL11.glScalef(2F, 2F, 2F);
                 Minecraft.getMinecraft().renderEngine
                         .bindTexture(this.blockTexture);
                 // renders the item
@@ -96,10 +95,16 @@ public class RendererItemOfficeLight1 implements IItemRenderer {
 
                 GL11.glPushMatrix();
                 // rotates the item
-                GL11.glRotatef(-153, 1, 0, 0);
-                GL11.glRotatef(49, 0, 1, 0);
-                GL11.glRotatef(-36, 0, 0, 1);
-                GL11.glTranslatef(9,4, 3);
+                /*GL11.glRotatef(KeyInputEventHandler.rotX, 1, 0, 0);
+                GL11.glRotatef(KeyInputEventHandler.rotY, 0, 1, 0);
+                GL11.glRotatef(KeyInputEventHandler.rotZ, 0, 0, 1);
+                GL11.glTranslatef(KeyInputEventHandler.mX, KeyInputEventHandler.mY, KeyInputEventHandler.mZ);*/
+
+                GL11.glRotatef(-174, 1, 0, 0);
+                GL11.glRotatef(80, 0, 1, 0);
+                GL11.glRotatef(-22, 0, 0, 1);
+                GL11.glTranslatef(6, 0, 5);
+
                 GL11.glScalef(8F, 8F, 8F);
                 Minecraft.getMinecraft().renderEngine
                         .bindTexture(this.blockTexture);
@@ -118,6 +123,7 @@ public class RendererItemOfficeLight1 implements IItemRenderer {
                 GL11.glPopMatrix();
 
                 GL11.glPopMatrix();
+                break;
 
             default:
                 break;

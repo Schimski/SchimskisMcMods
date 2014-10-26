@@ -2,6 +2,7 @@ package de.schimski.bulbs.tileEntity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import de.schimski.bulbs.item.ItemBulbNormal;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.Minecraft;
@@ -68,6 +69,20 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
     protected boolean canRotate;
 
 
+    /*
+     *  the redstone signal strength the tileEntity receives
+     */
+
+    private int powerLevel;
+
+
+    /*
+     *  if true ignore redstone for dimming until redstone change
+     */
+
+    private boolean manualDim;
+
+
     public TileEntityLightContainer(int metadata) {
         super();
         this.lightLevel = 15;
@@ -76,6 +91,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         this.state =  metadata >= 0 ? (byte) metadata : 0;
         this.canRotate = false;
         this.rotation=0;
+        this.manualDim = false;
     }
 
 
@@ -105,6 +121,18 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         return result;
     }
 
+
+    /*
+     *  Saves the incoming redstone signal strength
+     */
+
+    public void setPowerLevel(int powerLevel) {
+        if (powerLevel != this.powerLevel) {
+            this.powerLevel = powerLevel;
+            manualDim = false;
+            updateLightLevel();
+        }
+    }
 
     /*
      *  Methods to set and get rotation
@@ -202,6 +230,8 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         nbt.setByte("state", state);
         nbt.setInteger("lightLevel", lightLevel);
         nbt.setInteger("rotation", rotation);
+        nbt.setBoolean("manualDim", manualDim);
+        nbt.setInteger("powerLevel", powerLevel);
 
         NBTTagList itemList = new NBTTagList();
         for (int i = 0; i < inventory.length; i++) {
@@ -228,6 +258,8 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         state = nbt.getByte("state");
         lightLevel = nbt.getInteger("lightLevel");
         rotation = nbt.getInteger("rotation");
+        manualDim = nbt.getBoolean("manualDim");
+        powerLevel = nbt.getInteger("powerLevel");
 
         NBTTagList tagList = nbt.getTagList("Inventory",10);
         for (int i = 0; i < tagList.tagCount(); i++) {
@@ -263,7 +295,16 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
     public void updateLightLevel() {
 
-        lightLevel = getStackInSlot(0) != null ? lightLevel != 0 ? lightLevel : 15 : 0;
+        ItemStack stack = getStackInSlot(0);
+
+        if (stack != null) {
+            if (stack.getItem() instanceof ItemBulbNormal) {
+                lightLevel = powerLevel == 0 ? 15 : 0;
+            }
+
+        }
+
+//        lightLevel = getStackInSlot(0) != null ? lightLevel != 0 ? lightLevel : 15 : 0;
         updateBlockMetadata();
     }
 

@@ -13,7 +13,7 @@ public class ServerProxy extends CommonProxy {
     }
 
     @Override
-    public void setCustomRenderers() {
-        // nope
+    public void registerKeybindings() {
+        //  nope
     }
 }

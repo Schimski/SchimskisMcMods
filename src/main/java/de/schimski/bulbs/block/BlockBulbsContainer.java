@@ -1,5 +1,6 @@
 package de.schimski.bulbs.block;
 
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.bulbs;
@@ -7,6 +8,7 @@ import de.schimski.bulbs.creativetab.CreativeTabBulbs;
 import de.schimski.bulbs.handler.GuiHandler;
 import de.schimski.bulbs.item.ItemBulbs;
 import de.schimski.bulbs.item.ItemScrewDriver;
+import de.schimski.bulbs.network.messageBulbs;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
@@ -149,6 +151,32 @@ public class BlockBulbsContainer extends BlockContainer {
         }
     }
 
+    /*
+    @Override
+    public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y, int z, int side)
+    {
+        LogHelper.info("checkweakchanges");
+        return true;
+    }
+
+    /**
+     * If this block should be notified of weak changes.
+     * Weak changes are changes 1 block away through a solid block.
+     * Similar to comparators.
+     *
+     * @param world The current world
+     * @param x X Position
+     * @param y Y position
+     * @param z Z position
+     * @param side The side to check
+     * @return true To be notified of changes
+     *
+    @Override
+    public boolean getWeakChanges(IBlockAccess world, int x, int y, int z)
+    {
+        LogHelper.info("getweakchanges");
+        return true;
+    }*/
 
     @Override
     public String getUnlocalizedName() {
@@ -178,5 +206,14 @@ public class BlockBulbsContainer extends BlockContainer {
         return null;
     }
 
+
+    public void notifyBlockChange(World world, int x, int y, int z, TileEntityLightContainer entity) {
+        if (world.isRemote) {
+            //LogHelper.info("ClientMode");
+        } else {
+            entity.setPowerLevel(world.getStrongestIndirectPower(x, y, z));
+            bulbs.network.sendToAllAround(new messageBulbs(x + ":" + y + ":" + z + ":" + connectNeighbours[0] + ":" + connectNeighbours[1] + ":" + connectNeighbours[2] + ":" + connectNeighbours[3]), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 300));
+        }
+    }
 
 }

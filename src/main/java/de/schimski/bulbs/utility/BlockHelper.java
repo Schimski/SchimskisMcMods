@@ -14,7 +14,7 @@ public class BlockHelper {
     }
 
     public static boolean checkBlockNameAndTileState(World world, int x, int y, int z, String unlocalizedBlockName, byte tileState) {
-        LogHelper.info(world.getBlock(x, y, z).getUnlocalizedName() + "  -  " + unlocalizedBlockName);
+        //LogHelper.info(world.getBlock(x, y, z).getUnlocalizedName() + "  -  " + unlocalizedBlockName);
 
         if (world.getBlock(x, y, z).getUnlocalizedName().equals(unlocalizedBlockName) && (((TileEntityLightContainer)world.getTileEntity(x,y,z)).getState() == tileState)) {
             return true;

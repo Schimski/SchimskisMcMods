@@ -9,6 +9,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import de.schimski.bulbs.client.handler.KeyInputEventHandler;
 import de.schimski.bulbs.handler.ConfigurationHandler;
 import de.schimski.bulbs.handler.GuiHandler;
 import de.schimski.bulbs.init.*;
@@ -36,6 +37,8 @@ public class bulbs {
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
 
+        proxy.registerKeybindings();
+
         ModItems.init();
         ModBlocks.init();
 
@@ -48,14 +51,13 @@ public class bulbs {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
+        FMLCommonHandler.instance().bus().register(new KeyInputEventHandler());
+
         // Initialize custom rendering and pre-load textures (Client only)
         proxy.initRenderingAndTextures();
 
         // Initialize mod tile entities
         proxy.registerTileEntities();
-
-        // Initialize custom block renderers
-        proxy.setCustomRenderers();
 
         Recipes.init();
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());

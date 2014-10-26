@@ -1,3 +1,5 @@
+# Items
+
 item.bulbs:lightBulb.name=Light Bulb
 item.bulbs:lightBulbBlack.name=Black Light Bulb
 item.bulbs:lightBulbBlue.name=Blue Light Bulb
@@ -19,9 +21,22 @@ item.bulbs:lightBulbYellow.name=Yellow Light Bulb
 item.bulbs:screwDriver.name=Screwdriver
 item.bulbs:lightBulbRainbow.name=Multicolored Light Bulb
 
+# TileEntities
+
 tile.bulbs:gridLight.name=Gridlight
 tile.bulbs:blockLight.name=Blocklight
 tile.bulbs:officeLight1.name=Officelight
 tile.bulbs:poleLight.name=Lightpole
 
+# Creative Tabs
+
 itemGroup.bulbs=Bulbs
+
+# Keys
+keys.bulbs.category=Bulbs
+
+keys.bulbs.X=Move/Rotate X
+keys.bulbs.Y=Move/Rotate Y
+keys.bulbs.Z=Move/Rotate Z
+keys.bulbs.SwitchMode=Switch between Move and Rotate
+keys.bulbs.SwitchDirection=Switch between + and - Movement/Rotation

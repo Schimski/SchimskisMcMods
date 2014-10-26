@@ -1,6 +1,8 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelGridLightX32.ModelGridLightX32;
+import de.schimski.bulbs.client.handler.KeyInputEventHandler;
+import de.schimski.bulbs.client.settings.Keybindings;
 import de.schimski.bulbs.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -61,15 +63,41 @@ public class RendererItemGridLight implements IItemRenderer {
     public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
         switch (type) {
             case EQUIPPED:
-
-            case EQUIPPED_FIRST_PERSON:
-            GL11.glPushMatrix();
+                GL11.glPushMatrix();
                 // rotates the item
                 GL11.glRotatef(90, 0, 0, 1);
                 GL11.glRotatef(0, 0, 1, 0);
                 GL11.glRotatef(-75, 1, 0, 0);
                 GL11.glTranslatef(0.5f, 0.5f, -0.4f);
                 GL11.glScalef(-1.5F, -1.5F, -1.5F);
+                Minecraft.getMinecraft().renderEngine
+                        .bindTexture(this.blockTexture);
+                // renders the item
+
+                GL11.glPushMatrix();
+                GL11.glDisable(GL11.GL_CULL_FACE);
+                blockModel.renderModel(0.02f);
+                GL11.glEnable(GL11.GL_CULL_FACE);
+                GL11.glPopMatrix();
+
+                GL11.glPushMatrix();
+                GL11.glEnable(GL11.GL_BLEND);
+                blockModel.renderAlpha(0.02f);
+                GL11.glDisable(GL11.GL_BLEND);
+                GL11.glPopMatrix();
+
+                GL11.glPopMatrix();
+
+                break;
+
+            case EQUIPPED_FIRST_PERSON:
+            GL11.glPushMatrix();
+                // rotates the item
+                GL11.glRotatef(-149, 0, 0, 1);
+                GL11.glRotatef(-231, 0, 1, 0);
+                GL11.glRotatef(-186, 1, 0, 0);
+                GL11.glTranslatef(0, 0, 6);
+                GL11.glScalef(-8F, -8F, -8F);
                 Minecraft.getMinecraft().renderEngine
                         .bindTexture(this.blockTexture);
                 // renders the item
@@ -87,6 +115,8 @@ public class RendererItemGridLight implements IItemRenderer {
                 GL11.glPopMatrix();
 
             GL11.glPopMatrix();
+
+                break;
 
             default:
                 break;

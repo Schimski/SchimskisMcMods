@@ -2,23 +2,23 @@ package de.schimski.bulbs.proxy;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import de.schimski.bulbs.block.BlockThinLight;
+import de.schimski.bulbs.client.settings.Keybindings;
 import de.schimski.bulbs.init.ModBlocks;
 import de.schimski.bulbs.renderer.*;
 import de.schimski.bulbs.tileEntity.*;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.MinecraftForgeClient;
+
+import javax.swing.text.JTextComponent;
 
 public class ClientProxy extends CommonProxy {
 
     public static int renderPass;
 
     public static int thinLightRenderType;
-
-    public void setCustomRenderers()
-    {
-
-    }
 
     @Override
     public void initRenderingAndTextures() {
@@ -31,8 +31,19 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.thinLight), new RendererItemThinLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.gridLight), new RendererItemGridLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.officeLight1), new RendererItemOfficeLight1());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.poleLight), new RendererItemPoleLight());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.blockLight), new RendererItemBlockLight());
 
         thinLightRenderType = RenderingRegistry.getNextAvailableRenderId();
-        //RenderingRegistry.registerBlockHandler(new RendererThinLight());
+    }
+
+    @Override
+    public void registerKeybindings() {
+        ClientRegistry.registerKeyBinding(Keybindings.keyX);
+        ClientRegistry.registerKeyBinding(Keybindings.keyY);
+        ClientRegistry.registerKeyBinding(Keybindings.keyZ);
+        ClientRegistry.registerKeyBinding(Keybindings.keyMODE);
+        ClientRegistry.registerKeyBinding(Keybindings.keyDIRECTION);
+
     }
 }

@@ -21,7 +21,29 @@ public class ModelPoleLightX32 extends ModelBase
     ModelRenderer Alpha;
     ModelRenderer Light;
 
-    public ModelPoleLightX32(int lightHeight, float lightYpos, int alphaTextureOffset) {
+    int lightHeight;
+    float lightYpos;
+    int alphaTextureOffset;
+
+    public ModelPoleLightX32(int connections) {
+
+        if (connections == 2) {
+            lightHeight = 32;
+            lightYpos = -32;
+            alphaTextureOffset = 16;
+        } else if (connections == 1) {
+            lightHeight = 31;
+            lightYpos = -32;
+            alphaTextureOffset = 24;
+        } else {
+            lightHeight = 30;
+            lightYpos = -31;
+            alphaTextureOffset = 0;
+        }
+
+//        modelPoleLight0ConX32 = new ModelPoleLightX32(30, -31, 0);
+//        modelPoleLight1ConX32 = new ModelPoleLightX32(31, -32, 24);
+//        modelPoleLight2ConX32 = new ModelPoleLightX32(32, -32, 16);
 
         textureWidth = 64;
         textureHeight = 96;

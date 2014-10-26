@@ -8,4 +8,6 @@ public class Reference {
     public static final String SERVER_PROXY_CLASS = "de.schimski.bulbs.proxy.ServerProxy";
     public static final String CLIENT_PROXY_CLASS = "de.schimski.bulbs.proxy.ClientProxy";
     public static final String GUI_FACTORY_CLASS = "de.schimski.bulbs.client.gui.GuiFactory";
+
+
 }

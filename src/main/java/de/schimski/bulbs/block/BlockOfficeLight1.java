@@ -9,6 +9,7 @@ import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
 import de.schimski.bulbs.utility.BlockHelper;
+import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.tileentity.TileEntity;
@@ -44,7 +45,7 @@ public class BlockOfficeLight1 extends BlockBulbsContainer{
         connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, getUnlocalizedName(), (byte) side);
         return side;
     }
-
+    @Override
     public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbourBlock)
     {
         TileEntityLightContainer entity = (TileEntityLightContainer) world.getTileEntity(x,y,z);
@@ -54,15 +55,9 @@ public class BlockOfficeLight1 extends BlockBulbsContainer{
                 connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:officeLight1", entity.getState());
                 passNeighboursToTileEntity(entity);
             }
-        }
-        if (world.isRemote)
-        {
-            //LogHelper.info("ClientMode");
-        } else {
 
-            bulbs.network.sendToAllAround(new messageBulbs(x+":"+y+":"+z+":"+connectNeighbours[0]+":"+connectNeighbours[1]+":"+connectNeighbours[2]+":"+connectNeighbours[3]), new NetworkRegistry.TargetPoint(world.provider.dimensionId,x,y,z,300));
+            notifyBlockChange(world, x, y, z, entity);
         }
-
     }
 
     /**

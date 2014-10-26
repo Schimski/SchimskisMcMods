@@ -1,29 +1,25 @@
 package de.schimski.bulbs.renderer;
 
+import assets.bulbs.models.ModelBlockLightX32.ModelBlockLightX32;
 import assets.bulbs.models.ModelOfficeLight1.ModelOfficeLight1;
-import assets.bulbs.models.ModelThinLightX32.ModelThinLightX32;
-import de.schimski.bulbs.client.handler.KeyInputEventHandler;
-import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
-import de.schimski.bulbs.utility.GuiHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 import org.lwjgl.opengl.GL11;
 
-public class RendererItemOfficeLight1 implements IItemRenderer {
+public class RendererItemBlockLight implements IItemRenderer {
 
-    protected ModelOfficeLight1 blockModel;
+    protected ModelBlockLightX32 blockModel;
     protected ResourceLocation blockTexture;
     TileEntitySpecialRenderer render;
 
-    public RendererItemOfficeLight1() {
-        blockModel = new ModelOfficeLight1();
-        blockTexture = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/officeLight1/officeLight1WhiteX32.png");
-        render = new RendererOfficeLight1();
+    public RendererItemBlockLight() {
+        blockModel = new ModelBlockLightX32();
+        blockTexture = new ResourceLocation(Reference.MOD_ID.toLowerCase(), "textures/models/blockLight/blockLightWhiteX32.png");
+        render = new RendererBlockLight();
 
     }
     @Override

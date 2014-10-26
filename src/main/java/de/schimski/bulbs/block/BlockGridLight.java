@@ -62,15 +62,9 @@ public class BlockGridLight extends BlockBulbsContainer{
                 connectNeighbours = BlockHelper.compareBlocks4Sides(world, x, y, z, "tile.bulbs:gridLight", entity.getState());
                 passNeighboursToTileEntity(entity);
             }
-        }
-        if (world.isRemote)
-        {
-            //LogHelper.info("ClientMode");
-        } else {
 
-            bulbs.network.sendToAllAround(new messageBulbs(x+":"+y+":"+z+":"+connectNeighbours[0]+":"+connectNeighbours[1]+":"+connectNeighbours[2]+":"+connectNeighbours[3]), new NetworkRegistry.TargetPoint(world.provider.dimensionId,x,y,z,300));
+            notifyBlockChange(world, x, y, z, entity);
         }
-
     }
 
     /**
