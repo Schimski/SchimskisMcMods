@@ -69,12 +69,19 @@ public class BlockThinLight extends BlockBulbsContainer {
     {
         // Sets the bounds of the block.  minX, minY, minZ, maxX, maxY, maxZ
         float p = 1/16f;
-        switch (((TileEntityThinLight)block.getTileEntity(x,y,z)).getState()) {
+        TileEntityThinLight thinLight = ((TileEntityThinLight)block.getTileEntity(x,y,z));
+        switch (thinLight.getState()) {
             case 0:
-                this.setBlockBounds(2*p, 14*p, 2*p, 14*p, 16*p, 14*p);
+                this.setBlockBounds(2 * p, 14 * p, 2 * p, 14 * p, 16 * p, 14 * p);
                 break;
             case 1:
-                this.setBlockBounds(0*p, 0, 6*p, 16*p, 1*p, 10*p);
+                if (thinLight.neighbourCount() <= 2 && (thinLight.hasConnectingLightNeighbour(1) || thinLight.hasConnectingLightNeighbour(3)) && !thinLight.neighboursAreClose()) {
+                    this.setBlockBounds(6 * p, 0, 0 * p, 10 * p, 1 * p, 16 * p);
+                } else if (thinLight.neighbourCount() > 2 || thinLight.neighboursAreClose()) {
+                    this.setBlockBounds(0 * p, 0, 0 * p, 16 * p, 1 * p, 16 * p);
+                } else {
+                    this.setBlockBounds(0 * p, 0, 6 * p, 16 * p, 1 * p, 10 * p);
+                }
                 break;
             case 2:
                 this.setBlockBounds(2*p, 2*p, 13*p, 14*p, 14*p, 16*p);
