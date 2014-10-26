@@ -79,7 +79,7 @@ public class BlockThinLight extends BlockBulbsContainer {
                 this.setBlockBounds(2*p, 14*p, 2*p, 14*p, 16*p, 14*p);
                 break;
             case 1:
-                this.setBlockBounds(2*p, 0, 2*p, 14*p, 3*p, 14*p);
+                this.setBlockBounds(0*p, 0, 6*p, 16*p, 1*p, 10*p);
                 break;
             case 2:
                 this.setBlockBounds(2*p, 2*p, 13*p, 14*p, 14*p, 16*p);
