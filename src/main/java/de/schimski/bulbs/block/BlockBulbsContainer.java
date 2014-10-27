@@ -114,13 +114,8 @@ public class BlockBulbsContainer extends BlockContainer {
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
         TileEntityLightContainer tileEntity = (TileEntityLightContainer) world.getTileEntity(x, y, z);
         if (tileEntity != null && player.isSneaking() && player.getHeldItem() == null) {
-
-            //  Dimming when empty Hand and sneaking
-
-            tileEntity.increaseLightLevel();
+            GuiHelper.openGui(tileEntity, player, world, x, y, z);
             return true;
-
-
         } else if (player.getHeldItem() == null) {
 
             GuiHelper.openGui(tileEntity, player, world, x, y, z);
@@ -138,13 +133,9 @@ public class BlockBulbsContainer extends BlockContainer {
             tileEntity.setInventorySlotContents(0, newStack);
             player.getHeldItem().stackSize = player.getHeldItem().stackSize - 1;
             tileEntity.updateLightLevel();
-//            if (player.getHeldItem().stackSize == 0) {
-            //              player.inventory.siz
-            //a        }
             return true;
-        } else if (player.getHeldItem().getItem() instanceof ItemScrewDriver && tileEntity.isRotatable()) {
-            tileEntity.increaseRotation();
-            return true;
+        } else if (player.getHeldItem().getItem() instanceof ItemScrewDriver) {
+            return false;
         } else {
             GuiHelper.openGui(tileEntity, player, world, x, y, z);
             return true;

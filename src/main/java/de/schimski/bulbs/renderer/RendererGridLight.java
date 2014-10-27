@@ -1,9 +1,11 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelGridLightX32.*;
+import de.schimski.bulbs.item.ItemBulbRainbow;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityGridLight;
+import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -159,12 +161,16 @@ public class RendererGridLight extends TileEntitySpecialRenderer{
             modelGridLightX32.renderAlpha(renderScale);
         }
     }
-    
-    private void selectAndBindTexture(TileEntityGridLight gridLight) {
+
+    private void selectAndBindTexture(TileEntityLightContainer entity) {
         int textureIndex = 0;
-        ItemStack stack = gridLight.getStackInSlot(0);
+        ItemStack stack = entity.getStackInSlot(0);
         if (stack != null) {
-            textureIndex = stack.getItemDamage()+1;
+            if (stack.getItem() instanceof ItemBulbRainbow) {
+                textureIndex = entity.getPowerLevel();
+            } else {
+                textureIndex = stack.getItemDamage()+1;
+            }
         }
 
         bindTexture(texture[textureIndex]);

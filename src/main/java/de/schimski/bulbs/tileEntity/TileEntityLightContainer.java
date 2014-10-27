@@ -4,6 +4,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.item.ItemBulbDimmable;
 import de.schimski.bulbs.item.ItemBulbNormal;
+import de.schimski.bulbs.item.ItemBulbRainbow;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.Minecraft;
@@ -101,7 +102,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
      */
 
     public void increaseLightLevel() {
-        if (this.getStackInSlot(0) != null){
+        if (this.getStackInSlot(0) != null && isDimmable()){
             lightLevel = (lightLevel + 1) % 16;
             LogHelper.info(lightLevel);
             updateBlockMetadata();
@@ -135,6 +136,10 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         }
     }
 
+    public int getPowerLevel() {
+        return powerLevel;
+    }
+
     /*
      *  Methods to set and get rotation
      *  If tileEntity is rotatable is set in the block
@@ -150,6 +155,10 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
     public boolean isRotatable() {
         return this.canRotate;
+    }
+
+    public boolean isDimmable() {
+        return (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof ItemBulbDimmable);
     }
 
     /*
@@ -303,11 +312,11 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
                 lightLevel = powerLevel == 0 ? 15 : 0;
             } else if (stack.getItem() instanceof ItemBulbDimmable) {
                 lightLevel = manualDim ?  lightLevel : 15 - powerLevel;
+            } else if (stack.getItem() instanceof ItemBulbRainbow) {
+                lightLevel = 15;
             }
 
         }
-
-//        lightLevel = getStackInSlot(0) != null ? lightLevel != 0 ? lightLevel : 15 : 0;
         updateBlockMetadata();
     }
 
@@ -415,10 +424,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
     @Override
     public void closeInventory() {
-        ItemStack stack = getStackInSlot(0);
-
-        lightLevel = stack != null ? 15 : 0;
-        updateBlockMetadata();
+        updateLightLevel();
     }
 
     @Override

@@ -2,9 +2,11 @@ package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelBlockLightX32.ModelBlockLightX32;
 import de.schimski.bulbs.handler.ConfigurationHandler;
+import de.schimski.bulbs.item.ItemBulbRainbow;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityBlockLight;
+import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -66,11 +68,15 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
         modelBlockLight.renderAlpha(renderScale);
     }
     
-    private void selectAndBindTexture(TileEntityBlockLight blockLight) {
+    private void selectAndBindTexture(TileEntityLightContainer entity) {
         int textureIndex = 0;
-        ItemStack stack = blockLight.getStackInSlot(0);
+        ItemStack stack = entity.getStackInSlot(0);
         if (stack != null) {
-            textureIndex = stack.getItemDamage()+1;
+            if (stack.getItem() instanceof ItemBulbRainbow) {
+                textureIndex = entity.getPowerLevel();
+            } else {
+                textureIndex = stack.getItemDamage()+1;
+            }
         }
 
         bindTexture(texture[textureIndex]);

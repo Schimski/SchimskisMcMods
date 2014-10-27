@@ -2,8 +2,10 @@ package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelThinLightX32.*;
 import de.schimski.bulbs.handler.ConfigurationHandler;
+import de.schimski.bulbs.item.ItemBulbRainbow;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
+import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import de.schimski.bulbs.tileEntity.TileEntityThinLight;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -166,13 +168,18 @@ public class RendererThinLight extends TileEntitySpecialRenderer {
     }
 
 
-    private void selectAndBindTexture(TileEntityThinLight thinLight) {
+    private void selectAndBindTexture(TileEntityLightContainer entity) {
         int textureIndex = 0;
-        ItemStack stack = thinLight.getStackInSlot(0);
+        ItemStack stack = entity.getStackInSlot(0);
         if (stack != null) {
-            textureIndex = stack.getItemDamage() + 1;
+            if (stack.getItem() instanceof ItemBulbRainbow) {
+                textureIndex = entity.getPowerLevel();
+            } else {
+                textureIndex = stack.getItemDamage()+1;
+            }
         }
-        this.bindTexture(texture[textureIndex]);
+
+        bindTexture(texture[textureIndex]);
     }
 
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float p_147500_8_)

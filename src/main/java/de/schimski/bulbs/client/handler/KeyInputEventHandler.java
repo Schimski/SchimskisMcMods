@@ -4,6 +4,12 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import de.schimski.bulbs.client.settings.Keybindings;
 import de.schimski.bulbs.utility.LogHelper;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraftforge.event.ServerChatEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public class KeyInputEventHandler {
 
@@ -55,8 +61,11 @@ public class KeyInputEventHandler {
 
     @SubscribeEvent
     public void handleKeyInputEvent(InputEvent.KeyInputEvent event) {
+        //LogHelper.info("Key pressed");
         //getPressedKeybinding();
         //LogHelper.info("Position: " + mX + " - " + mY + " - " + mZ);
         //LogHelper.info("Rotation: " + rotX + " - " + rotY + " - " + rotZ);
     }
+
+
 }

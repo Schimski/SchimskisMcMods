@@ -1,8 +1,10 @@
 package de.schimski.bulbs.renderer;
 
 import assets.bulbs.models.ModelOfficeLight1.ModelOfficeLight1;
+import de.schimski.bulbs.item.ItemBulbRainbow;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
+import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
 import de.schimski.bulbs.tileEntity.TileEntityOfficeLight1;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -63,12 +65,16 @@ public class RendererOfficeLight1 extends TileEntitySpecialRenderer{
 
         modelOfficeLight1.renderAlpha(renderScale);
     }
-    
-    private void selectAndBindTexture(TileEntityOfficeLight1 officeLight1) {
+
+    private void selectAndBindTexture(TileEntityLightContainer entity) {
         int textureIndex = 0;
-        ItemStack stack = officeLight1.getStackInSlot(0);
+        ItemStack stack = entity.getStackInSlot(0);
         if (stack != null) {
-            textureIndex = stack.getItemDamage()+1;
+            if (stack.getItem() instanceof ItemBulbRainbow) {
+                textureIndex = entity.getPowerLevel();
+            } else {
+                textureIndex = stack.getItemDamage()+1;
+            }
         }
 
         bindTexture(texture[textureIndex]);

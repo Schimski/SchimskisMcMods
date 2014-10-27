@@ -2,13 +2,18 @@ package de.schimski.bulbs.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import de.schimski.bulbs.block.BlockBulbsContainer;
 import de.schimski.bulbs.creativetab.CreativeTabBulbs;
 import de.schimski.bulbs.reference.Reference;
+import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
+import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -21,6 +26,22 @@ public class ItemScrewDriver extends Item {
         super();
         //this.setMaxDamage(0);
         this.setCreativeTab(CreativeTabBulbs.BULBS_TAB);
+    }
+
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float p_77648_8_, float p_77648_9_, float p_77648_10_)
+    {
+        TileEntityLightContainer tileEntity = world.getTileEntity(x,y,z) != null ? world.getTileEntity(x,y,z) instanceof TileEntityLightContainer ? (TileEntityLightContainer)world.getTileEntity(x,y,z) : null : null;
+
+        if (player.isSneaking() && tileEntity != null) {
+            tileEntity.increaseLightLevel();
+            return true;
+        } else if (!player.isSneaking() && tileEntity != null && tileEntity.isRotatable()) {
+            tileEntity.increaseRotation();
+            return true;
+        }
+
+        return false;
     }
 
     @Override
