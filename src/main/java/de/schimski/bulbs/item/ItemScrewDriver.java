@@ -2,16 +2,14 @@ package de.schimski.bulbs.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import de.schimski.bulbs.block.BlockBulbsContainer;
+import de.schimski.bulbs.client.gui.TextOverlay;
 import de.schimski.bulbs.creativetab.CreativeTabBulbs;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
-import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
@@ -34,8 +32,14 @@ public class ItemScrewDriver extends Item {
         TileEntityLightContainer tileEntity = world.getTileEntity(x,y,z) != null ? world.getTileEntity(x,y,z) instanceof TileEntityLightContainer ? (TileEntityLightContainer)world.getTileEntity(x,y,z) : null : null;
 
         if (player.isSneaking() && tileEntity != null) {
-            tileEntity.increaseLightLevel();
-            return true;
+            if (tileEntity.increaseLightLevel()) {
+                TextOverlay.renderText("LightLevel: " + tileEntity.getLightLevel());
+                return true;
+            } else {
+                TextOverlay.renderText("Cannot be dimmed");
+                return false;
+            }
+
         } else if (!player.isSneaking() && tileEntity != null && tileEntity.isRotatable()) {
             tileEntity.increaseRotation();
             return true;

@@ -101,12 +101,14 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
      *  Method for manually increasing the lightlevel
      */
 
-    public void increaseLightLevel() {
+    public boolean increaseLightLevel() {
         if (this.getStackInSlot(0) != null && isDimmable()){
             lightLevel = (lightLevel + 1) % 16;
             LogHelper.info(lightLevel);
             updateBlockMetadata();
+            return true;
         }
+        return false;
     }
 
 
@@ -159,6 +161,10 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
 
     public boolean isDimmable() {
         return (getStackInSlot(0) != null && getStackInSlot(0).getItem() instanceof ItemBulbDimmable);
+    }
+
+    public int getLightLevel() {
+        return lightLevel;
     }
 
     /*

@@ -73,7 +73,7 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
         ItemStack stack = entity.getStackInSlot(0);
         if (stack != null) {
             if (stack.getItem() instanceof ItemBulbRainbow) {
-                textureIndex = entity.getPowerLevel();
+                textureIndex = entity.getPowerLevel()+1;
             } else {
                 textureIndex = stack.getItemDamage()+1;
             }

@@ -9,6 +9,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import de.schimski.bulbs.client.gui.TextOverlay;
 import de.schimski.bulbs.client.handler.KeyInputEventHandler;
 import de.schimski.bulbs.handler.BulbsEventHandler;
 import de.schimski.bulbs.handler.ConfigurationHandler;
@@ -19,6 +20,7 @@ import de.schimski.bulbs.network.messageBulbsHandler;
 import de.schimski.bulbs.proxy.IProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.utility.LogHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, guiFactory = Reference.GUI_FACTORY_CLASS)
@@ -38,6 +40,8 @@ public class bulbs {
 
         ConfigurationHandler.init(event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new ConfigurationHandler());
+        MinecraftForge.EVENT_BUS.register(new TextOverlay(Minecraft.getMinecraft()));
+
 
         proxy.registerKeybindings();
 
@@ -54,6 +58,7 @@ public class bulbs {
     public void init(FMLInitializationEvent event)
     {
         FMLCommonHandler.instance().bus().register(new KeyInputEventHandler());
+
         MinecraftForge.EVENT_BUS.register(new BulbsEventHandler());
 
         // Initialize custom rendering and pre-load textures (Client only)
