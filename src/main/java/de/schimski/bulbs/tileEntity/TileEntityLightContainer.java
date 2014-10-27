@@ -2,6 +2,7 @@ package de.schimski.bulbs.tileEntity;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import de.schimski.bulbs.item.ItemBulbDimmable;
 import de.schimski.bulbs.item.ItemBulbNormal;
 import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.utility.LogHelper;
@@ -300,6 +301,8 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         if (stack != null) {
             if (stack.getItem() instanceof ItemBulbNormal) {
                 lightLevel = powerLevel == 0 ? 15 : 0;
+            } else if (stack.getItem() instanceof ItemBulbDimmable) {
+                lightLevel = manualDim ?  lightLevel : 15 - powerLevel;
             }
 
         }
