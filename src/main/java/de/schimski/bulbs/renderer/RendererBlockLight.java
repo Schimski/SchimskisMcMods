@@ -7,6 +7,7 @@ import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityBlockLight;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
+import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -107,6 +108,40 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
                 GL11.glEnable(GL11.GL_LIGHTING);
                 GL11.glPopMatrix();
             }
+
+
+
+            float p = (float)1/16;
+            float t =  (float)1/192;
+
+            GL11.glScalef(p,p,p);
+
+            float i = -8 + 16;
+            float j =  12;
+            float k = -8 + 16;
+
+
+            GL11.glPushMatrix();
+                bindTexture(texture[12]);
+                GL11.glEnable(GL11.GL_BLEND);
+                GL11.glBegin(GL11.GL_POLYGON);
+
+                    GL11.glTexCoord2f(0,64*t);
+                    GL11.glVertex3f(i,j,k);
+
+                    GL11.glTexCoord2f(64*t,64*t);
+                    GL11.glVertex3f(i+16,j,k);
+
+                    GL11.glTexCoord2f(0,64*t);
+                    GL11.glVertex3f(i,j,k+16);
+/*
+                    GL11.glVertex3f(i+16,j,k);
+                    GL11.glVertex3f(i+16,j,k+16);
+                    GL11.glVertex3f(i,j,k+16);
+*/
+                GL11.glEnd();
+                GL11.glDisable(GL11.GL_BLEND);
+            GL11.glPopMatrix();
         GL11.glPopMatrix();
     }
 }
