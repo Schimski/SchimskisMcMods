@@ -58,7 +58,7 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
 
     private void rotateTilEntityAccordingNBT(TileEntityBlockLight blockLight)
     {
-        GL11.glRotatef(blockLight.getRotation(), 0, 1, 0);
+        GL11.glRotatef(((blockLight.getRotation()-2)/2) * 90, 0, 1, 0);
     }
 
     private void renderModel() {
@@ -83,6 +83,184 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
         bindTexture(texture[textureIndex]);
     }
 
+    private void renderBlockLightSub0(boolean glow) {
+
+        if (ClientProxy.renderPass == 0) {
+            GL11.glPushMatrix();
+            GL11.glDisable(GL11.GL_CULL_FACE);
+            renderModel();
+            GL11.glEnable(GL11.GL_CULL_FACE);
+            GL11.glPopMatrix();
+        } else {
+            GL11.glPushMatrix();
+            GL11.glDisable(GL11.GL_LIGHTING);
+            GL11.glEnable(GL11.GL_BLEND);
+            renderModelAlpha();
+            GL11.glDisable(GL11.GL_BLEND);
+            GL11.glEnable(GL11.GL_LIGHTING);
+            GL11.glPopMatrix();
+        }
+    }
+
+    private void renderBlockLightSub1(boolean glow) {
+
+        float t =  (float)1/192;
+        float p = (float)1/32;
+        int x = glow ? 1 : 0;
+        GL11.glScalef(p, p, p);
+        GL11.glTranslatef(-16, 24, -16);
+        GL11.glPushMatrix();
+
+        if (ClientProxy.renderPass == 1) {
+            GL11.glEnable(GL11.GL_BLEND);
+
+            //Bottom
+            GL11.glBegin(GL11.GL_QUADS);
+                GL11.glTexCoord2f(0,64*t);
+                GL11.glVertex3f(-x,x,-x);
+
+                GL11.glTexCoord2f(0,136*t);
+                GL11.glVertex3f(-x,x,32+x);
+
+                GL11.glTexCoord2f(72*t,136*t);
+                GL11.glVertex3f(32+x,x,32+x);
+
+                GL11.glTexCoord2f(72*t,72*t);
+                GL11.glVertex3f(32+x,x,-x);
+
+            GL11.glEnd();
+
+            //Top
+            GL11.glBegin(GL11.GL_QUADS);
+                GL11.glTexCoord2f(0,64*t);
+                GL11.glVertex3f(-x,-32-x,-x);
+
+                GL11.glTexCoord2f(72*t,72*t);
+                GL11.glVertex3f(32+x,x,-x);
+
+                GL11.glTexCoord2f(72*t,136*t);
+                GL11.glVertex3f(32+x,x,32+x);
+
+                GL11.glTexCoord2f(0,136*t);
+                GL11.glVertex3f(-x,-32-x,32+x);
+            GL11.glEnd();
+
+            //Side Quad
+            GL11.glBegin(GL11.GL_QUADS);
+                GL11.glTexCoord2f(0,64*t);
+                GL11.glVertex3f(-x,x,-x);
+
+                GL11.glTexCoord2f(72*t,72*t);
+                GL11.glVertex3f(-x,-32-x,-x);
+
+                GL11.glTexCoord2f(72*t,136*t);
+                GL11.glVertex3f(-x,-32-x,32+x);
+
+                GL11.glTexCoord2f(0,136*t);
+                GL11.glVertex3f(-x,x,32+x);
+            GL11.glEnd();
+
+            //Side Triangle
+            GL11.glBegin(GL11.GL_POLYGON);
+                GL11.glTexCoord2f(0,64*t);
+                GL11.glVertex3f(-x,x,-x);
+
+                GL11.glTexCoord2f(72*t,72*t);
+                GL11.glVertex3f(32+x,x,-x);
+
+                GL11.glTexCoord2f(72*t,136*t);
+                GL11.glVertex3f(-x,-32-x,-x);
+            GL11.glEnd();
+
+            //Side Triangle
+            GL11.glBegin(GL11.GL_POLYGON);
+                GL11.glTexCoord2f(0,64*t);
+                GL11.glVertex3f(-x,x,32+x);
+
+                GL11.glTexCoord2f(72*t,136*t);
+                GL11.glVertex3f(-x,-32-x,32+x);
+
+                GL11.glTexCoord2f(72*t,72*t);
+                GL11.glVertex3f(32+x,x,32+x);
+            GL11.glEnd();
+
+        GL11.glDisable(GL11.GL_BLEND);
+        } else {
+
+            //Bottom
+            GL11.glBegin(GL11.GL_QUADS);
+            GL11.glTexCoord2f(0,64*t);
+            GL11.glVertex3f(2,-2,2);
+
+            GL11.glTexCoord2f(0,136*t);
+            GL11.glVertex3f(2,-2,30);
+
+            GL11.glTexCoord2f(72*t,136*t);
+            GL11.glVertex3f(27,-2,30);
+
+            GL11.glTexCoord2f(72*t,72*t);
+            GL11.glVertex3f(27,-2,2);
+
+            GL11.glEnd();
+
+            //Top
+            GL11.glBegin(GL11.GL_QUADS);
+            GL11.glTexCoord2f(0,64*t);
+            GL11.glVertex3f(2,-27,2);
+
+            GL11.glTexCoord2f(72*t,72*t);
+            GL11.glVertex3f(27,-2,2);
+
+            GL11.glTexCoord2f(72*t,136*t);
+            GL11.glVertex3f(27,-2,30);
+
+            GL11.glTexCoord2f(0,136*t);
+            GL11.glVertex3f(2,-27,30);
+            GL11.glEnd();
+
+            //Side Quad
+            GL11.glBegin(GL11.GL_QUADS);
+            GL11.glTexCoord2f(0,64*t);
+            GL11.glVertex3f(2,-2,2);
+
+            GL11.glTexCoord2f(72*t,72*t);
+            GL11.glVertex3f(2,-27,2);
+
+            GL11.glTexCoord2f(72*t,136*t);
+            GL11.glVertex3f(2,-27,30);
+
+            GL11.glTexCoord2f(0,136*t);
+            GL11.glVertex3f(2,-2,30);
+            GL11.glEnd();
+
+            //Side Triangle
+            GL11.glBegin(GL11.GL_POLYGON);
+            GL11.glTexCoord2f(0,64*t);
+            GL11.glVertex3f(2,-2,2);
+
+            GL11.glTexCoord2f(72*t,72*t);
+            GL11.glVertex3f(27,-2,2);
+
+            GL11.glTexCoord2f(72*t,136*t);
+            GL11.glVertex3f(2,-27,2);
+            GL11.glEnd();
+
+            //Side Triangle
+            GL11.glBegin(GL11.GL_POLYGON);
+            GL11.glTexCoord2f(0,64*t);
+            GL11.glVertex3f(2,-2,30);
+
+            GL11.glTexCoord2f(72*t,136*t);
+            GL11.glVertex3f(2,-27,30);
+
+            GL11.glTexCoord2f(72*t,72*t);
+            GL11.glVertex3f(27,-2,30);
+            GL11.glEnd();
+
+        }
+        GL11.glPopMatrix();
+    }
+
     public void renderTileEntityAt(TileEntity entity, double x, double y, double z, float p_147500_8_)
     {
         TileEntityBlockLight blockLight = (TileEntityBlockLight)(entity);
@@ -91,57 +269,13 @@ public class RendererBlockLight extends TileEntitySpecialRenderer{
             alignTileEntityAccordingState(x, y, z, blockLight.getState());
             rotateTilEntityAccordingNBT(blockLight);
             selectAndBindTexture(blockLight);
-
-            if (ClientProxy.renderPass == 0) {
-
-                GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_CULL_FACE);
-                renderModel();
-                GL11.glEnable(GL11.GL_CULL_FACE);
-                GL11.glPopMatrix();
-            } else {
-                GL11.glPushMatrix();
-                GL11.glDisable(GL11.GL_LIGHTING);
-                GL11.glEnable(GL11.GL_BLEND);
-                renderModelAlpha();
-                GL11.glDisable(GL11.GL_BLEND);
-                GL11.glEnable(GL11.GL_LIGHTING);
-                GL11.glPopMatrix();
+            int rotation = blockLight.getRotation();
+            if (rotation < 2) {
+                renderBlockLightSub0(rotation==0 ? true : false);
+            } else if (rotation < 10) {
+                renderBlockLightSub1(((rotation-2) % 2) == 0 ? true : false);
             }
 
-
-
-            float p = (float)1/16;
-            float t =  (float)1/192;
-
-            GL11.glScalef(p,p,p);
-
-            float i = -8 + 16;
-            float j =  12;
-            float k = -8 + 16;
-
-
-            GL11.glPushMatrix();
-                bindTexture(texture[12]);
-                GL11.glEnable(GL11.GL_BLEND);
-                GL11.glBegin(GL11.GL_POLYGON);
-
-                    GL11.glTexCoord2f(0,64*t);
-                    GL11.glVertex3f(i,j,k);
-
-                    GL11.glTexCoord2f(64*t,64*t);
-                    GL11.glVertex3f(i+16,j,k);
-
-                    GL11.glTexCoord2f(0,64*t);
-                    GL11.glVertex3f(i,j,k+16);
-/*
-                    GL11.glVertex3f(i+16,j,k);
-                    GL11.glVertex3f(i+16,j,k+16);
-                    GL11.glVertex3f(i,j,k+16);
-*/
-                GL11.glEnd();
-                GL11.glDisable(GL11.GL_BLEND);
-            GL11.glPopMatrix();
         GL11.glPopMatrix();
     }
 }

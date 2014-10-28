@@ -10,7 +10,14 @@ public class TileEntityBlockLight extends TileEntityLightContainer {
     }
 
     public TileEntityBlockLight(int metadata) {
+
         super(metadata);
+        this.canRotate = true;
+    }
+
+    @Override
+    public void increaseRotation() {
+        rotation = (rotation + 1) %10;
     }
 
     @Override
