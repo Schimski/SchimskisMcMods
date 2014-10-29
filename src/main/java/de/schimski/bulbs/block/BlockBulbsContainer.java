@@ -203,7 +203,7 @@ public class BlockBulbsContainer extends BlockContainer {
             //LogHelper.info("ClientMode");
         } else {
             entity.setPowerLevel(world.getStrongestIndirectPower(x, y, z));
-            bulbs.network.sendToAllAround(new messageBulbs(x + ":" + y + ":" + z + ":" + connectNeighbours[0] + ":" + connectNeighbours[1] + ":" + connectNeighbours[2] + ":" + connectNeighbours[3]), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 300));
+            bulbs.network.sendToAllAround(new messageBulbs(x + ":" + y + ":" + z + ":" + connectNeighbours[0] + ":" + connectNeighbours[1] + ":" + connectNeighbours[2] + ":" + connectNeighbours[3] + ":" + connectNeighbours[4] + ":" + connectNeighbours[5]), new NetworkRegistry.TargetPoint(world.provider.dimensionId, x, y, z, 300));
         }
     }
 

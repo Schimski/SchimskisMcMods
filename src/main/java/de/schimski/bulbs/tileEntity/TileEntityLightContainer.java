@@ -89,7 +89,7 @@ public class TileEntityLightContainer extends TileEntity  implements IInventory 
         super();
         this.lightLevel = 15;
         this.inventory = new ItemStack[1];
-        this.boolConnect = new boolean[] {false, false, false, false};
+        this.boolConnect = new boolean[] {false, false, false, false, false, false};
         this.state =  metadata >= 0 ? (byte) metadata : 0;
         this.canRotate = false;
         this.rotation=0;

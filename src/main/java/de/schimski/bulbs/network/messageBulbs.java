@@ -13,7 +13,7 @@ public class messageBulbs implements IMessage{
     public int y;
     public int z;
 
-    public boolean connectNeighbours[] = {false, false, false, false};
+    public boolean connectNeighbours[] = {false, false, false, false, false, false};
 
     public messageBulbs() {}
 
@@ -32,8 +32,7 @@ public class messageBulbs implements IMessage{
         y = Integer.valueOf(splitText[1]);
         z = Integer.valueOf(splitText[2]);
 
-        for (int i = 3; i<7; i++) {
-
+        for (int i = 3; i<9; i++) {
             connectNeighbours[i-3] = splitText[i].equals("false") ? false : true;
         }
 

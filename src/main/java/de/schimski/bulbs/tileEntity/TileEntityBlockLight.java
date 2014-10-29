@@ -12,7 +12,7 @@ public class TileEntityBlockLight extends TileEntityLightContainer {
     public TileEntityBlockLight(int metadata) {
 
         super(metadata);
-        this.canRotate = true;
+        this.canRotate = false;
     }
 
     @Override
