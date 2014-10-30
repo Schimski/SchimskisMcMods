@@ -20,6 +20,8 @@ public class GuiHelper {
             player.openGui(bulbs.instance, 3, world, x, y, z);
         } else if (tileEntity instanceof TileEntityPoleLight) {
             player.openGui(bulbs.instance, 4, world, x, y, z);
+        } else if (tileEntity instanceof TileEntityOfficeLight2) {
+            player.openGui(bulbs.instance, 5, world, x, y, z);
         }
     }
 }

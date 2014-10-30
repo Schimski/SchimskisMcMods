@@ -42,5 +42,6 @@ public class Recipes {
         GameRegistry.addRecipe(new ItemStack(ModBlocks.blockLight, 4), "ggg", "ghg", "ggg", 'g', new ItemStack(Blocks.glass_pane), 'h', new ItemStack(ModItems.lightBulbHolding));
         GameRegistry.addRecipe(new ItemStack(ModBlocks.poleLight, 4), " i ", " h ", " i ", 'i', new ItemStack(Items.iron_ingot), 'h', new ItemStack(ModItems.lightBulbHolding));
         GameRegistry.addRecipe(new ItemStack(ModBlocks.officeLight1, 4), "sss", " h ", " i ", 'i', new ItemStack(Items.iron_ingot), 'h', new ItemStack(ModItems.lightBulbHolding), 's', new ItemStack(Blocks.stone));
+        GameRegistry.addRecipe(new ItemStack(ModBlocks.officeLight2, 4), "ihi", " i ", " i ", 'i', new ItemStack(Items.iron_ingot), 'h', new ItemStack(ModItems.lightBulbHolding));
     }
 }

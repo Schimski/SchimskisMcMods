@@ -25,12 +25,14 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGridLight.class, new RendererGridLight());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityThinLight.class, new RendererThinLight());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOfficeLight1.class, new RendererOfficeLight1());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOfficeLight2.class, new RendererOfficeLight2());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBlockLight.class, new RendererBlockLight());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPoleLight.class, new RendererPoleLight());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.thinLight), new RendererItemThinLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.gridLight), new RendererItemGridLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.officeLight1), new RendererItemOfficeLight1());
+        MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.officeLight2), new RendererItemOfficeLight2());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.poleLight), new RendererItemPoleLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.blockLight), new RendererItemBlockLight());
 

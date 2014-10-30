@@ -33,7 +33,7 @@ import java.util.Random;
 
 public class BlockBulbsContainer extends BlockContainer {
 
-    protected boolean[] connectNeighbours;
+    protected boolean[] connectNeighbours={false, false, false, false, false, false};
 
     public BlockBulbsContainer(Material material) {
         super(material);

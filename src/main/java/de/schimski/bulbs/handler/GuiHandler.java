@@ -30,6 +30,9 @@ public class GuiHandler implements IGuiHandler{
         } else if (id == 4) {
             TileEntityPoleLight tileEntityPoleLight = (TileEntityPoleLight) world.getTileEntity(x,y,z);
             return new ContainerPoleLight(entityPlayer.inventory, tileEntityPoleLight);
+        } else if (id == 5) {
+            TileEntityOfficeLight2 tileEntityOfficeLight2 = (TileEntityOfficeLight2) world.getTileEntity(x,y,z);
+            return new ContainerOfficeLight2(entityPlayer.inventory, tileEntityOfficeLight2);
         }
 
         return null;
@@ -51,6 +54,9 @@ public class GuiHandler implements IGuiHandler{
         } else if(id == 4) {
             TileEntityPoleLight tileEntityPoleLight = (TileEntityPoleLight) world.getTileEntity(x, y, z);
             return new GuiPoleLight(entityPlayer.inventory, tileEntityPoleLight);
+        } else if(id == 5) {
+            TileEntityOfficeLight2 tileEntityOfficeLight2 = (TileEntityOfficeLight2) world.getTileEntity(x, y, z);
+            return new GuiOfficeLight2(entityPlayer.inventory, tileEntityOfficeLight2);
         }
 
         return null;
