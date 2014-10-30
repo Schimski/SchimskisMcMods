@@ -107,6 +107,10 @@ public class ModelOfficeLight2X32 extends ModelBase
     }
 
     public void renderAlpha(float f5) {
+        Side1.render(f5);
+        Side2.render(f5);
+        Side3.render(f5);
+        Side4.render(f5);
         Light.render(f5);
         Top.render(f5);
     }
