@@ -4,9 +4,12 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.schimski.bulbs.client.gui.TextOverlay;
 import de.schimski.bulbs.creativetab.CreativeTabBulbs;
+import de.schimski.bulbs.proxy.ClientProxy;
 import de.schimski.bulbs.reference.Reference;
 import de.schimski.bulbs.tileEntity.TileEntityLightContainer;
+import de.schimski.bulbs.utility.LogHelper;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,6 +27,37 @@ public class ItemScrewDriver extends Item {
         super();
         //this.setMaxDamage(0);
         this.setCreativeTab(CreativeTabBulbs.BULBS_TAB);
+    }
+
+    @Override
+    public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
+
+        super.onUpdate(par1ItemStack, par2World, par3Entity, par4, par5);
+
+        if (par3Entity instanceof EntityPlayer)
+        {
+
+            EntityPlayer player = (EntityPlayer)par3Entity;
+            if (player.getHeldItem() != null) {
+                if (player.getHeldItem().equals(par1ItemStack)) {
+                    if (!ClientProxy.screwDriverSelected) {
+                        ClientProxy.screwDriverSelected = true;
+                        par2World.markBlockRangeForRenderUpdate((int) player.posX - 20, (int) player.posY - 20, (int) player.posZ - 20, (int) player.posX + 20, (int) player.posY + 20, (int) player.posZ + 20);
+                        LogHelper.info((int) player.posX);
+                    }
+                } else {
+                    if (ClientProxy.screwDriverSelected){
+                        ClientProxy.screwDriverSelected = false;
+                        par2World.markBlockRangeForRenderUpdate((int) player.posX - 20, (int) player.posY - 20, (int) player.posZ - 20, (int) player.posX + 20, (int) player.posY + 20, (int) player.posZ + 20);
+                    }
+                }
+            } else {
+                if (ClientProxy.screwDriverSelected) {
+                    ClientProxy.screwDriverSelected = false;
+                    par2World.markBlockRangeForRenderUpdate((int) player.posX - 20, (int) player.posY - 20, (int) player.posZ - 20, (int) player.posX + 20, (int) player.posY + 20, (int) player.posZ + 20);
+                }
+            }
+        }
     }
 
     @Override

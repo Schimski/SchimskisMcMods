@@ -18,6 +18,8 @@ public class ClientProxy extends CommonProxy {
 
     public static int renderPass;
 
+    public static boolean screwDriverSelected;
+
     public static int thinLightRenderType;
 
     @Override
