@@ -18,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.ColorizerFoliage;
@@ -29,8 +30,6 @@ import net.minecraft.world.World;
 public class BlockStealthLight extends BlockBulbsContainer {
 
     @SideOnly(Side.CLIENT)
-    protected IIcon[] blockIcon;
-    private String blockClass="";
     private int blockMeta=0;
     private boolean isOpaque=true;
     private IIcon standardIcon;
@@ -41,22 +40,19 @@ public class BlockStealthLight extends BlockBulbsContainer {
         this.setHardness(0.5f);
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int metadata) {
+    public IIcon getIcon(IBlockAccess block, int x, int y, int z, int side) {
         if (ClientProxy.screwDriverSelected) {
             return standardIcon;
         } else {
-            return this.blockIcon[side];
+            return ((TileEntityStealthLight)block.getTileEntity(x,y,z)).getIcon(side);
         }
     }
 
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        this.standardIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "itemGridLight");
-        this.blockIcon = new IIcon[6];
-        for (int j=0; j<6; j++){
-            blockIcon[j] = standardIcon;
-        }
+        this.standardIcon = iconRegister.registerIcon(Reference.MOD_ID + ":" + "blockStealthLight");
     }
 
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int p_149727_6_, float p_149727_7_, float p_149727_8_, float p_149727_9_) {
@@ -67,13 +63,9 @@ public class BlockStealthLight extends BlockBulbsContainer {
 
                 blockMeta = item.getDamage(player.getHeldItem());
                 Block block = Block.getBlockFromItem(item);
-                blockClass = block.getUnlocalizedName();
-                isOpaque = block.isOpaqueCube();
-                LogHelper.info(blockClass);
-                for (int i=0; i<6; i++) {
-                    blockIcon[i] = block.getIcon(i, blockMeta);
-                }
-
+//                blockClass = block.getUnlocalizedName();
+//                isOpaque = block.isOpaqueCube();
+                ((TileEntityStealthLight)world.getTileEntity(x,y,z)).saveStealthStack(player.getHeldItem());
                 world.notifyBlockChange(x,y,z,this);
                 world.markBlockRangeForRenderUpdate(x-1,y-1,z-1,x+1, y+1, z+1);
                 return true;
@@ -87,7 +79,7 @@ public class BlockStealthLight extends BlockBulbsContainer {
         return side;
     }
 
-
+/*
     @Override
     @SideOnly(Side.CLIENT)
     public int getBlockColor() {
@@ -101,7 +93,7 @@ public class BlockStealthLight extends BlockBulbsContainer {
 
     /**
      * Returns the color this block should be rendered. Used by leaves.
-     */
+     *
     @Override
     @SideOnly(Side.CLIENT)
     public int getRenderColor(int p_149741_1_) {
@@ -116,7 +108,7 @@ public class BlockStealthLight extends BlockBulbsContainer {
     /**
      * Returns a integer with hex for 0xrrggbb with this color multiplied against the blocks color. Note only called
      * when first determining what to render.
-     */
+     *
     @Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess p_149720_1_, int p_149720_2_, int p_149720_3_, int p_149720_4_)
@@ -149,13 +141,13 @@ public class BlockStealthLight extends BlockBulbsContainer {
         }
 
         return (l / 9 & 255) << 16 | (i1 / 9 & 255) << 8 | j1 / 9 & 255;
-    }
-/*
+    }*/
+
     @Override
     public int getRenderType() {
-        return -1;
+        return ClientProxy.stealthLightRenderType;
     }
-*/
+
     @Override
     public boolean isOpaqueCube() {
         return isOpaque;

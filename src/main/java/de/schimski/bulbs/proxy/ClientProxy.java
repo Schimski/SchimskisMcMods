@@ -3,6 +3,7 @@ package de.schimski.bulbs.proxy;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import de.schimski.bulbs.block.BlockStealthLight;
 import de.schimski.bulbs.block.BlockThinLight;
 import de.schimski.bulbs.client.settings.Keybindings;
 import de.schimski.bulbs.init.ModBlocks;
@@ -20,16 +21,21 @@ public class ClientProxy extends CommonProxy {
 
     public static boolean screwDriverSelected;
 
-    public static int thinLightRenderType;
+    public static int stealthLightRenderType;
 
     @Override
     public void initRenderingAndTextures() {
+
+        stealthLightRenderType = RenderingRegistry.getNextAvailableRenderId();
+
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityGridLight.class, new RendererGridLight());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityThinLight.class, new RendererThinLight());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOfficeLight1.class, new RendererOfficeLight1());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityOfficeLight2.class, new RendererOfficeLight2());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBlockLight.class, new RendererBlockLight());
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPoleLight.class, new RendererPoleLight());
+
+        RenderingRegistry.registerBlockHandler(stealthLightRenderType, new RendererStealthLight());
 
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.thinLight), new RendererItemThinLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.gridLight), new RendererItemGridLight());
@@ -38,7 +44,8 @@ public class ClientProxy extends CommonProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.poleLight), new RendererItemPoleLight());
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ModBlocks.blockLight), new RendererItemBlockLight());
 
-        thinLightRenderType = RenderingRegistry.getNextAvailableRenderId();
+        //thinLightRenderType = RenderingRegistry.getNextAvailableRenderId();
+
     }
 
     @Override
